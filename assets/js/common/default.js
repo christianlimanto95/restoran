@@ -28,3 +28,38 @@ function addCommas(nStr) {
     }
     return x1 + x2;
 }
+
+function pad(pad, str, padLeft) {
+    if (typeof str === 'undefined') 
+        return pad;
+    if (padLeft) {
+        return (pad + str).slice(-pad.length);
+    } else {
+        return (str + pad).substring(0, pad.length);
+    }
+}
+
+function ajaxCall(url, data, callback) {
+	return $.ajax({
+		url: url,
+		data: data,
+		type: 'POST',
+		error: function(jqXHR, exception) {
+			if (exception != "abort") {
+				console.log(jqXHR + " : " + jqXHR.responseText);
+			}
+		},
+		success: function(result) {
+			callback(result);
+		}
+	});
+}
+
+function checkInputNumber(element) {
+    var value = parseInt($(element).val());
+    if (value <= 0 || isNaN(value)) {
+        $(element).val(1);
+    } else if (value > 999) {
+        $(element).val(999);
+    }
+}
