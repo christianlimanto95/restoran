@@ -2,9 +2,9 @@
 <div class="center">
     <div class="subtotal">23.000</div>
     <div class="menu-chosen-container">
-        <div class="menu-chosen">001 - NASI BABI PEDAS - 12.000</div>
-        <input class="qty" type="number" value="1" min="1" max="999" />
-        <div class="qty-add">+</div>
+        <div class="menu-chosen" tabindex="1" >001 - NASI BABI PEDAS - 12.000</div>
+        <input class="qty" type="number" value="1" min="1" max="999" tabindex="2" />
+        <div class="qty-add" tabindex="3">+</div>
     </div>
     <div class="detail">
         <table class="detail-table">
@@ -46,4 +46,5 @@
             </tbody>
         </table>
     </div>
+    <div class="bayar">BAYAR</div>
 </div>

@@ -28,6 +28,7 @@ function nextTabIndex(e) {
     var activeElement = $(document.activeElement);
     if (activeElement.length > 0) {
         e.preventDefault();
+        e.stopPropagation();
         var tabIndex = activeElement.attr("tabindex");
         tabIndex++;
         if (tabIndex > maxTabIndex) {
@@ -41,6 +42,7 @@ function prevTabIndex(e) {
     var activeElement = $(document.activeElement);
     if (activeElement.length > 0) {
         e.preventDefault();
+        e.stopPropagation();
         var tabIndex = activeElement.attr("tabindex");
         tabIndex--;
         if (tabIndex <= 0) {
