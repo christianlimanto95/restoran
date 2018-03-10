@@ -1,7 +1,32 @@
+var maxTabIndex = 0;
 $(function() {
+    $("[tabindex='1']").focus();
+    maxTabIndex = $("[tabindex]").length;
+
     $(window).on("keydown", function(e) {
-        if (e.which == 39) {
-            var activeElement = $(document.activeElement);
+        switch (e.which) {
+            case 39:
+                var activeElement = $(document.activeElement);
+                if (activeElement.length > 0) {
+                    var tabIndex = activeElement.attr("tabindex");
+                    tabIndex++;
+                    if (tabIndex > maxTabIndex) {
+                        tabIndex = 1;
+                    }
+                    $("[tabindex='" + tabIndex + "']").focus();
+                }
+                break;
+            case 37:
+                var activeElement = $(document.activeElement);
+                if (activeElement.length > 0) {
+                    var tabIndex = activeElement.attr("tabindex");
+                    tabIndex--;
+                    if (tabIndex <= 0) {
+                        tabIndex = maxTabIndex;
+                    }
+                    $("[tabindex='" + tabIndex + "']").focus();
+                }
+                break;
         }
     });
 
