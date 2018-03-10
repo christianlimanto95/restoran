@@ -5,27 +5,12 @@ $(function() {
 
     $(window).on("keydown", function(e) {
         switch (e.which) {
+            case 9:
             case 39:
-                var activeElement = $(document.activeElement);
-                if (activeElement.length > 0) {
-                    var tabIndex = activeElement.attr("tabindex");
-                    tabIndex++;
-                    if (tabIndex > maxTabIndex) {
-                        tabIndex = 1;
-                    }
-                    $("[tabindex='" + tabIndex + "']").focus();
-                }
+                nextTabIndex(e);
                 break;
             case 37:
-                var activeElement = $(document.activeElement);
-                if (activeElement.length > 0) {
-                    var tabIndex = activeElement.attr("tabindex");
-                    tabIndex--;
-                    if (tabIndex <= 0) {
-                        tabIndex = maxTabIndex;
-                    }
-                    $("[tabindex='" + tabIndex + "']").focus();
-                }
+                prevTabIndex(e);
                 break;
         }
     });
@@ -38,6 +23,32 @@ $(function() {
         this.value = addCommas(this.value);
     });
 });
+
+function nextTabIndex(e) {
+    var activeElement = $(document.activeElement);
+    if (activeElement.length > 0) {
+        e.preventDefault();
+        var tabIndex = activeElement.attr("tabindex");
+        tabIndex++;
+        if (tabIndex > maxTabIndex) {
+            tabIndex = 1;
+        }
+        $("[tabindex='" + tabIndex + "']").focus();
+    }
+}
+
+function prevTabIndex(e) {
+    var activeElement = $(document.activeElement);
+    if (activeElement.length > 0) {
+        e.preventDefault();
+        var tabIndex = activeElement.attr("tabindex");
+        tabIndex--;
+        if (tabIndex <= 0) {
+            tabIndex = maxTabIndex;
+        }
+        $("[tabindex='" + tabIndex + "']").focus();
+    }
+}
 
 function isNumber(e) {
 	if (e.key.length == 1) {
