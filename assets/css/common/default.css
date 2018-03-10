@@ -1,5 +1,5 @@
 * {
-  font-family: copperplate-bold;
+  font-family: square_721;
   outline: 0;
   margin: 0;
   padding: 0;
@@ -32,7 +32,7 @@ body {
   color: #444;
 }
 
-@media all and (max-width: 1279px) {
+@media all and (max-width: 1024px) {
   .div-mobile {
     display: block;
   }
@@ -42,11 +42,11 @@ body {
   }
 }
 
-@media all and (min-width: 768px) and (max-width: 1279px) {
+@media all and (min-width: 768px) and (max-width: 1024px) {
 
 }
 
-@media all and (min-width: 1280px) {
+@media all and (min-width: 1025px) {
   .div-mobile {
     display: none;
   }

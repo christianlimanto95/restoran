@@ -1,4 +1,10 @@
 $(function() {
+    $(window).on("keydown", function(e) {
+        if (e.which == 39) {
+            var activeElement = $(document.activeElement);
+        }
+    });
+
     $(document).on("keydown", "input[data-type='number']", function(e) {
         isNumber(e);
     });
