@@ -26,7 +26,7 @@ $(function() {
 
 function nextTabIndex(e) {
     var activeElement = $(document.activeElement);
-    if (activeElement.length > 0) {
+    if (activeElement.length > 0 && activeElement.prop("tagName").toLowerCase() != "body") {
         e.preventDefault();
         e.stopPropagation();
         var tabIndex = activeElement.attr("tabindex");
@@ -40,7 +40,7 @@ function nextTabIndex(e) {
 
 function prevTabIndex(e) {
     var activeElement = $(document.activeElement);
-    if (activeElement.length > 0) {
+    if (activeElement.length > 0 && activeElement.prop("tagName").toLowerCase() != "body") {
         e.preventDefault();
         e.stopPropagation();
         var tabIndex = activeElement.attr("tabindex");

@@ -6,4 +6,12 @@ class Kasir_model extends CI_Model
     {
         parent::__construct();
     }
+
+    function get_all_menu() {
+        $query = $this->db->query("
+            SELECT *
+            FROM menu
+        ");
+        return $query->result();
+    }
 }

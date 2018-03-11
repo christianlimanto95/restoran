@@ -30,6 +30,30 @@ table {
   border-spacing: 0;
 }
 
+.select {
+  position: relative;
+}
+
+.option-container {
+  position: absolute;
+  top: 0;
+  left: -3px;
+  background-color: white;
+  border: 1px solid black;
+  padding: 1vw 0;
+  width: calc(100% + 6px);
+  max-height: 15vw;
+  overflow-y: auto;
+}
+
+.option {
+  padding: 0.5vw 1vw;
+}
+
+.option:hover {
+  background-color: #DDD;
+}
+
 .section {
   width: 100vw;
   background-color: #F1F1F1;

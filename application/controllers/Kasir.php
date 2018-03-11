@@ -18,4 +18,12 @@ class Kasir extends General_controller {
 		
 		parent::view("kasir", $data);
 	}
+
+	function get_all_menu() {
+		$menus = $this->Kasir_model->get_all_menu();
+		echo json_encode(array(
+			"status" => "success",
+			"data" => $menus
+		));
+	}
 }
