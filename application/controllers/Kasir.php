@@ -20,7 +20,8 @@ class Kasir extends General_controller {
 	}
 
 	function get_all_menu() {
-		$menus = $this->Kasir_model->get_all_menu();
+		$keyword = $this->input->post("keyword");
+		$menus = $this->Kasir_model->get_all_menu($keyword);
 		$iLength = sizeof($menus);
 		for ($i = 0; $i < $iLength; $i++) {
 			$menus[$i]->menu_id = str_pad($menus[$i]->menu_id, 3, "0", STR_PAD_LEFT);

@@ -69,6 +69,12 @@ $(function() {
         }
     });
 
+    $(document).on("click", ".option", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        selectOption($(this));
+    });
+
     $(document).on("click", function(e) {
         hideOptionContainer();
     });
@@ -78,7 +84,7 @@ $(function() {
     });
 
     $(document).on("input", "input[data-thousand-separator='true']", function() {
-        this.value = addCommas(this.value);
+        this.value = addThousandSeparator(this.value);
     });
 });
 
@@ -109,7 +115,9 @@ function toggleOptionContainer(element) {
 }
 
 function setOptionActive(select, value) {
+    $(".option.active").removeClass("active");
     select.find(".option[data-value='" + value + "']").addClass("active").focus();
+    select.find(".select-text").focus();
 }
 
 function nextOptionActive() {
@@ -189,7 +197,7 @@ function isNumber(e) {
 	}
 }
 
-function addCommas(nStr) {
+function addThousandSeparator(nStr) {
     nStr = nStr.replace(/,/g, "");
     nStr += '';
     x = nStr.split('.');
@@ -197,7 +205,7 @@ function addCommas(nStr) {
     x2 = x.length > 1 ? '.' + x[1] : '';
     var rgx = /(\d+)(\d{3})/;
     while (rgx.test(x1)) {
-            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+            x1 = x1.replace(rgx, '$1' + '.' + '$2');
     }
     return x1 + x2;
 }

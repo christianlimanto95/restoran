@@ -1,6 +1,6 @@
 <div class="title">Dapur Babi</div>
 <div class="center">
-    <div class="subtotal">23.000</div>
+    <div class="subtotal" data-value="0">0</div>
     <div class="menu-chosen-container">
         <div class="select menu-chosen" tabindex="1" data-value="" >
             <input type="text" class="menu-chosen-text select-text" />
@@ -24,30 +24,6 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>001</td>
-                    <td>NASI BABI PEDAS</td>
-                    <td>12.000</td>
-                    <td>1</td>
-                    <td>12.000</td>
-                    <td>CANCEL</td>
-                </tr>
-                <tr>
-                    <td>006</td>
-                    <td>NASI PUTIH</td>
-                    <td>6.000</td>
-                    <td>1</td>
-                    <td>6.000</td>
-                    <td>CANCEL</td>
-                </tr>
-                <tr>
-                    <td>009</td>
-                    <td>ES TEH TAWAR</td>
-                    <td>2.500</td>
-                    <td>2</td>
-                    <td>5.000</td>
-                    <td>CANCEL</td>
-                </tr>
             </tbody>
         </table>
     </div>
