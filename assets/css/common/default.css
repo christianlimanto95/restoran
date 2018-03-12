@@ -67,6 +67,12 @@ table {
   color: #444;
 }
 
+.button {
+  padding: 0.5vw;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
 @media all and (max-width: 1024px) {
   .div-mobile {
     display: block;

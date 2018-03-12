@@ -26,6 +26,7 @@
     border: 5px solid transparent;
     margin-right: 20px;
     cursor: pointer;
+    text-decoration: none;
 }
 
 .main-menu:hover, .main-menu:focus {
@@ -48,4 +49,6 @@
 .main-menu-text {
     font-size: 20pt;
     margin-top: 10px;
+    text-decoration: none;
+    color: black;
 }
