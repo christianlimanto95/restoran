@@ -86,6 +86,7 @@
     clear: both;
     margin-top: 0.5vw;
     padding: 1.5vw;
+    overflow-y: auto;
 }
 
 .detail-table td {
@@ -123,6 +124,10 @@
 .detail-table td:nth-child(6) {
     width: 7vw;
     text-align: right;
+}
+
+.detail-table thead td:nth-child(6) {
+    padding-right: 1.5vw;
 }
 
 .detail-table tbody td:nth-child(6) {

@@ -122,12 +122,12 @@ function add_to_table() {
             tdQty.html(currentQty);
             
             var tdSubtotal = $(tbodyTR[i]).find("td:nth-child(5)");
-            var currentSubtotal = parseInt(tdSubtotal.html());
+            var currentSubtotal = parseInt(tdSubtotal.html().replace(".", ""));
             currentSubtotal += subtotal;
             tdSubtotal.html(addThousandSeparator(currentSubtotal + ""));
 
             $(tbodyTR[i]).attr("data-subtotal", currentSubtotal);
-            addTotal(-subtotal);
+            addTotal(subtotal);
             return;
         }
     }
