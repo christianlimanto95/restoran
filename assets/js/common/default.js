@@ -1,18 +1,76 @@
 var maxTabIndex = 0;
 $(function() {
-    $("[tabindex='1']").focus();
-    maxTabIndex = $("[tabindex]").length;
+    $(":not(.tabindex-exception)[tabindex='1']").focus().addClass("active-element");
+    maxTabIndex = $("[tabindex]:not(.tabindex-exception)").length;
+    $("*").on("focus", function() {
+        $("*").removeClass("active-element");
+        $(this).addClass("active-element");
+    });
 
     $(window).on("keydown", function(e) {
         switch (e.which) {
             case 9:
-            case 39:
                 nextTabIndex(e);
                 break;
+            case 39:
+                if ($("body.option-container-show").length == 0 && $(".select-text.active-element").length == 0) {
+                    nextTabIndex(e);
+                }
+                break;
             case 37:
-                prevTabIndex(e);
+                if ($("body.option-container-show").length == 0 && $(".select-text.active-element").length == 0) {
+                    prevTabIndex(e);
+                }
+                break;
+            case 40: // DOWN
+                if ($("body.option-container-show").length > 0) {
+                    nextOptionActive();
+                    e.preventDefault();
+                } else {
+                    if ($(".select.active-element").length > 0) {
+                        showOptionContainer($(".select.active-element"));
+                    } else if ($(".select-text.active-element").length > 0) {
+                        showOptionContainer($(".select-text.active-element").parent());
+                    }
+                }
+                break;
+            case 38: // UP
+                if ($("body.option-container-show").length > 0) {
+                    prevOptionActive();
+                    e.preventDefault();
+                } else {
+                    var activeElement = $(".select.active-element");
+                    if (activeElement.length > 0) {
+                        showOptionContainer(activeElement);
+                    }
+                }
+                break;
+            case 27:
+                hideOptionContainer();
                 break;
         }
+    });
+
+    $(document).on("keydown", ".select-text", function(e) {
+        if (e.which == 13) {
+            e.preventDefault();
+            e.stopPropagation();
+            selectOption($(this).parent().find(".option.active"));
+        }
+    });
+
+    $(document).on("click", ".select", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (!$(this).find(".option-container").hasClass("show")) {
+            showOptionContainer($(this));
+        } else {
+            hideOptionContainer($(this));
+        }
+    });
+
+    $(document).on("click", function(e) {
+        hideOptionContainer();
     });
 
     $(document).on("keydown", "input[data-type='number']", function(e) {
@@ -24,23 +82,90 @@ $(function() {
     });
 });
 
-function nextTabIndex(e) {
-    var activeElement = $(document.activeElement);
-    if (activeElement.length > 0 && activeElement.prop("tagName").toLowerCase() != "body") {
-        e.preventDefault();
-        e.stopPropagation();
-        var tabIndex = activeElement.attr("tabindex");
-        tabIndex++;
-        if (tabIndex > maxTabIndex) {
-            tabIndex = 1;
-        }
-        $("[tabindex='" + tabIndex + "']").focus();
+function showOptionContainer(element) {
+    element.find(".option-container").addClass("show");
+    var value = element.attr("data-value");
+    setOptionActive(element, value);
+    $("body").addClass("option-container-show");
+    element.find(".select-text").select();
+}
+
+function hideOptionContainer(element) {
+    if (element != null) {
+        element.find(".option-container").removeClass("show");
+    } else {
+        $(".option-container").removeClass("show");
+    }
+    $(".option").removeClass("active");
+    $("body").removeClass("option-container-show");
+}
+
+function toggleOptionContainer(element) {
+    if (element.find(".option-container.show").length == 0) {
+        showOptionContainer(element);
+    } else {
+        hideOptionContainer(element);
     }
 }
 
-function prevTabIndex(e) {
-    var activeElement = $(document.activeElement);
+function setOptionActive(select, value) {
+    select.find(".option[data-value='" + value + "']").addClass("active").focus();
+}
+
+function nextOptionActive() {
+    var next = $(".option.active").next();
+    if (next.length == 0) {
+        next = $(".option.active").parent().children().first();
+    }
+    $(".option").removeClass("active");
+    next.addClass("active").focus();
+    next.closest(".select").find(".select-text").focus();
+}
+
+function prevOptionActive() {
+    var prev = $(".option.active").prev();
+    if (prev.length == 0) {
+        prev = $(".option.active").parent().children().last();
+    }
+    $(".option").removeClass("active");
+    prev.focus().addClass("active");
+    prev.closest(".select").find(".select-text").focus();
+}
+
+function selectOption(option) {
+    var value = option.attr("data-value");
+    var text = option.html();
+    var select = option.closest(".select");
+    select.attr("data-value", value);
+    select.find(".select-text").val(text);
+    hideOptionContainer();
+}
+
+function nextTabIndex(e) {
+    var activeElement = $(".active-element");
+    var tabIndex = 0;
     if (activeElement.length > 0 && activeElement.prop("tagName").toLowerCase() != "body") {
+        if (activeElement.hasClass("select-text")) {
+            tabIndex = activeElement.closest(".select").attr("tabindex");
+        } else {
+            tabIndex = activeElement.attr("tabindex");
+        }
+    }
+    hideOptionContainer();
+    e.preventDefault();
+    e.stopPropagation();
+    
+    tabIndex++;
+    if (tabIndex > maxTabIndex) {
+        tabIndex = 1;
+    }
+    $(":not(.tabindex-exception)[tabindex='" + tabIndex + "']").focus();
+}
+
+function prevTabIndex(e) {
+    var activeElement = $(".active-element");
+    if (activeElement.length > 0 && activeElement.prop("tagName").toLowerCase() != "body") {
+        hideOptionContainer();
         e.preventDefault();
         e.stopPropagation();
         var tabIndex = activeElement.attr("tabindex");
@@ -48,8 +173,12 @@ function prevTabIndex(e) {
         if (tabIndex <= 0) {
             tabIndex = maxTabIndex;
         }
-        $("[tabindex='" + tabIndex + "']").focus();
+        $(":not(.tabindex-exception)[tabindex='" + tabIndex + "']").focus();
     }
+}
+
+function focusTabIndex(index) {
+    $("[tabindex='" + index + "']").focus();
 }
 
 function isNumber(e) {

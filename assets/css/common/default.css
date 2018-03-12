@@ -44,13 +44,19 @@ table {
   width: calc(100% + 6px);
   max-height: 15vw;
   overflow-y: auto;
+  display: none;
+}
+
+.option-container.show {
+  display: block;
 }
 
 .option {
   padding: 0.5vw 1vw;
 }
 
-.option:hover {
+.option:hover, .option.active {
+  border: 0 !important;
   background-color: #DDD;
 }
 

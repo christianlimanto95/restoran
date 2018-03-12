@@ -1,4 +1,4 @@
-[tabindex]:focus {
+[tabindex]:not(.tabindex-exception).active-element {
     border: 3px solid rgb(128, 0, 38);
 }
 
@@ -48,8 +48,16 @@
 .menu-chosen {
     width: 35vw;
     text-align: left;
+}
+
+.menu-chosen .select-text {
+    width: 100%;
+    height: 100%;
     padding-left: 1vw;
-    padding-top: 0.45vw;
+    padding-top: 0.3vw;
+    
+    border: 0;
+    font-size: 1.4vw;
 }
 
 .menu-option-container {

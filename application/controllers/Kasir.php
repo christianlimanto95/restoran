@@ -21,6 +21,11 @@ class Kasir extends General_controller {
 
 	function get_all_menu() {
 		$menus = $this->Kasir_model->get_all_menu();
+		$iLength = sizeof($menus);
+		for ($i = 0; $i < $iLength; $i++) {
+			$menus[$i]->menu_id = str_pad($menus[$i]->menu_id, 3, "0", STR_PAD_LEFT);
+			$menus[$i]->menu_harga = number_format($menus[$i]->menu_harga, 0, ", ", ".");
+		}
 		echo json_encode(array(
 			"status" => "success",
 			"data" => $menus
