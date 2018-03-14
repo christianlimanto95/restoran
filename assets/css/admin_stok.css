@@ -143,3 +143,53 @@
 .btn-confirm-delete:hover {
     background-color: #FFCDD2;
 }
+
+.dialog-tambah .dialog-box {
+    height: 22vw;
+}
+
+.dialog-tambah .dialog-text {
+    line-height: 2.8vw;
+}
+
+.dialog-tambah-left {
+    display: inline-block;
+    width: 11vw;
+}
+
+.dialog-tambah-nama {
+    text-transform: uppercase;
+    width: auto;
+}
+
+.dialog-tambah-right {
+    display: inline-block;
+    width: 8vw;
+    text-align: right;
+    position: relative;
+    padding-right: 0.5vw;
+}
+
+.dialog-tambah-right-input {
+    border: 1px solid black;
+    text-align: left;
+    padding-right: 0.2vw;
+}
+
+.dialog-tambah input {
+    padding: 0.5vw;
+    border: 0;
+    font-size: 1.5vw;
+    font-weight: bold;
+    -moz-appearance: textfield;
+    width: 85%;
+    text-align: right;
+}
+
+.dialog-tambah input::-webkit-outer-spin-button, .dialog-tambah input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+.btn-confirm-tambah:hover {
+    background-color: #C8E6C9;
+}

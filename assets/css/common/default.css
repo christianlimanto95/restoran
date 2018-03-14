@@ -181,6 +181,14 @@ table {
   height: 100%;
 }
 
+.dialog-title {
+  position: absolute;
+  top: 1.3vw;
+  left: 1.3vw;
+  font-size: 1.5vw;
+  font-weight: bold;
+}
+
 .dialog-close-icon {
   width: 30px;
   height: 30px;
@@ -201,8 +209,13 @@ table {
   font-size: 1.5vw;
   font-weight: bold;
   position: absolute;
-  top: 40%;
+  top: 50%;
   left: 2vw;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 
 .dialog-button-container {

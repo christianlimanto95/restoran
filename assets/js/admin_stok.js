@@ -1,8 +1,25 @@
 $(function() {
+    $(window).off("keydown", window_keydown_left);
+    $(window).off("keydown", window_keydown_right);
+
     get_all_bahan();
 
     $(".btn-tambah-stok").on("click", function() {
         insert_bahan();
+    });
+
+    $(document).on("click", ".btn-tambah", function() {
+        var tr = $(this).closest("tr");
+        var bahan_id = tr.attr("data-id");
+        var bahan_nama = tr.attr("data-nama");
+        var bahan_stok = tr.attr("data-stok");
+        var bahan_satuan = tr.attr("data-satuan");
+
+        $(".dialog-tambah").attr("data-id", bahan_id);
+        $(".dialog-tambah-nama").html(bahan_nama);
+        $(".dialog-tambah-stok").html(bahan_stok + " " + bahan_satuan);
+        $(".dialog-tambah .input-satuan").html(bahan_satuan);
+        showDialog($(".dialog-tambah"));
     });
 
     $(document).on("click", ".btn-hapus", function() {
@@ -33,7 +50,7 @@ function get_all_bahan() {
         var iLength = data.length;
         var element = "";
         for (var i = 0; i < iLength; i++) {
-            element += "<tr data-id='" + data[i].bahan_id + "'>";
+            element += "<tr data-id='" + data[i].bahan_id + "' data-nama='" + data[i].bahan_nama + "' data-stok='" + data[i].bahan_stok + "' data-satuan='" + data[i].bahan_satuan + "'>";
             element += "<td>" + data[i].bahan_id + "</td>";
             element += "<td>" + data[i].bahan_nama + "</td>";
             element += "<td>" + data[i].bahan_stok + " " + data[i].bahan_satuan + "</td>";

@@ -7,6 +7,12 @@ require_once("application/core/General_controller.php");
 class Admin extends General_controller {
 	public function __construct() {
 		parent::__construct();
+		parent::redirect_if_not_logged_in();
+		$is_admin = parent::is_admin();
+		if (!$is_admin) {
+			redirect(base_url("kasir"));
+		}
+
 		$this->load->model("Admin_model");
 	}
 	
@@ -28,6 +34,7 @@ class Admin extends General_controller {
 	}
 
 	function get_all_bahan() {
+		parent::show_404_if_not_ajax();
 		$data = $this->Admin_model->get_all_bahan();
 		$iLength = sizeof($data);
 		for ($i = 0; $i < $iLength; $i++) {
@@ -40,6 +47,7 @@ class Admin extends General_controller {
 	}
 
 	function insert_bahan() {
+		parent::show_404_if_not_ajax();
 		$bahan_nama = $this->input->post("nama");
 		$bahan_stok = $this->input->post("stok");
 
@@ -72,6 +80,7 @@ class Admin extends General_controller {
 	}
 
 	function delete_bahan() {
+		parent::show_404_if_not_ajax();
 		$bahan_id = intval($this->input->post("bahan_id"));
 		$result = $this->Admin_model->delete_bahan($bahan_id);
 		echo json_encode($result);

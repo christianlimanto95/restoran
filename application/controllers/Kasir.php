@@ -7,6 +7,7 @@ require_once("application/core/General_controller.php");
 class Kasir extends General_controller {
 	public function __construct() {
 		parent::__construct();
+		parent::redirect_if_not_logged_in();
 		$this->load->model("Kasir_model");
 	}
 	

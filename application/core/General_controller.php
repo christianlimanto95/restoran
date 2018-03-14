@@ -41,9 +41,29 @@ class General_controller extends CI_Controller
         $this->load->view('common/footer');
     }
 
-	public function cek_login() {
-        if ($this->session->userdata('isLoggedIn') != 1) {
+    public function redirect_if_not_logged_in() {
+        if (!$this->session->userdata('user_id', true)) {
             redirect(base_url());
+        }
+    }
+    
+    public function is_logged_in() {
+        return $this->session->userdata('user_id', true);
+	}
+	
+	public function is_admin() {
+        $user_id = $this->session->userdata('user_id', true);
+        if ($user_id) {
+            return $this->General_model->is_admin($user_id);
+        }
+        return false;
+    }
+
+    function show_404_if_not_ajax() {
+        if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' )) {
+            return true;
+        } else {
+            show_404();
         }
     }
 }

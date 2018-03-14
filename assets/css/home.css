@@ -1,0 +1,38 @@
+.title {
+    font-family: pinarak;
+    text-align: center;
+    font-size: 3.5vw;
+    margin-top: 1vw;
+}
+
+.center {
+    width: 30vw;
+    margin: 5vw auto 0;
+}
+
+.form-item {
+    width: 100%;
+    margin-bottom: 2vw;
+}
+
+.form-label {
+    font-size: 1vw;
+    margin-bottom: 0.5vw;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.5vw;
+    font-size: 1vw;
+}
+
+.btn-login {
+    float: right;
+    margin-top: 2vw;
+    width: 6vw;
+    text-align: center;
+}
+
+.btn-login:hover {
+    background-color: #E0E0E0;
+}

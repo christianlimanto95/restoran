@@ -9,18 +9,8 @@ $(function() {
 
     $(window).on("keydown", function(e) {
         switch (e.which) {
-            case 9:
+            case 9: // TAB
                 nextTabIndex(e);
-                break;
-            case 39:
-                if ($("body.option-container-show").length == 0 && $(".select-text.active-element").length == 0) {
-                    nextTabIndex(e);
-                }
-                break;
-            case 37:
-                if ($("body.option-container-show").length == 0 && $(".select-text.active-element").length == 0) {
-                    prevTabIndex(e);
-                }
                 break;
             case 40: // DOWN
                 if ($("body.option-container-show").length > 0) {
@@ -45,12 +35,15 @@ $(function() {
                     }
                 }
                 break;
-            case 27:
+            case 27: // ESC
                 hideOptionContainer();
                 closeDialog();
                 break;
         }
     });
+
+    $(window).on("keydown", window_keydown_left);
+    $(window).on("keydown", window_keydown_right);
 
     $(document).on("keydown", ".select-text", function(e) {
         if (e.which == 13) {
@@ -94,6 +87,22 @@ $(function() {
     });
 });
 
+function window_keydown_right(e) {
+    if (e.which == 39) {
+        if ($("body.option-container-show").length == 0 && $(".select-text.active-element").length == 0 && $(document.activeElement).prop("tagName").toLowerCase() != "input") {
+            nextTabIndex(e);
+        }
+    }
+}
+
+function window_keydown_left(e) {
+    if (e.which == 37) {
+        if ($("body.option-container-show").length == 0 && $(".select-text.active-element").length == 0 && $(document.activeElement).prop("tagName").toLowerCase() != "input") {
+            prevTabIndex(e);
+        }
+    }
+}
+
 function showDialog(dialogElement) {
     dialogElement.addClass("show");
 }
@@ -113,7 +122,11 @@ function showNotification(text) {
     notification.one("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(e) {
         notification.removeClass("showing");
     });
-    notification.removeClass("showing").addClass("showing");
+
+    notification.removeClass("showing");
+    setTimeout(function() {
+        notification.addClass("showing");
+    }, 1);
 }
 
 function showOptionContainer(element) {

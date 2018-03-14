@@ -41,6 +41,27 @@
         </div>
     </div>
 </div>
+<div class="dialog dialog-tambah">
+    <div class="dialog-background">
+        <div class="dialog-box">
+            <div class="dialog-close-icon" style="background-image: url(<?php echo base_url("assets/images/close_icon.png"); ?>);"></div>
+            <div class="dialog-title">TAMBAH STOK</div>
+            <div class="dialog-text">
+                <span class="dialog-tambah-left dialog-tambah-nama"></span><br />
+                <span class="dialog-tambah-left">Stok Saat Ini : </span>
+                <span class="dialog-tambah-right dialog-tambah-stok"></span><br />
+                <span class="dialog-tambah-left">Tambah : </span>
+                <span class="dialog-tambah-right dialog-tambah-right-input">
+                    <input type="text" value="0" data-type="number" maxlength="5" /
+                ><span class="input-satuan">g</span></span>
+            </div>
+            <div class="dialog-button-container">
+                <div class="button btn-cancel">BATAL</div>
+                <div class="button btn-confirm-tambah">TAMBAH</div>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
 var get_all_bahan_url = "<?php echo base_url("admin/get_all_bahan"); ?>";
 var insert_bahan_url = "<?php echo base_url("admin/insert_bahan") ?>";
