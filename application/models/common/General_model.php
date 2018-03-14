@@ -16,7 +16,7 @@ class General_model extends CI_Model
         ");
         $result = $query->result();
         if (sizeof($result) > 0) {
-            if ($result[0]->role_id == 1) {
+            if ($result[0]->role_id == "1") {
                 return true;
             }
         }

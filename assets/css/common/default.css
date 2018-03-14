@@ -25,6 +25,47 @@ body {
   overflow-x: hidden;
 }
 
+.menu-icon {
+  width: 4vw;
+  height: 4vw;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 1.5vw;
+  right: 2vw;
+  z-index: 100;
+  cursor: pointer;
+}
+
+.menu-container {
+  position: absolute;
+  top: 6vw;
+  right: 2vw;
+  background-color: white;
+  border: 1px solid black;
+  padding: 1vw 0;
+  width: 10vw;
+  z-index: 100;
+  display: none;
+}
+
+.menu-container.show {
+  display: block;
+}
+
+.menu {
+  padding: 1vw 1vw;
+  font-size: 1.2vw;
+  text-decoration: none;
+  color: black;
+  display: block;
+}
+
+.menu:hover {
+  background-color: #EEEEEE;
+  cursor: pointer;
+}
+
 table {
   border-collapse: collapse;
   border-spacing: 0;
@@ -226,6 +267,7 @@ table {
 
 .dialog-button-container .button {
   display: inline-block;
+  font-size: 1.2vw;
 }
 
 .dialog-button-container .button:not(:nth-last-child(1)) {

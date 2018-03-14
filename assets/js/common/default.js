@@ -7,11 +7,23 @@ $(function() {
         $(this).addClass("active-element");
     });
 
+    $(".menu-icon").on("click", function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        if ($(".menu-container").hasClass("show")) {
+            hide_menu();
+        } else {
+            show_menu();
+        }
+    });
+
+    $(".menu").on("click", function(e) {
+        e.stopPropagation();
+        hide_menu();
+    });
+
     $(window).on("keydown", function(e) {
         switch (e.which) {
-            case 9: // TAB
-                nextTabIndex(e);
-                break;
             case 40: // DOWN
                 if ($("body.option-container-show").length > 0) {
                     nextOptionActive();
@@ -42,6 +54,7 @@ $(function() {
         }
     });
 
+    $(window).on("keydown", window_keydown_tab);
     $(window).on("keydown", window_keydown_left);
     $(window).on("keydown", window_keydown_right);
 
@@ -85,7 +98,25 @@ $(function() {
         var dialogElement = $(this).closest(".dialog");
         closeDialog(dialogElement);
     });
+
+    $(document).on("click", function(e) {
+        hide_menu();
+    });
 });
+
+function show_menu() {
+    $(".menu-container").addClass("show");
+}
+
+function hide_menu() {
+    $(".menu-container").removeClass("show");
+}
+
+function window_keydown_tab(e) {
+    if (e.which == 9) {
+        nextTabIndex(e);
+    }
+}
 
 function window_keydown_right(e) {
     if (e.which == 39) {

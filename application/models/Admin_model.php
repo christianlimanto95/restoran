@@ -29,11 +29,11 @@ class Admin_model extends CI_Model
         return $this->db->affected_rows();
     }
 
-    function delete_bahan($bahan_id) {
+    function delete_bahan($data) {
         $query = $this->db->query("
             SELECT bahan_id
             FROM menu_bahan
-            WHERE bahan_id = " . $bahan_id . "
+            WHERE bahan_id = " . $data["bahan_id"] . "
             LIMIT 1
         ");
         $bahan_from_menu = $query->result();
@@ -43,11 +43,11 @@ class Admin_model extends CI_Model
                 "error_message" => "exist_in_menu_bahan"
             );
         } else {
-            $this->db->where("bahan_id", $bahan_id);
-            $updateData = array(
-                "status" => 0
-            );
-            $this->db->update("bahan", $updateData);
+            $this->db->where("bahan_id", $data["bahan_id"]);
+            $this->db->set("status", 0, true);
+            $this->db->set("modified_date", "NOW()", false);
+            $this->db->set("modified_by", $data["user_id"], true);
+            $this->db->update("bahan");
             if ($this->db->affected_rows() > 0) {
                 return array(
                     "status" => "success"

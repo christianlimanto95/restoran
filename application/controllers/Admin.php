@@ -50,6 +50,7 @@ class Admin extends General_controller {
 		parent::show_404_if_not_ajax();
 		$bahan_nama = $this->input->post("nama");
 		$bahan_stok = $this->input->post("stok");
+		$user_id = parent::is_logged_in();
 
 		if ($bahan_nama && $bahan_stok) {
 			$bahan_satuan = "g";
@@ -60,7 +61,7 @@ class Admin extends General_controller {
 				"bahan_stok" => $bahan_stok,
 				"bahan_satuan" => $bahan_satuan,
 				"bahan_keterangan" => $bahan_keterangan,
-				"user_id" => 0
+				"user_id" => $user_id
 			);
 			$affected_rows = $this->Admin_model->insert_bahan($data);
 			if ($affected_rows > 0) {
@@ -82,7 +83,12 @@ class Admin extends General_controller {
 	function delete_bahan() {
 		parent::show_404_if_not_ajax();
 		$bahan_id = intval($this->input->post("bahan_id"));
-		$result = $this->Admin_model->delete_bahan($bahan_id);
+		$user_id = parent::is_logged_in();
+		$data = array(
+			"bahan_id" => $bahan_id,
+			"user_id" => $user_id
+		);
+		$result = $this->Admin_model->delete_bahan($data);
 		echo json_encode($result);
 	}
 }

@@ -120,6 +120,11 @@
     width: 10vw;
 }
 
+.table tbody td:nth-child(3) {
+    text-align: right;
+    padding-right: 2vw;
+}
+
 .table thead td:nth-child(4) {
     padding-left: 1vw;
 }

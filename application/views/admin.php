@@ -1,3 +1,8 @@
+<div class="menu-icon" style="background-image: url(<?php echo base_url("assets/images/setting.png"); ?>);"></div>
+<div class="menu-container">
+    <a href="<?php echo base_url("home/settings"); ?>" class="menu">Settings</a>
+    <a href="<?php echo base_url("home/logout"); ?>" class="menu">Logout</a>
+</div>
 <div class="center">
     <div class="title">Dapur Babi</div>
     <div class="main-menu-container">
