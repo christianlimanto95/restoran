@@ -25,6 +25,17 @@ body {
   overflow-x: hidden;
 }
 
+.admin-back-button {
+  width: 4vw;
+  height: 4vw;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 1.5vw;
+  left: 2vw;
+  cursor: pointer;
+}
+
 .menu-icon {
   width: 4vw;
   height: 4vw;

@@ -1,4 +1,9 @@
 <div class="title">Dapur Babi</div>
+<?php
+    if ($is_admin) {
+        echo "<a href='" . base_url("admin") . "' class='admin-back-button' style='background-image: url(" . base_url("assets/images/back.png") . ");'></a>";
+    }
+?>
 <div class="menu-icon" style="background-image: url(<?php echo base_url("assets/images/setting.png"); ?>);"></div>
 <div class="menu-container">
     <a href="<?php echo base_url("home/settings"); ?>" class="menu">Settings</a>

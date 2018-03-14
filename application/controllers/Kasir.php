@@ -13,8 +13,10 @@ class Kasir extends General_controller {
 	
 	public function index()
 	{
+		$is_admin = parent::is_admin();
 		$data = array(
-			"title" => "Kasir"
+			"title" => "Kasir",
+			"is_admin" => $is_admin
 		);
 		
 		parent::view("kasir", $data);
