@@ -50,6 +50,10 @@
     font-size: 1.2vw;
 }
 
+.input-nama {
+    text-transform: uppercase;
+}
+
 .input-jumlah-stok {
     width: 7vw;
     text-align: center;
@@ -134,4 +138,8 @@
 
 .btn-hapus:hover {
     background-color: #EEEEEE;
+}
+
+.btn-confirm-delete:hover {
+    background-color: #FFCDD2;
 }

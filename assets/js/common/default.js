@@ -47,6 +47,7 @@ $(function() {
                 break;
             case 27:
                 hideOptionContainer();
+                closeDialog();
                 break;
         }
     });
@@ -86,7 +87,34 @@ $(function() {
     $(document).on("input", "input[data-thousand-separator='true']", function() {
         this.value = addThousandSeparator(this.value);
     });
+
+    $(document).on("click", ".dialog-close-icon, .btn-cancel", function() {
+        var dialogElement = $(this).closest(".dialog");
+        closeDialog(dialogElement);
+    });
 });
+
+function showDialog(dialogElement) {
+    dialogElement.addClass("show");
+}
+
+function closeDialog() {
+    $(".dialog").removeClass("show");
+}
+
+function removeAllErrors() {
+    $(".error").html("");
+}
+
+function showNotification(text) {
+    var notification = $(".notification");
+    notification.html(text);
+    notification.off("webkitAnimationEnd oanimationend msAnimationEnd animationend");
+    notification.one("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(e) {
+        notification.removeClass("showing");
+    });
+    notification.removeClass("showing").addClass("showing");
+}
 
 function showOptionContainer(element) {
     element.find(".option-container").addClass("show");

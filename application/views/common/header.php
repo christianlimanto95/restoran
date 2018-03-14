@@ -20,4 +20,5 @@
 <body>
 <div class="header">
 </div>
+<div class="notification"></div>
 <div class="container">

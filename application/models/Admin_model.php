@@ -11,6 +11,7 @@ class Admin_model extends CI_Model
         $query = $this->db->query("
             SELECT *
             FROM bahan
+            WHERE status = 1
         ");
         return $query->result();
     }
@@ -26,5 +27,37 @@ class Admin_model extends CI_Model
         );
         $this->db->insert("bahan", $insertData);
         return $this->db->affected_rows();
+    }
+
+    function delete_bahan($bahan_id) {
+        $query = $this->db->query("
+            SELECT bahan_id
+            FROM menu_bahan
+            WHERE bahan_id = " . $bahan_id . "
+            LIMIT 1
+        ");
+        $bahan_from_menu = $query->result();
+        if (sizeof($bahan_from_menu) > 0) {
+            return array(
+                "status" => "error",
+                "error_message" => "exist_in_menu_bahan"
+            );
+        } else {
+            $this->db->where("bahan_id", $bahan_id);
+            $updateData = array(
+                "status" => 0
+            );
+            $this->db->update("bahan", $updateData);
+            if ($this->db->affected_rows() > 0) {
+                return array(
+                    "status" => "success"
+                );
+            } else {
+                return array(
+                    "status" => "error",
+                    "error_message" => ""
+                );
+            }
+        }
     }
 }

@@ -42,20 +42,38 @@ class Admin extends General_controller {
 	function insert_bahan() {
 		$bahan_nama = $this->input->post("nama");
 		$bahan_stok = $this->input->post("stok");
-		$bahan_satuan = "g";
-		$bahan_keterangan = "";
 
-		$data = array(
-			"bahan_nama" => $bahan_nama,
-			"bahan_stok" => $bahan_stok,
-			"bahan_satuan" => $bahan_satuan,
-			"bahan_keterangan" => $bahan_keterangan
-		);
-		$affected_rows = $this->Admin_model->insert_bahan($data);
-		if ($affected_rows > 0) {
-			
+		if ($bahan_nama && $bahan_stok) {
+			$bahan_satuan = "g";
+			$bahan_keterangan = "";
+
+			$data = array(
+				"bahan_nama" => $bahan_nama,
+				"bahan_stok" => $bahan_stok,
+				"bahan_satuan" => $bahan_satuan,
+				"bahan_keterangan" => $bahan_keterangan,
+				"user_id" => 0
+			);
+			$affected_rows = $this->Admin_model->insert_bahan($data);
+			if ($affected_rows > 0) {
+				echo json_encode(array(
+					"status" => "success"
+				));
+			} else {
+				echo json_encode(array(
+					"status" => "error"
+				));
+			}
 		} else {
-
+			echo json_encode(array(
+				"status" => "error"
+			));
 		}
+	}
+
+	function delete_bahan() {
+		$bahan_id = intval($this->input->post("bahan_id"));
+		$result = $this->Admin_model->delete_bahan($bahan_id);
+		echo json_encode($result);
 	}
 }
