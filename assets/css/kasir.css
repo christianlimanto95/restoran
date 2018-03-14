@@ -134,7 +134,7 @@
     color: rgb(128, 0, 38);
 }
 
-.btn-cancel {
+.btn-cancel-menu {
     background-color: transparent;
     padding: 0.3vw;
     text-align: center;
@@ -142,7 +142,7 @@
     transition: all 0.2s;
 }
 
-.btn-cancel:hover {
+.btn-cancel-menu:hover {
     background-color: #FFCDD2;
 }
 
@@ -161,4 +161,42 @@
 
 .bayar:hover {
     background-color: #C8E6C9;
+}
+
+.dialog-bayar .dialog-box, .dialog-confirm-bayar .dialog-box {
+    height: 20vw;
+}
+
+.dialog-text {
+    line-height: 4vw;
+}
+
+.dialog-confirm-bayar .dialog-text {
+    line-height: 3vw;
+}
+
+.dialog-bayar-left, .dialog-confirm-bayar-left {
+    display: inline-block;
+    width: 4.5vw;
+}
+
+.dialog-bayar-right, .dialog-confirm-bayar-right {
+    display: inline-block;
+    width: 10vw;
+    text-align: right;
+}
+
+.dialog-bayar-total {
+    padding-right: 0.5vw;
+}
+
+input.dialog-bayar-right {
+    padding: 0.5vw;
+    font-size: 1.5vw;
+    font-weight: bold;
+    border: 1px solid black;
+}
+
+.btn-bayar:hover {
+    background-color: #E0E0E0;
 }

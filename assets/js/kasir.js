@@ -20,6 +20,14 @@ $(function() {
         }
     });
 
+    $(window).on("keyup", function(e) {
+        if ($(document.activeElement).prop("tagName").toLowerCase() != "input") {
+            if (e.which == 66) {
+                showDialogBayar();
+            }
+        }
+    });
+
     $(document).on("click", ".option", function(e) {
         nextTabIndex(e);
     });
@@ -41,9 +49,37 @@ $(function() {
         }
     });
 
-    $(document).on("click", ".btn-cancel", function() {
+    $(document).on("click", ".btn-cancel-menu", function() {
         var tr = $(this).closest("tr");
         deleteItem(tr);
+    });
+
+    $(".bayar").on("click", function() {
+        showDialogBayar();
+    });
+
+    $(".dialog-bayar").on("dialogShown", function() {
+        $(".input-bayar").select();
+    });
+
+    $(".input-bayar").on("input", function() {
+        var value = parseInt(removeThousandSeparator($(this).val()));
+        if (isNaN(value)) {
+            value = 0;
+        }
+        value = addThousandSeparator(value + "");
+        $(this).val(value);
+    });
+
+    $(".input-bayar").on("keydown", function(e) {
+        if (e.which == 13) {
+            e.stopPropagation();
+            showConfirmDialogBayar();
+        }
+    });
+
+    $(".btn-bayar").on("click", function() {
+        showConfirmDialogBayar();
     });
 
     get_all_menu(true);
@@ -53,6 +89,35 @@ function initialize() {
     just_get_all_menu(true);
     selectOption($(".option").first());
     $(".qty").val(1);
+}
+
+function showDialogBayar() {
+    var subtotal = parseInt($(".subtotal").attr("data-value"));
+    if (subtotal == 0) {
+        showNotification("Pesanan Belum Diinputkan");
+    } else {
+        var dialogBayar = $(".dialog-bayar");
+        dialogBayar.attr("data-total", subtotal);
+        $(".dialog-bayar-total").html(addThousandSeparator(subtotal + ""));
+        $(".input-bayar").val(0);
+        showDialog(dialogBayar);
+    }
+}
+
+function showConfirmDialogBayar() {
+    var total = parseInt($(".dialog-bayar").attr("data-total"));
+    var bayar = parseInt(removeThousandSeparator($(".input-bayar").val()));
+    if (bayar < total) {
+        showNotification("Uang Tidak Cukup");
+        $(".input-bayar").select();
+    } else {
+        var dialogConfirmBayar = $(".dialog-confirm-bayar");
+        dialogConfirmBayar.attr("data-total", total);
+        dialogConfirmBayar.attr("data-bayar", bayar);
+        $(".dialog-confirm-bayar-total").html(addThousandSeparator(total + ""));
+        $(".dialog-confirm-bayar-bayar").html(addThousandSeparator(bayar + ""));
+        showDialog(dialogConfirmBayar);
+    }
 }
 
 function get_all_menu(first) {
@@ -139,7 +204,7 @@ function add_to_table() {
     element += "<td>" + addThousandSeparator(harga + "") + "</td>";
     element += "<td>" + qty + "</td>";
     element += "<td>" + addThousandSeparator(subtotal + "") + "</td>";
-    element += "<td><div class='btn-cancel'>CANCEL</div></td>";
+    element += "<td><div class='btn-cancel-menu'>CANCEL</div></td>";
     element += "</tr>";
     $(".detail-table tbody").append(element);
 

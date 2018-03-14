@@ -136,6 +136,7 @@ function window_keydown_left(e) {
 
 function showDialog(dialogElement) {
     dialogElement.addClass("show");
+    dialogElement.trigger("dialogShown");
 }
 
 function closeDialog() {
@@ -280,6 +281,10 @@ function addThousandSeparator(nStr) {
             x1 = x1.replace(rgx, '$1' + '.' + '$2');
     }
     return x1 + x2;
+}
+
+function removeThousandSeparator(str) {
+    return str.replace(/\./g,'');
 }
 
 function pad(pad, str, padLeft) {

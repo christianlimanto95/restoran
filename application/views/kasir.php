@@ -39,6 +39,47 @@
     </div>
     <div class="bayar">BAYAR</div>
 </div>
+<div class="dialog dialog-bayar">
+    <div class="dialog-background">
+        <div class="dialog-box">
+            <div class="dialog-close-icon" style="background-image: url(<?php echo base_url("assets/images/close_icon.png"); ?>);"></div>
+            <div class="dialog-text">
+                <span class="dialog-bayar-left">Total</span>
+                <span class="dialog-bayar-titik-dua">: Rp</span>
+                <span class="dialog-bayar-right dialog-bayar-total"></span>
+                <br />
+                <span class="dialog-bayar-left">Bayar</span>
+                <span class="dialog-bayar-titik-dua">: Rp</span>
+                <input class="dialog-bayar-right input-bayar" />
+            </div>
+            <div class="dialog-button-container">
+                <div class="button btn-bayar">BAYAR</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="dialog dialog-confirm-bayar">
+    <div class="dialog-background">
+        <div class="dialog-box">
+            <div class="dialog-close-icon" style="background-image: url(<?php echo base_url("assets/images/close_icon.png"); ?>);"></div>
+            <div class="dialog-text">
+                <span class="dialog-confirm-bayar-left">Total</span>
+                <span class="dialog-confirm-bayar-titik-dua">: Rp</span>
+                <span class="dialog-confirm-bayar-right dialog-confirm-bayar-total"></span>
+                <br />
+                <span class="dialog-confirm-bayar-left">Bayar</span>
+                <span class="dialog-confirm-bayar-titik-dua">: Rp</span>
+                <span class="dialog-confirm-bayar-right dialog-confirm-bayar-bayar"></span>
+                <br />
+                Bayar?
+            </div>
+            <div class="dialog-button-container">
+                <div class="button btn-cancel">BATAL</div>
+                <div class="button btn-confirm-bayar">BAYAR</div>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
 var get_all_menu_url = "<?php echo base_url("kasir/get_all_menu"); ?>";
 </script>
