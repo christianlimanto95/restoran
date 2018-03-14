@@ -127,6 +127,7 @@ table {
   padding: 1.2vw 1.5vw 0;
   opacity: 0;
   display: none;
+  z-index: 501;
 }
 
 @-webkit-keyframes notification-showing-anim {

@@ -57,7 +57,7 @@
                 <span class="dialog-tambah-right dialog-tambah-stok"></span><br />
                 <span class="dialog-tambah-left">Tambah : </span>
                 <span class="dialog-tambah-right dialog-tambah-right-input">
-                    <input type="text" value="0" data-type="number" maxlength="5" /
+                    <input type="text" class="tambah-qty" value="0" data-type="number" maxlength="5" /
                 ><span class="input-satuan">g</span></span>
             </div>
             <div class="dialog-button-container">
@@ -67,8 +67,31 @@
         </div>
     </div>
 </div>
+<div class="dialog dialog-kurang">
+    <div class="dialog-background">
+        <div class="dialog-box">
+            <div class="dialog-close-icon" style="background-image: url(<?php echo base_url("assets/images/close_icon.png"); ?>);"></div>
+            <div class="dialog-title">KURANGI STOK</div>
+            <div class="dialog-text">
+                <span class="dialog-tambah-left dialog-tambah-nama"></span><br />
+                <span class="dialog-tambah-left">Stok Saat Ini : </span>
+                <span class="dialog-tambah-right dialog-tambah-stok"></span><br />
+                <span class="dialog-tambah-left">Dikurangi : </span>
+                <span class="dialog-tambah-right dialog-tambah-right-input">
+                    <input type="text" class="tambah-qty" value="0" data-type="number" maxlength="5" /
+                ><span class="input-satuan">g</span></span>
+            </div>
+            <div class="dialog-button-container">
+                <div class="button btn-cancel">BATAL</div>
+                <div class="button btn-confirm-kurang">KURANGI</div>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
 var get_all_bahan_url = "<?php echo base_url("admin/get_all_bahan"); ?>";
 var insert_bahan_url = "<?php echo base_url("admin/insert_bahan") ?>";
+var tambah_stok_url = "<?php echo base_url("admin/tambah_stok") ?>";
+var kurang_stok_url = "<?php echo base_url("admin/kurang_stok") ?>";
 var delete_bahan_url = "<?php echo base_url("admin/delete_bahan") ?>";
 </script>

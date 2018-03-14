@@ -16,10 +16,41 @@ $(function() {
         var bahan_satuan = tr.attr("data-satuan");
 
         $(".dialog-tambah").attr("data-id", bahan_id);
-        $(".dialog-tambah-nama").html(bahan_nama);
-        $(".dialog-tambah-stok").html(bahan_stok + " " + bahan_satuan);
+        $(".dialog-tambah .dialog-tambah-nama").html(bahan_nama);
+        $(".dialog-tambah .dialog-tambah-stok").html(bahan_stok + " " + bahan_satuan);
         $(".dialog-tambah .input-satuan").html(bahan_satuan);
+        $(".dialog-tambah .tambah-qty").val("0");
         showDialog($(".dialog-tambah"));
+    });
+
+    $(".btn-confirm-tambah").on("click", function() {
+        tambah_stok();
+    });
+
+    $(document).on("click", ".btn-kurang", function() {
+        var tr = $(this).closest("tr");
+        var bahan_id = tr.attr("data-id");
+        var bahan_nama = tr.attr("data-nama");
+        var bahan_stok = tr.attr("data-stok");
+        var bahan_satuan = tr.attr("data-satuan");
+
+        $(".dialog-kurang").attr("data-id", bahan_id);
+        $(".dialog-kurang .dialog-tambah-nama").html(bahan_nama);
+        $(".dialog-kurang .dialog-tambah-stok").html(bahan_stok + " " + bahan_satuan);
+        $(".dialog-kurang .input-satuan").html(bahan_satuan);
+        $(".dialog-kurang .tambah-qty").val("0");
+        showDialog($(".dialog-kurang"));
+    });
+
+    $(".btn-confirm-kurang").on("click", function() {
+        kurang_stok();
+    });
+
+    $(".tambah-qty").on("blur", function() {
+        var value = parseInt($(this).val());
+        if (isNaN(value) || value == 0) {
+            $(this).val(0);
+        }
     });
 
     $(document).on("click", ".btn-hapus", function() {
@@ -75,6 +106,44 @@ function insert_bahan() {
                 $(".input-jumlah-stok").val(1);
                 get_all_bahan();
                 showNotification("Stok Berhasil Dimasukkan");
+            }
+        });
+    }
+}
+
+function tambah_stok() {
+    var bahan_id = $(".dialog-tambah").attr("data-id");
+    var bahan_qty = parseInt($(".dialog-tambah .tambah-qty").val());
+    if (bahan_qty == 0) {
+        showNotification("Jumlah tidak boleh 0");
+    } else {
+        ajaxCall(tambah_stok_url, {bahan_id: bahan_id, bahan_qty: bahan_qty}, function(json) {
+            closeDialog();
+            var result = jQuery.parseJSON(json);
+            if (result.status == "success") {
+                get_all_bahan();
+                showNotification("Berhasil Tambah Stok");
+            } else {
+                showNotification("Gagal Tambah Stok");
+            }
+        });
+    }
+}
+
+function kurang_stok() {
+    var bahan_id = $(".dialog-kurang").attr("data-id");
+    var bahan_qty = parseInt($(".dialog-kurang .tambah-qty").val());
+    if (bahan_qty == 0) {
+        showNotification("Jumlah tidak boleh 0");
+    } else {
+        ajaxCall(kurang_stok_url, {bahan_id: bahan_id, bahan_qty: bahan_qty}, function(json) {
+            closeDialog();
+            var result = jQuery.parseJSON(json);
+            if (result.status == "success") {
+                get_all_bahan();
+                showNotification("Berhasil Mengurangi Stok");
+            } else {
+                showNotification("Gagal Mengurangi Stok");
             }
         });
     }

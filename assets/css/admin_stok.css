@@ -149,11 +149,11 @@
     background-color: #FFCDD2;
 }
 
-.dialog-tambah .dialog-box {
+.dialog-tambah .dialog-box, .dialog-kurang .dialog-box {
     height: 22vw;
 }
 
-.dialog-tambah .dialog-text {
+.dialog-tambah .dialog-text, .dialog-kurang .dialog-text {
     line-height: 2.8vw;
 }
 
@@ -181,7 +181,7 @@
     padding-right: 0.2vw;
 }
 
-.dialog-tambah input {
+.dialog-tambah input, .dialog-kurang input {
     padding: 0.5vw;
     border: 0;
     font-size: 1.5vw;
@@ -191,10 +191,14 @@
     text-align: right;
 }
 
-.dialog-tambah input::-webkit-outer-spin-button, .dialog-tambah input::-webkit-inner-spin-button {
+.dialog-tambah input::-webkit-outer-spin-button, .dialog-tambah input::-webkit-inner-spin-button, .dialog-kurang input::-webkit-outer-spin-button, .dialog-kurang input::-webkit-inner-spin-button {
     -webkit-appearance: none;
 }
 
 .btn-confirm-tambah:hover {
     background-color: #C8E6C9;
+}
+
+.btn-confirm-kurang:hover {
+    background-color: #FFCDD2;
 }

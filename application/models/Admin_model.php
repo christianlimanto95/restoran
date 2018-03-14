@@ -29,6 +29,28 @@ class Admin_model extends CI_Model
         return $this->db->affected_rows();
     }
 
+    function tambah_stok($data) {
+        $this->db->trans_start();
+
+        $insertData = array(
+            "bahan_id" => $data["bahan_id"],
+            "transaksi_bahan_qty" => $data["transaksi_bahan_qty"],
+            "transaksi_bahan_keterangan" => $data["transaksi_bahan_keterangan"],
+            "created_by" => $data["user_id"],
+            "modified_by" => $data["user_id"]
+        );
+        $this->db->insert("transaksi_bahan", $insertData);
+
+        $this->db->set("bahan_stok", "bahan_stok + " . $data["transaksi_bahan_qty"], false);
+        $this->db->set("modified_by", $data["user_id"]);
+        $this->db->where("bahan_id", $data["bahan_id"]);
+        $this->db->update("bahan");
+
+        $this->db->trans_complete();
+
+        return $this->db->affected_rows();
+    }
+
     function delete_bahan($data) {
         $query = $this->db->query("
             SELECT bahan_id

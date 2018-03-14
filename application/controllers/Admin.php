@@ -80,6 +80,58 @@ class Admin extends General_controller {
 		}
 	}
 
+	function tambah_stok() {
+		parent::show_404_if_not_ajax();
+		$bahan_id = intval($this->input->post("bahan_id"));
+		$bahan_qty = $this->input->post("bahan_qty");
+		$keterangan = "";
+		$user_id = parent::is_logged_in();
+
+		if ($bahan_id && $bahan_qty && $user_id) {
+			$data = array(
+				"bahan_id" => $bahan_id,
+				"transaksi_bahan_qty" => $bahan_qty,
+				"transaksi_bahan_keterangan" => $keterangan,
+				"user_id" => $user_id,
+			);
+
+			$affected_rows = $this->Admin_model->tambah_stok($data);
+			echo json_encode(array(
+				"status" => "success"
+			));
+		} else {
+			echo json_encode(array(
+				"status" => "error"
+			));
+		}
+	}
+
+	function kurang_stok() {
+		parent::show_404_if_not_ajax();
+		$bahan_id = intval($this->input->post("bahan_id"));
+		$bahan_qty = $this->input->post("bahan_qty");
+		$keterangan = "";
+		$user_id = parent::is_logged_in();
+
+		if ($bahan_id && $bahan_qty && $user_id) {
+			$data = array(
+				"bahan_id" => $bahan_id,
+				"transaksi_bahan_qty" => -intval($bahan_qty),
+				"transaksi_bahan_keterangan" => $keterangan,
+				"user_id" => $user_id,
+			);
+
+			$affected_rows = $this->Admin_model->tambah_stok($data);
+			echo json_encode(array(
+				"status" => "success"
+			));
+		} else {
+			echo json_encode(array(
+				"status" => "error"
+			));
+		}
+	}
+
 	function delete_bahan() {
 		parent::show_404_if_not_ajax();
 		$bahan_id = intval($this->input->post("bahan_id"));
