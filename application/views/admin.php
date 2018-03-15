@@ -7,7 +7,7 @@
     <div class="title">Dapur Babi</div>
     <div class="main-menu-container">
         <a href="<?php echo base_url("kasir"); ?>" class="main-menu main-menu-kasir" tabindex="1" autofocus>
-            <div class="main-menu-image" style="background-image: url(<?php echo base_url("assets/images/menu.png"); ?>);"></div>
+            <div class="main-menu-image" style="background-image: url(<?php echo base_url("assets/images/cashier.png"); ?>);"></div>
             <div class="main-menu-text">KASIR</div>
         </a>
         <a href="<?php echo base_url("admin/menu"); ?>" class="main-menu main-menu-menu" tabindex="2">

@@ -143,4 +143,12 @@ class Admin extends General_controller {
 		$result = $this->Admin_model->delete_bahan($data);
 		echo json_encode($result);
 	}
+
+	function menu() {
+		$data = array(
+			"title" => "Master Menu"
+		);
+		
+		parent::view("admin_menu", $data);
+	}
 }

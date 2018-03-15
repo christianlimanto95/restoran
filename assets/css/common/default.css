@@ -114,9 +114,7 @@ table {
 
 .section {
   width: 100vw;
-  background-color: #F1F1F1;
   overflow: hidden;
-  color: #444;
 }
 
 .button {

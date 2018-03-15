@@ -1,0 +1,100 @@
+.title {
+    font-family: pinarak;
+    text-align: center;
+    font-size: 3.5vw;
+    margin-top: 1vw;
+}
+
+.section {
+    height: auto;
+    text-align: center;
+    margin-top: 4vw;
+}
+
+.section-left, .section-right {
+    display: inline-block;
+    vertical-align: top;
+    text-align: left;
+}
+
+.section-title {
+    font-size: 2vw;
+    font-weight: bold;
+    margin-bottom: 2vw;
+}
+
+.section-left {
+    width: 25vw;
+    padding-right: 2vw;
+}
+
+.form-item {
+    margin-bottom: 1vw;
+}
+
+.form-label {
+    font-weight: bold;
+    font-size: 1.3vw;
+    margin-bottom: 0.5vw;
+}
+
+.form-input {
+    padding: 0.5vw;
+    border: 1px solid black;
+    font-size: 1.2vw;
+}
+
+.input-nama-menu {
+    width: 100%;
+}
+
+.section-right {
+    width: 55vw;
+    height: 50vw;
+    background-color: cyan;
+}
+
+.section-right .section-title {
+    padding-left: 1vw;
+}
+
+.table-menu td {
+    padding: 0.3vw;
+    font-size: 1.3vw;
+}
+
+.table-menu thead td {
+    font-weight: bold;
+}
+
+.table-menu thead td {
+    padding-bottom: 1vw;
+    border-bottom: 3px solid black;
+}
+
+.table-menu td:nth-child(1) {
+    width: 6vw;
+    padding-left: 1vw;
+}
+
+.table-menu td:nth-child(2) {
+    width: 20vw;
+}
+
+.table-menu td:nth-child(3) {
+    width: 9vw;
+}
+
+.table-menu td:nth-child(4) {
+    width: 10vw;
+}
+
+.table-menu .btn-ubah, .table-menu .btn-hapus {
+    padding: 0.3vw;
+    font-size: 1.2vw;
+    display: inline-block;
+}
+
+.table-menu .btn-ubah:hover {
+    background-color: #E0E0E0;
+}
