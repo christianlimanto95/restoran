@@ -220,6 +220,34 @@ class Admin extends General_controller {
 		}
 	}
 
+	function update_menu() {
+		parent::show_404_if_not_ajax();
+
+		$menu_id = $this->input->post("menu_id");
+		$menu_jenis = $this->input->post("menu_jenis");
+		$menu_nama = strtoupper($this->input->post("menu_nama"));
+		$menu_harga = $this->input->post("menu_harga");
+		$user_id = parent::is_logged_in();
+
+		$data = array(
+			"menu_id" => $menu_id,
+			"menu_jenis" => $menu_jenis,
+			"menu_nama" => $menu_nama,
+			"menu_harga" => $menu_harga,
+			"user_id" => $user_id
+		);
+		$affected_rows = $this->Admin_model->update_menu($data);
+		if ($affected_rows > 0) {
+			echo json_encode(array(
+				"status" => "success"
+			));
+		} else {
+			echo json_encode(array(
+				"status" => "error"
+			));
+		}
+	}
+
 	function delete_menu() {
 		parent::show_404_if_not_ajax();
 		$menu_id = $this->input->post("menu_id");

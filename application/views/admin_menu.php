@@ -61,7 +61,7 @@
 <div class="dialog dialog-tambah-bahan">
     <div class="dialog-background">
         <div class="dialog-box">
-            <div class="dialog-title">Bahan Makanan</div>
+            <div class="dialog-title">BAHAN MAKANAN</div>
             <div class="dialog-close-icon" style="background-image: url(<?php echo base_url("assets/images/close_icon.png"); ?>);"></div>
             <div class="dialog-text">
                 <table class="table-dialog-tambah-bahan">
@@ -101,9 +101,53 @@
         </div>
     </div>
 </div>
+<div class="dialog dialog-edit-menu">
+    <div class="dialog-background">
+        <div class="dialog-box">
+            <div class="dialog-title">UBAH MENU</div>
+            <div class="dialog-close-icon" style="background-image: url(<?php echo base_url("assets/images/close_icon.png"); ?>);"></div>
+            <div class="dialog-text">
+                <div class="button btn-edit-bahan">UBAH BAHAN MAKANAN</div>
+                <table class="table table-edit-menu">
+                    <tbody>
+                        <tr>
+                            <td class="table-label">NAMA</td>
+                            <td class="table-value">
+                                <input type="text" class="table-input menu-edit-nama" maxlength="30" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="table-label">JENIS</td>
+                            <td class="table-value">
+                                <div class="select select-edit-jenis" data-value="1">
+                                    <div class="input-edit-jenis-menu select-text" >MAKANAN</div>
+                                    <div class="option-container option-container-edit-jenis">
+                                        <div class="option tabindex-exception edit-jenis-option" data-value="1">MAKANAN</div>
+                                        <div class="option tabindex-exception edit-jenis-option" data-value="2">MINUMAN</div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="table-label">HARGA</td>
+                            <td class="table-value">
+                                <input type="text" class="table-input menu-edit-harga" data-type="number" data-thousand-separator="true" maxlength="8" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="dialog-button-container">
+                <div class="button btn-cancel">BATAL</div>
+                <div class="button btn-confirm-edit-menu">UBAH</div>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
 var get_all_menu_url = "<?php echo base_url("admin/get_all_menu"); ?>";
 var get_all_bahan_url = "<?php echo base_url("admin/get_all_bahan_by_keyword"); ?>";
 var insert_menu_url = "<?php echo base_url("admin/insert_menu"); ?>";
+var update_menu_url = "<?php echo base_url("admin/update_menu"); ?>";
 var delete_menu_url = "<?php echo base_url("admin/delete_menu"); ?>";
 </script>

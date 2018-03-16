@@ -230,3 +230,38 @@
 .btn-confirm-hapus:hover {
     background-color: #FFCDD2;
 }
+
+.dialog-edit-menu .dialog-box {
+    height: 30vw;
+}
+
+.table-edit-menu td {
+    padding: 0.5vw 0.3vw;
+    font-size: 1.2vw;
+}
+
+.table-input, .select-edit-jenis {
+    padding: 0.5vw;
+    font-size: 1.2vw;
+    border: 1px solid black;
+}
+
+.option-container-edit-jenis {
+    top: 3vw;
+}
+
+.table-edit-menu .menu-edit-nama {
+    width: 20vw;
+    text-transform: uppercase;
+}
+
+.table-edit-menu .menu-edit-harga {
+    width: 9vw;
+}
+
+.btn-edit-bahan {
+    font-size: 1vw;
+    width: 14vw;
+    margin-bottom: 2vw;
+    text-align: center;
+}

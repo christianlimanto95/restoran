@@ -53,6 +53,17 @@ class Admin_model extends CI_Model
         $this->db->trans_complete();
     }
 
+    function update_menu($data) {
+        $this->db->where("menu_id", $data["menu_id"]);
+        $this->db->set("menu_nama", $data["menu_nama"], true);
+        $this->db->set("menu_jenis", $data["menu_jenis"], true);
+        $this->db->set("menu_harga", $data["menu_harga"], true);
+        $this->db->set("modified_by", $data["user_id"], false);
+        $this->db->set("modified_date", "NOW()", false);
+        $this->db->update("menu");
+        return $this->db->affected_rows();
+    }
+
     function delete_menu($data) {
         $this->db->where("menu_id", $data["menu_id"]);
         $this->db->set("status", 0, true);

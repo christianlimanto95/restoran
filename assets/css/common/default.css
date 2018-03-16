@@ -125,6 +125,10 @@ table {
   transition: all 0.2s;
 }
 
+.button:hover {
+  background-color: #E0E0E0;
+}
+
 .notification {
   position: fixed;
   bottom: 3vw;

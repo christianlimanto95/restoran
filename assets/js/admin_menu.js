@@ -58,6 +58,8 @@ $(function() {
             ajaxCall(insert_menu_url, {menu_jenis: menu_jenis, menu_nama: menu_nama, menu_harga: menu_harga, bahan: bahan}, function(json) {
                 var result = jQuery.parseJSON(json);
                 if (result.status == "success") {
+                    $(".input-nama-menu").val("");
+                    $(".input-harga-menu").val("0");
                     showNotification("Berhasil Tambah Menu");
                     get_all_menu();
                 }
@@ -71,6 +73,47 @@ $(function() {
         $(".input-nama-bahan").val("");
         get_all_bahan(true);
         $(".input-qty-bahan").val(0);
+    });
+
+    $(document).on("click", ".btn-ubah", function() {
+        var tr = $(this).closest("tr");
+        var id = tr.attr("data-id");
+        var nama = tr.attr("data-nama");
+        var jenis = tr.attr("data-jenis");
+        var harga = tr.attr("data-harga");
+
+        var dialogEditMenu = $(".dialog-edit-menu");
+        dialogEditMenu.attr("data-id", id);
+        dialogEditMenu.find(".menu-edit-nama").val(nama);
+        selectOption(dialogEditMenu.find(".edit-jenis-option[data-value='" + jenis + "']"));
+        dialogEditMenu.find(".menu-edit-harga").val(addThousandSeparator(harga));
+        showDialog(dialogEditMenu);
+    });
+
+    $(".btn-confirm-edit-menu").on("click", function() {
+        var nama = $(".menu-edit-nama").val().trim().toUpperCase();
+        if (nama == "") {
+            showNotification("Nama tidak boleh kosong");
+        } else {
+            var harga = parseInt(removeThousandSeparator($(".menu-edit-harga").val()));
+            if (harga == 0) {
+                showNotification("Harga tidak boleh 0");
+            } else {
+                var jenis = $(".select-edit-jenis").attr("data-value");
+                var id = $(".dialog-edit-menu").attr("data-id");
+
+                ajaxCall(update_menu_url, {menu_id: id, menu_jenis: jenis, menu_nama: nama, menu_harga: harga}, function(json) {
+                    var result = jQuery.parseJSON(json);
+                    if (result.status == "success") {
+                        get_all_menu();
+                        closeDialog();
+                        showNotification("Berhasil Update Menu " + nama);
+                    } else {
+                        showNotification("Gagal Update Menu");
+                    }
+                });
+            }
+        }
     });
 
     $(document).on("click", ".btn-hapus-bahan", function() {
