@@ -8,6 +8,7 @@ class Admin_model extends CI_Model
     }
 
     function get_all_menu() {
+        $this->db->where("status", 1);
         return $this->db->get("menu")->result();
     }
 
@@ -50,6 +51,15 @@ class Admin_model extends CI_Model
         }
 
         $this->db->trans_complete();
+    }
+
+    function delete_menu($data) {
+        $this->db->where("menu_id", $data["menu_id"]);
+        $this->db->set("status", 0, true);
+        $this->db->set("modified_date", "NOW()", false);
+        $this->db->set("modified_by", $data["user_id"], true);
+        $this->db->update("menu");
+        return $this->db->affected_rows();
     }
 
     function get_all_bahan() {

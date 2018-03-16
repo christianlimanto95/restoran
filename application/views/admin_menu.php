@@ -89,8 +89,21 @@
         </div>
     </div>
 </div>
+<div class="dialog dialog-konfirmasi-hapus">
+    <div class="dialog-background">
+        <div class="dialog-box">
+            <div class="dialog-close-icon" style="background-image: url(<?php echo base_url("assets/images/close_icon.png"); ?>);"></div>
+            <div class="dialog-text">Hapus Menu?</div>
+            <div class="dialog-button-container">
+                <div class="button btn-cancel">BATAL</div>
+                <div class="button btn-confirm-hapus">HAPUS</div>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
 var get_all_menu_url = "<?php echo base_url("admin/get_all_menu"); ?>";
 var get_all_bahan_url = "<?php echo base_url("admin/get_all_bahan_by_keyword"); ?>";
 var insert_menu_url = "<?php echo base_url("admin/insert_menu"); ?>";
+var delete_menu_url = "<?php echo base_url("admin/delete_menu"); ?>";
 </script>

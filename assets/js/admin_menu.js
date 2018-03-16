@@ -77,7 +77,35 @@ $(function() {
         var tr = $(this).closest("tr");
         tr.remove();
     });
+
+    $(document).on("click", ".btn-hapus", function() {
+        var tr = $(this).closest("tr");
+        var id = tr.attr("data-id");
+        var nama = tr.attr("data-nama");
+        var dialogKonfirmasiHapus = $(".dialog-konfirmasi-hapus");
+        dialogKonfirmasiHapus.attr("data-id", id);
+        dialogKonfirmasiHapus.find(".dialog-text").html("Hapus Menu " + nama + " ?");
+        showDialog(dialogKonfirmasiHapus);
+    });
+
+    $(".btn-confirm-hapus").on("click", function() {
+        deleteMenu();
+    });
 });
+
+function deleteMenu() {
+    var menu_id = $(".dialog-konfirmasi-hapus").attr("data-id");
+    ajaxCall(delete_menu_url, {menu_id: menu_id}, function(json) {
+        var result = jQuery.parseJSON(json);
+        if (result.status == "success") {
+            closeDialog();
+            get_all_menu();
+            showNotification("Berhasil Hapus Menu");
+        } else {
+            showNotification("Gagal Hapus Menu");
+        }
+    });
+}
 
 function tambahBahan() {
     var qty = parseInt(removeThousandSeparator($(".input-qty-bahan").val()));

@@ -222,3 +222,11 @@
 .btn-confirm-tambah-bahan:hover {
     background-color: #C8E6C9;
 }
+
+.dialog-konfirmasi-hapus .dialog-box {
+    width: 35vw;
+}
+
+.btn-confirm-hapus:hover {
+    background-color: #FFCDD2;
+}

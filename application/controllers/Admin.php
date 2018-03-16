@@ -136,12 +136,18 @@ class Admin extends General_controller {
 		parent::show_404_if_not_ajax();
 		$bahan_id = intval($this->input->post("bahan_id"));
 		$user_id = parent::is_logged_in();
-		$data = array(
-			"bahan_id" => $bahan_id,
-			"user_id" => $user_id
-		);
-		$result = $this->Admin_model->delete_bahan($data);
-		echo json_encode($result);
+		if ($bahan_id && $user_id) {
+			$data = array(
+				"bahan_id" => $bahan_id,
+				"user_id" => $user_id
+			);
+			$result = $this->Admin_model->delete_bahan($data);
+			echo json_encode($result);
+		} else {
+			echo json_encode(array(
+				"status" => "error"
+			));
+		}
 	}
 
 	function menu() {
@@ -181,30 +187,57 @@ class Admin extends General_controller {
 		$bahan = $this->input->post("bahan");
 		$user_id = parent::is_logged_in();
 
-		$bahan_array = array();
-		$bahan_item = explode(";", $bahan);
-		$iLength = sizeof($bahan_item);
-		for ($i = 0; $i < $iLength; $i++) {
-			$bahan_col = explode("~", $bahan_item[$i]);
-			$bahan_id = $bahan_col[0];
-			$bahan_qty = $bahan_col[1];
-			
-			array_push($bahan_array, array(
-				"bahan_id" => $bahan_id,
-				"bahan_qty" => $bahan_qty
+		if ($menu_jenis && $menu_nama && $menu_harga && $bahan && $user_id) {
+			$bahan_array = array();
+			$bahan_item = explode(";", $bahan);
+			$iLength = sizeof($bahan_item);
+			for ($i = 0; $i < $iLength; $i++) {
+				$bahan_col = explode("~", $bahan_item[$i]);
+				$bahan_id = $bahan_col[0];
+				$bahan_qty = $bahan_col[1];
+				
+				array_push($bahan_array, array(
+					"bahan_id" => $bahan_id,
+					"bahan_qty" => $bahan_qty
+				));
+			}
+
+			$data = array(
+				"menu_jenis" => $menu_jenis,
+				"menu_nama" => $menu_nama,
+				"menu_harga" => $menu_harga,
+				"bahan" => $bahan_array,
+				"user_id" => $user_id
+			);
+			$this->Admin_model->insert_menu($data);
+			echo json_encode(array(
+				"status" => "success"
+			));
+		} else {
+			echo json_encode(array(
+				"status" => "error"
 			));
 		}
+	}
+
+	function delete_menu() {
+		parent::show_404_if_not_ajax();
+		$menu_id = $this->input->post("menu_id");
+		$user_id = parent::is_logged_in();
 
 		$data = array(
-			"menu_jenis" => $menu_jenis,
-			"menu_nama" => $menu_nama,
-			"menu_harga" => $menu_harga,
-			"bahan" => $bahan_array,
+			"menu_id" => $menu_id,
 			"user_id" => $user_id
 		);
-		$this->Admin_model->insert_menu($data);
-		echo json_encode(array(
-			"status" => "success"
-		));
+		$affected_rows = $this->Admin_model->delete_menu($data);
+		if ($affected_rows > 0) {
+			echo json_encode(array(
+				"status" => "success"
+			));
+		} else {
+			echo json_encode(array(
+				"status" => "error"
+			));
+		}
 	}
 }
