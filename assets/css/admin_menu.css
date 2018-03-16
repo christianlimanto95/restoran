@@ -48,10 +48,65 @@
     width: 100%;
 }
 
+.title-bahan-makanan {
+    font-size: 1.5vw;
+    margin-top: 3vw;
+    margin-bottom: 1vw;
+    font-weight: bold;
+}
+
+.table-bahan td {
+    font-size: 1vw;
+    padding: 0.5vw 0.3vw;
+}
+
+.table-bahan thead td {
+    font-weight: bold;
+    padding-bottom: 0.5vw;
+    border-bottom: 3px solid black;
+}
+
+.table-bahan td:nth-child(1) {
+    width: 10vw;
+}
+
+.table-bahan td:nth-child(2) {
+    width: 7vw;
+    text-align: right;
+    padding-right: 2vw;
+}
+
+.table-bahan td:nth-child(3) {
+    width: 5vw;
+}
+
+.btn-hapus-bahan {
+    cursor: pointer;
+    padding: 0.3vw 0;
+    text-align: center;
+}
+
+.btn-hapus-bahan:hover {
+    background-color: #E0E0E0;
+}
+
+.btn-tambah-bahan {
+    float: right;
+    width: 3vw;
+    text-align: center;
+    margin-top: 0.5vw;
+    padding: 0.3vw 0 0.5vw;
+    font-size: 1.7vw;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-tambah-bahan:hover {
+    background-color: #E0E0E0;
+}
+
 .section-right {
     width: 55vw;
-    height: 50vw;
-    background-color: cyan;
 }
 
 .section-right .section-title {
@@ -86,15 +141,63 @@
 }
 
 .table-menu td:nth-child(4) {
-    width: 10vw;
+    width: 9vw;
+}
+
+.table-menu td:nth-child(4) {
+    text-align: right;
+    padding-right: 2vw;
 }
 
 .table-menu .btn-ubah, .table-menu .btn-hapus {
     padding: 0.3vw;
     font-size: 1.2vw;
     display: inline-block;
+    cursor: pointer;
+}
+
+.table-menu .btn-ubah {
+    margin-right: 1vw;
 }
 
 .table-menu .btn-ubah:hover {
     background-color: #E0E0E0;
+}
+
+.table-menu .btn-hapus:hover {
+    background-color: #FFCDD2;
+}
+
+.dialog-tambah-bahan .dialog-box {
+    height: 20vw;
+}
+
+.table-dialog-tambah-bahan td {
+    font-size: 1.2vw;
+    padding: 0.3vw;
+}
+
+.input-nama-bahan, .input-qty-bahan {
+    padding: 0.3vw;
+    font-size: 1.2vw;
+}
+
+.input-nama-bahan {
+    width: 12vw;
+    text-transform: uppercase;
+}
+
+.option-container-nama-bahan {
+    top: 2.5vw;
+    text-transform: uppercase;
+    font-size: 1vw;
+}
+
+.input-qty-bahan {
+    width: 5vw;
+    text-align: right;
+}
+
+.btn-confirm-tambah-bahan:hover {
+    background-color: #C8E6C9;
 }

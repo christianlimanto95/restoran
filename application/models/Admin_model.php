@@ -7,6 +7,30 @@ class Admin_model extends CI_Model
         parent::__construct();
     }
 
+    function get_all_menu() {
+        return $this->db->get("menu")->result();
+    }
+
+    function get_all_bahan_by_keyword($keyword) {
+        $query = $this->db->query("
+            SELECT *
+            FROM bahan
+            WHERE status = 1 AND bahan_nama LIKE '%" . $keyword . "%'
+        ");
+        return $query->result();
+    }
+
+    function insert_menu($data) {
+        $insertData = array(
+            "menu_nama" => $data["menu_nama"],
+            "menu_harga" => $data["menu_harga"],
+            "created_by" => $data["user_id"],
+            "modified_by" => $data["user_id"]
+        );
+        $this->db->insert("menu", $insertData);
+        return $this->db->affected_rows();
+    }
+
     function get_all_bahan() {
         $query = $this->db->query("
             SELECT *

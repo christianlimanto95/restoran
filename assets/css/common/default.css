@@ -101,6 +101,7 @@ table {
 
 .option-container.show {
   display: block;
+  z-index: 10000;
 }
 
 .option {
@@ -277,6 +278,7 @@ table {
 
 .dialog-button-container .button {
   display: inline-block;
+  position: relative;
   font-size: 1.2vw;
 }
 

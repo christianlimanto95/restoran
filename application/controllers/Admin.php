@@ -151,4 +151,25 @@ class Admin extends General_controller {
 		
 		parent::view("admin_menu", $data);
 	}
+
+	function get_all_menu() {
+		$menus = $this->Admin_model->get_all_menu();
+		$iLength = sizeof($menus);
+		for ($i = 0; $i < $iLength; $i++) {
+			$menus[$i]->menu_id = str_pad($menus[$i]->menu_id, 3, "0", STR_PAD_LEFT);
+		}
+		echo json_encode(array(
+			"status" => "success",
+			"data" => $menus
+		));
+	}
+
+	function get_all_bahan_by_keyword() {
+		$keyword = $this->input->post("keyword");
+		$data = $this->Admin_model->get_all_bahan_by_keyword($keyword);
+		echo json_encode(array(
+			"status" => "success",
+			"data" => $data
+		));
+	}
 }
