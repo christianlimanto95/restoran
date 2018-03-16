@@ -9,16 +9,22 @@
     <div class="section-left">
         <div class="section-title">TAMBAH JENIS MENU</div>
         <div class="form-item">
-            <div class="form-label">NAMA</div>
-            <input type="text" class="form-input input-nama-menu" />
+            <div class="form-label">NAMA <span class="error error-menu-nama"></span></div>
+            <input type="text" class="form-input input-nama-menu" maxlength="30" />
         </div>
         <div class="form-item">
             <div class="form-label">JENIS</div>
-            <input type="text" class="form-input input-jenis-menu" />
+            <div class="select select-jenis" data-value="1">
+                <div class="form-input input-jenis-menu select-text" >MAKANAN</div>
+                <div class="option-container option-container-jenis">
+                    <div class="option tabindex-exception jenis-option" data-value="1">MAKANAN</div>
+                    <div class="option tabindex-exception jenis-option" data-value="2">MINUMAN</div>
+                </div>
+            </div>
         </div>
         <div class="form-item">
-            <div class="form-label">HARGA</div>
-            <input type="text" class="form-input input-harga-menu" data-type="number" />
+            <div class="form-label">HARGA <span class="error error-menu-harga"></span></div>
+            <input type="text" class="form-input input-harga-menu" data-type="number" data-thousand-separator="true" maxlength="9" value="0" />
         </div>
         <div class="title-bahan-makanan">BAHAN MAKANAN</div>
         <table class="table-bahan">
@@ -33,6 +39,7 @@
             </tbody>
         </table>
         <div class="btn-tambah-bahan">+</div>
+        <div class="button btn-tambah-menu">TAMBAH MENU</div>
     </div>
     <div class="section-right">
         <div class="section-title">LIST MENU</div>
@@ -70,7 +77,7 @@
                         </tr>
                         <tr>
                             <td>Pemakaian Per Menu</td>
-                            <td><input type="text" maxlength="5" class="input-qty-bahan" data-type="number" value="0" /> g</td>
+                            <td><input type="text" maxlength="6" class="input-qty-bahan" data-type="number" data-thousand-separator="true" value="0" /> g</td>
                         </tr>
                     </tbody>
                 </table>
@@ -85,4 +92,5 @@
 <script>
 var get_all_menu_url = "<?php echo base_url("admin/get_all_menu"); ?>";
 var get_all_bahan_url = "<?php echo base_url("admin/get_all_bahan_by_keyword"); ?>";
+var insert_menu_url = "<?php echo base_url("admin/insert_menu"); ?>";
 </script>

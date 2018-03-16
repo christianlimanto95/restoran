@@ -172,4 +172,39 @@ class Admin extends General_controller {
 			"data" => $data
 		));
 	}
+
+	function insert_menu() {
+		parent::show_404_if_not_ajax();
+		$menu_jenis = $this->input->post("menu_jenis");
+		$menu_nama = strtoupper($this->input->post("menu_nama"));
+		$menu_harga = $this->input->post("menu_harga");
+		$bahan = $this->input->post("bahan");
+		$user_id = parent::is_logged_in();
+
+		$bahan_array = array();
+		$bahan_item = explode(";", $bahan);
+		$iLength = sizeof($bahan_item);
+		for ($i = 0; $i < $iLength; $i++) {
+			$bahan_col = explode("~", $bahan_item[$i]);
+			$bahan_id = $bahan_col[0];
+			$bahan_qty = $bahan_col[1];
+			
+			array_push($bahan_array, array(
+				"bahan_id" => $bahan_id,
+				"bahan_qty" => $bahan_qty
+			));
+		}
+
+		$data = array(
+			"menu_jenis" => $menu_jenis,
+			"menu_nama" => $menu_nama,
+			"menu_harga" => $menu_harga,
+			"bahan" => $bahan_array,
+			"user_id" => $user_id
+		);
+		$this->Admin_model->insert_menu($data);
+		echo json_encode(array(
+			"status" => "success"
+		));
+	}
 }

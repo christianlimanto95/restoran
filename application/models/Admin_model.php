@@ -21,14 +21,35 @@ class Admin_model extends CI_Model
     }
 
     function insert_menu($data) {
+        $this->db->trans_start();
+
         $insertData = array(
+            "menu_jenis" => $data["menu_jenis"],
             "menu_nama" => $data["menu_nama"],
             "menu_harga" => $data["menu_harga"],
             "created_by" => $data["user_id"],
             "modified_by" => $data["user_id"]
         );
         $this->db->insert("menu", $insertData);
-        return $this->db->affected_rows();
+        $menu_id = $this->db->insert_id();
+        
+        $bahan = $data["bahan"];
+        $iLength = sizeof($bahan);
+        $insertDataArray = array();
+        for ($i = 0; $i < $iLength; $i++) {
+            array_push($insertDataArray, array(
+                "menu_id" => $menu_id,
+                "bahan_id" => $bahan[$i]["bahan_id"],
+                "bahan_qty" => $bahan[$i]["bahan_qty"],
+                "created_by" => $data["user_id"],
+                "modified_by" => $data["user_id"]
+            ));
+        }
+        if ($iLength > 0) {
+            $this->db->insert_batch("menu_bahan", $insertDataArray);
+        }
+
+        $this->db->trans_complete();
     }
 
     function get_all_bahan() {

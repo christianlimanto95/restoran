@@ -2,6 +2,7 @@ var get_all_bahan_ajax = null;
 $(function() {
     get_all_menu();
     get_all_bahan(true);
+    $(window).off("keydown", window_keydown_tab);
 
     $(".btn-tambah-bahan").on("click", function() {
         showDialog($(".dialog-tambah-bahan"));
@@ -11,12 +12,10 @@ $(function() {
         get_all_bahan();
     });
 
-    $(".input-qty-bahan").on("blur", function() {
-        var value = parseInt($(this).val());
-        if (isNaN(value)) {
-            value = 0;
+    $(".input-qty-bahan").on("keyup", function(e) {
+        if (e.which == 13) {
+            tambahBahan();
         }
-        $(this).val(value);
     });
 
     $(".select-bahan").on("valueSelected", function() {
@@ -26,22 +25,52 @@ $(function() {
     });
 
     $(".btn-confirm-tambah-bahan").on("click", function() {
-        var qty = parseInt($(".input-qty-bahan").val());
-        if (qty == 0) {
-            showNotification("Pemakaian Per Menu minimal 1 g");
-        } else {
-            var id = $(".select-bahan").attr("data-value");
-            var nama = $(".select-bahan").attr("data-nama");
-            
-            var element = "";
-            element += "<tr>";
-            element += "<td>" + nama + "</td>";
-            element += "<td>" + qty + " g</td>";
-            element += "<td><div class='btn-hapus-bahan'>HAPUS</div></td>";
-            element += "</tr>";
-            $(".table-bahan tbody").append(element);
-            closeDialog();
+        tambahBahan();
+    });
+
+    $(".btn-tambah-menu").on("click", function() {
+        removeAllErrors();
+        var valid = true;
+        var menu_nama = $(".input-nama-menu").val().trim();
+        if (menu_nama == "") {
+            $(".error-menu-nama").html("harus diisi");
+            valid = false;
         }
+
+        var menu_harga = parseInt(removeThousandSeparator($(".input-harga-menu").val()));
+        if (menu_harga == 0) {
+            $(".error-menu-harga").html("harus lebih dari 0");
+            valid = false;
+        }
+
+        if (valid) {
+            var menu_jenis = $(".select-jenis").attr("data-value");
+            var bahan = "";
+            $(".table-bahan tbody tr").each(function() {
+                var bahan_id = $(this).attr("data-id");
+                var bahan_qty = $(this).attr("data-qty");
+                if (bahan != "") {
+                    bahan += ";";
+                }
+                bahan += bahan_id + "~" + bahan_qty;
+            });
+            
+            ajaxCall(insert_menu_url, {menu_jenis: menu_jenis, menu_nama: menu_nama, menu_harga: menu_harga, bahan: bahan}, function(json) {
+                var result = jQuery.parseJSON(json);
+                if (result.status == "success") {
+                    showNotification("Berhasil Tambah Menu");
+                    get_all_menu();
+                }
+            });
+        } else {
+            showNotification("Silakan periksa inputan");
+        }
+    });
+
+    $(".dialog-tambah-bahan").on("dialogClosed", function() {
+        $(".input-nama-bahan").val("");
+        get_all_bahan(true);
+        $(".input-qty-bahan").val(0);
     });
 
     $(document).on("click", ".btn-hapus-bahan", function() {
@@ -49,6 +78,25 @@ $(function() {
         tr.remove();
     });
 });
+
+function tambahBahan() {
+    var qty = parseInt(removeThousandSeparator($(".input-qty-bahan").val()));
+    if (qty == 0) {
+        showNotification("Pemakaian Per Menu minimal 1 g");
+    } else {
+        var id = $(".select-bahan").attr("data-value");
+        var nama = $(".select-bahan").attr("data-nama");
+        
+        var element = "";
+        element += "<tr data-id='" + id + "' data-qty='" + qty + "'>";
+        element += "<td>" + nama + "</td>";
+        element += "<td>" + qty + " g</td>";
+        element += "<td><div class='btn-hapus-bahan'>HAPUS</div></td>";
+        element += "</tr>";
+        $(".table-bahan tbody").append(element);
+        closeDialog();
+    }
+}
 
 function get_all_menu() {
     ajaxCall(get_all_menu_url, null, function(json) {

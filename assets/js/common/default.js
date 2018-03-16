@@ -90,8 +90,12 @@ $(function() {
         isNumber(e);
     });
 
-    $(document).on("input", "input[data-thousand-separator='true']", function() {
-        this.value = addThousandSeparator(this.value);
+    $(document).on("input", "input[data-type='number'][data-thousand-separator='true']", function(e) {
+        var value = parseInt(removeThousandSeparator($(this).val()));
+        if (isNaN(value)) {
+            value = 0;
+        }
+        $(this).val(addThousandSeparator(value + ""));
     });
 
     $(document).on("click", ".dialog-close-icon, .btn-cancel", function() {
@@ -141,6 +145,7 @@ function showDialog(dialogElement) {
 
 function closeDialog() {
     $(".dialog").removeClass("show");
+    $(".dialog").trigger("dialogClosed");
 }
 
 function removeAllErrors() {
@@ -218,7 +223,12 @@ function selectOption(option) {
     var text = option.html();
     var select = option.closest(".select");
     select.attr("data-value", value);
-    select.find(".select-text").val(text);
+    var selectText = select.find(".select-text");
+    if (selectText.prop("tagName").toLowerCase() == "input") {
+        selectText.val(text);
+    } else {
+        selectText.html(text);
+    }
     select.trigger("valueSelected");
     hideOptionContainer();
 }

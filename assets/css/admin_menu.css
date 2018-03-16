@@ -9,6 +9,7 @@
     height: auto;
     text-align: center;
     margin-top: 4vw;
+    padding-bottom: 5vw;
 }
 
 .section-left, .section-right {
@@ -46,6 +47,11 @@
 
 .input-nama-menu {
     width: 100%;
+    text-transform: uppercase;
+}
+
+.option-container-jenis {
+    top: 3vw;
 }
 
 .title-bahan-makanan {
@@ -104,6 +110,16 @@
 
 .btn-tambah-bahan:hover {
     background-color: #E0E0E0;
+}
+
+.btn-tambah-menu {
+    clear: both;
+    float: right;
+    margin-top: 3vw;
+}
+
+.btn-tambah-menu:hover {
+    background-color: #C8E6C9;
 }
 
 .section-right {
