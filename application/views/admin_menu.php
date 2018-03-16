@@ -30,11 +30,6 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>BABI</td>
-                    <td>100g</td>
-                    <td><div class='btn-hapus-bahan'>HAPUS</div></td>
-                </tr>
             </tbody>
         </table>
         <div class="btn-tambah-bahan">+</div>
@@ -56,7 +51,7 @@
         </table>
     </div>
 </div>
-<div class="dialog dialog-tambah-bahan show">
+<div class="dialog dialog-tambah-bahan">
     <div class="dialog-background">
         <div class="dialog-box">
             <div class="dialog-title">Bahan Makanan</div>

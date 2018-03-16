@@ -219,6 +219,7 @@ function selectOption(option) {
     var select = option.closest(".select");
     select.attr("data-value", value);
     select.find(".select-text").val(text);
+    select.trigger("valueSelected");
     hideOptionContainer();
 }
 

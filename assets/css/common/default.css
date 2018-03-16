@@ -97,6 +97,7 @@ table {
   max-height: 15vw;
   overflow-y: auto;
   display: none;
+  z-index: 10;
 }
 
 .option-container.show {

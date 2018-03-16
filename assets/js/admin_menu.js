@@ -3,6 +3,10 @@ $(function() {
     get_all_menu();
     get_all_bahan(true);
 
+    $(".btn-tambah-bahan").on("click", function() {
+        showDialog($(".dialog-tambah-bahan"));
+    })
+
     $(".input-nama-bahan").on("input", function() {
         get_all_bahan();
     });
@@ -15,11 +19,34 @@ $(function() {
         $(this).val(value);
     });
 
+    $(".select-bahan").on("valueSelected", function() {
+        var id = $(this).attr("data-value");
+        var nama = $(this).find(".option[data-value='" + id + "']").attr("data-nama");
+        $(this).attr("data-nama", nama);
+    });
+
     $(".btn-confirm-tambah-bahan").on("click", function() {
         var qty = parseInt($(".input-qty-bahan").val());
         if (qty == 0) {
             showNotification("Pemakaian Per Menu minimal 1 g");
+        } else {
+            var id = $(".select-bahan").attr("data-value");
+            var nama = $(".select-bahan").attr("data-nama");
+            
+            var element = "";
+            element += "<tr>";
+            element += "<td>" + nama + "</td>";
+            element += "<td>" + qty + " g</td>";
+            element += "<td><div class='btn-hapus-bahan'>HAPUS</div></td>";
+            element += "</tr>";
+            $(".table-bahan tbody").append(element);
+            closeDialog();
         }
+    });
+
+    $(document).on("click", ".btn-hapus-bahan", function() {
+        var tr = $(this).closest("tr");
+        tr.remove();
     });
 });
 

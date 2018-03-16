@@ -68,6 +68,7 @@
 
 .table-bahan td:nth-child(1) {
     width: 10vw;
+    text-transform: uppercase;
 }
 
 .table-bahan td:nth-child(2) {
@@ -166,6 +167,10 @@
 
 .table-menu .btn-hapus:hover {
     background-color: #FFCDD2;
+}
+
+.dialog-text {
+    z-index: 10;
 }
 
 .dialog-tambah-bahan .dialog-box {
