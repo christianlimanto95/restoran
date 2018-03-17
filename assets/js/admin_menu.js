@@ -1,10 +1,13 @@
 var get_all_bahan_ajax = null;
+var get_bahan_by_menu_ajax = null;
 $(function() {
     get_all_menu();
     get_all_bahan(true);
     $(window).off("keydown", window_keydown_tab);
 
     $(".btn-tambah-bahan").on("click", function() {
+        var source = $(this).attr("data-source");
+        $(".dialog-tambah-bahan").attr("data-source", source);
         showDialog($(".dialog-tambah-bahan"));
     })
 
@@ -14,7 +17,7 @@ $(function() {
 
     $(".input-qty-bahan").on("keyup", function(e) {
         if (e.which == 13) {
-            tambahBahan();
+            tambahBahan(e);
         }
     });
 
@@ -24,8 +27,8 @@ $(function() {
         $(this).attr("data-nama", nama);
     });
 
-    $(".btn-confirm-tambah-bahan").on("click", function() {
-        tambahBahan();
+    $(".btn-confirm-tambah-bahan").on("click", function(e) {
+        tambahBahan(e);
     });
 
     $(".btn-tambah-menu").on("click", function() {
@@ -84,6 +87,7 @@ $(function() {
 
         var dialogEditMenu = $(".dialog-edit-menu");
         dialogEditMenu.attr("data-id", id);
+        dialogEditMenu.attr("data-nama", nama);
         dialogEditMenu.find(".menu-edit-nama").val(nama);
         selectOption(dialogEditMenu.find(".edit-jenis-option[data-value='" + jenis + "']"));
         dialogEditMenu.find(".menu-edit-harga").val(addThousandSeparator(harga));
@@ -116,6 +120,21 @@ $(function() {
         }
     });
 
+    $(".btn-edit-bahan").on("click", function() {
+        var dialogEditMenu = $(".dialog-edit-menu");
+        var id = dialogEditMenu.attr("data-id");
+        var nama = dialogEditMenu.attr("data-nama");
+
+        var dialogEditBahan = $(".dialog-edit-bahan");
+        dialogEditBahan.attr("data-id", id);
+        $(".dialog-edit-bahan-menu").html(nama);
+        showDialog(dialogEditBahan);
+    });
+
+    $(".dialog-edit-bahan").on("dialogShown", function() {
+        get_bahan_by_menu();
+    });
+
     $(document).on("click", ".btn-hapus-bahan", function() {
         var tr = $(this).closest("tr");
         tr.remove();
@@ -136,6 +155,30 @@ $(function() {
     });
 });
 
+function get_bahan_by_menu() {
+    var menu_id = $(".dialog-edit-bahan").attr("data-id");
+    if (get_bahan_by_menu_ajax != null) {
+        get_bahan_by_menu_ajax.abort();
+    }
+    get_bahan_by_menu_ajax = ajaxCall(get_bahan_by_menu_url, {menu_id: menu_id}, function(json) {
+        var result = jQuery.parseJSON(json);
+        if (result.status == "success") {
+            var data = result.data;
+            var iLength = data.length;
+            var element = "";
+            for (var i = 0; i < iLength; i++) {
+                element += "<tr data-id='" + data[i].bahan_id + "' data-qty='" + data[i].bahan_qty + "'>";
+                element += "<td>" + data[i].bahan_nama + "</td>";
+                element += "<td>" + data[i].bahan_qty + " g</td>";
+                element += "<td><div class='btn-hapus-bahan'>HAPUS</div></td>";
+                element += "</tr>";
+            }
+
+            $(".table-ubah-bahan tbody").html(element);
+        }
+    });
+}
+
 function deleteMenu() {
     var menu_id = $(".dialog-konfirmasi-hapus").attr("data-id");
     ajaxCall(delete_menu_url, {menu_id: menu_id}, function(json) {
@@ -150,7 +193,7 @@ function deleteMenu() {
     });
 }
 
-function tambahBahan() {
+function tambahBahan(e) {
     var qty = parseInt(removeThousandSeparator($(".input-qty-bahan").val()));
     if (qty == 0) {
         showNotification("Pemakaian Per Menu minimal 1 g");
@@ -164,8 +207,14 @@ function tambahBahan() {
         element += "<td>" + qty + " g</td>";
         element += "<td><div class='btn-hapus-bahan'>HAPUS</div></td>";
         element += "</tr>";
-        $(".table-bahan tbody").append(element);
-        closeDialog();
+
+        var dialog = $(".dialog-tambah-bahan");
+        if (dialog.attr("data-source") == "tambah_bahan") {
+            $(".table-bahan tbody").append(element);
+        } else {
+            $(".table-ubah-bahan tbody").append(element);
+        }
+        closeDialog(dialog);
     }
 }
 

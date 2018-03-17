@@ -248,6 +248,16 @@ class Admin extends General_controller {
 		}
 	}
 
+	function get_bahan_by_menu() {
+		parent::show_404_if_not_ajax();
+		$menu_id = $this->input->post("menu_id");
+		$data = $this->Admin_model->get_bahan_by_menu_id($menu_id);
+		echo json_encode(array(
+			"status" => "success",
+			"data" => $data
+		));
+	}
+
 	function delete_menu() {
 		parent::show_404_if_not_ajax();
 		$menu_id = $this->input->post("menu_id");

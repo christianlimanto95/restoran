@@ -21,6 +21,15 @@ class Admin_model extends CI_Model
         return $query->result();
     }
 
+    function get_bahan_by_menu_id($menu_id) {
+        $query = $this->db->query("
+            SELECT mb.*, b.bahan_nama
+            FROM menu_bahan mb, bahan b
+            WHERE mb.menu_id = " . $menu_id . " AND b.bahan_id = mb.bahan_id
+        ");
+        return $query->result();
+    }
+
     function insert_menu($data) {
         $this->db->trans_start();
 

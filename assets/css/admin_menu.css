@@ -61,29 +61,33 @@
     font-weight: bold;
 }
 
-.table-bahan td {
+.table-bahan td, .table-ubah-bahan td {
     font-size: 1vw;
-    padding: 0.5vw 0.3vw;
+    padding: 0.3vw;
 }
 
-.table-bahan thead td {
+.table-bahan thead td, .table-ubah-bahan thead td {
     font-weight: bold;
-    padding-bottom: 0.5vw;
+    padding-bottom: 1vw;
     border-bottom: 3px solid black;
 }
 
-.table-bahan td:nth-child(1) {
+.table-bahan tbody tr:nth-child(1) td, .table-ubah-bahan tbody tr:nth-child(1) td {
+    padding-top: 1vw;
+}
+
+.table-bahan td:nth-child(1), .table-ubah-bahan td:nth-child(1) {
     width: 10vw;
     text-transform: uppercase;
 }
 
-.table-bahan td:nth-child(2) {
+.table-bahan td:nth-child(2), .table-ubah-bahan td:nth-child(2) {
     width: 7vw;
     text-align: right;
     padding-right: 2vw;
 }
 
-.table-bahan td:nth-child(3) {
+.table-bahan td:nth-child(3), .table-ubah-bahan td:nth-child(3) {
     width: 5vw;
 }
 
@@ -97,7 +101,7 @@
     background-color: #E0E0E0;
 }
 
-.btn-tambah-bahan {
+.btn-tambah-bahan, .btn-tambah-ubah-bahan {
     float: right;
     width: 3vw;
     text-align: center;
@@ -108,7 +112,7 @@
     cursor: pointer;
 }
 
-.btn-tambah-bahan:hover {
+.btn-tambah-bahan:hover, .btn-tambah-ubah-bahan:hover {
     background-color: #E0E0E0;
 }
 
@@ -189,6 +193,10 @@
     z-index: 10;
 }
 
+.dialog-tambah-bahan {
+    z-index: 501;
+}
+
 .dialog-tambah-bahan .dialog-box {
     height: 20vw;
 }
@@ -264,4 +272,14 @@
     width: 14vw;
     margin-bottom: 2vw;
     text-align: center;
+}
+
+.dialog-edit-bahan .dialog-box {
+    height: 35vw;
+}
+
+.table-ubah-bahan {
+    display: block;
+    max-height: 15vw;
+    overflow: auto;
 }

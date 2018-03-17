@@ -38,7 +38,7 @@
             <tbody>
             </tbody>
         </table>
-        <div class="btn-tambah-bahan">+</div>
+        <div class="btn-tambah-bahan" data-source="tambah_bahan">+</div>
         <div class="button btn-tambah-menu">TAMBAH MENU</div>
     </div>
     <div class="section-right">
@@ -144,10 +144,37 @@
         </div>
     </div>
 </div>
+<div class="dialog dialog-edit-bahan">
+    <div class="dialog-background">
+        <div class="dialog-box">
+            <div class="dialog-title">UBAH BAHAN <br /><span class="dialog-edit-bahan-menu">KOLOKE</span></div>
+            <div class="dialog-close-icon" style="background-image: url(<?php echo base_url("assets/images/close_icon.png"); ?>);"></div>
+            <div class="dialog-text">
+                <table class="table-ubah-bahan">
+                    <thead>
+                        <tr>
+                            <td>NAMA</td>
+                            <td>JUMLAH</td>
+                            <td>ACTION</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <div class="btn-tambah-bahan" data-source="edit_bahan">+</div>
+            </div>
+            <div class="dialog-button-container">
+                <div class="button btn-cancel">BATAL</div>
+                <div class="button btn-confirm-edit-bahan">UBAH</div>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
 var get_all_menu_url = "<?php echo base_url("admin/get_all_menu"); ?>";
 var get_all_bahan_url = "<?php echo base_url("admin/get_all_bahan_by_keyword"); ?>";
 var insert_menu_url = "<?php echo base_url("admin/insert_menu"); ?>";
 var update_menu_url = "<?php echo base_url("admin/update_menu"); ?>";
+var get_bahan_by_menu_url = "<?php echo base_url("admin/get_bahan_by_menu"); ?>";
 var delete_menu_url = "<?php echo base_url("admin/delete_menu"); ?>";
 </script>

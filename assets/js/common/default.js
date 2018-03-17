@@ -143,9 +143,12 @@ function showDialog(dialogElement) {
     dialogElement.trigger("dialogShown");
 }
 
-function closeDialog() {
-    $(".dialog").removeClass("show");
-    $(".dialog").trigger("dialogClosed");
+function closeDialog(element) {
+    if (element == null) {
+        element = $(".dialog");
+    }
+    element.removeClass("show");
+    element.trigger("dialogClosed");
 }
 
 function removeAllErrors() {
