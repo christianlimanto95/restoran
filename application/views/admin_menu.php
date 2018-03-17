@@ -176,5 +176,6 @@ var get_all_bahan_url = "<?php echo base_url("admin/get_all_bahan_by_keyword"); 
 var insert_menu_url = "<?php echo base_url("admin/insert_menu"); ?>";
 var update_menu_url = "<?php echo base_url("admin/update_menu"); ?>";
 var get_bahan_by_menu_url = "<?php echo base_url("admin/get_bahan_by_menu"); ?>";
+var update_menu_bahan_url = "<?php echo base_url("admin/update_menu_bahan"); ?>";
 var delete_menu_url = "<?php echo base_url("admin/delete_menu"); ?>";
 </script>

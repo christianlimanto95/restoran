@@ -127,12 +127,21 @@ $(function() {
 
         var dialogEditBahan = $(".dialog-edit-bahan");
         dialogEditBahan.attr("data-id", id);
+        dialogEditBahan.attr("data-nama", nama);
         $(".dialog-edit-bahan-menu").html(nama);
         showDialog(dialogEditBahan);
     });
 
     $(".dialog-edit-bahan").on("dialogShown", function() {
         get_bahan_by_menu();
+    });
+
+    $(".dialog-edit-bahan").on("dialogClosed", function() {
+        $(".table-ubah-bahan tbody").html("");
+    });
+
+    $(".btn-confirm-edit-bahan").on("click", function() {
+        update_menu_bahan();
     });
 
     $(document).on("click", ".btn-hapus-bahan", function() {
@@ -154,6 +163,30 @@ $(function() {
         deleteMenu();
     });
 });
+
+function update_menu_bahan() {
+    var menu_id = $(".dialog-edit-bahan").attr("data-id");
+    var menu_nama = $(".dialog-edit-bahan").attr("data-nama");
+    var bahan = "";
+    $(".table-ubah-bahan tbody tr").each(function() {
+        var bahan_id = $(this).attr("data-id");
+        var bahan_qty = $(this).attr("data-qty");
+        if (bahan != "") {
+            bahan += ";";
+        }
+        bahan += bahan_id + "~" + bahan_qty;
+    });
+
+    ajaxCall(update_menu_bahan_url, {menu_id: menu_id, bahan: bahan}, function(json) {
+        var result = jQuery.parseJSON(json);
+        if (result.status == "success") {
+            showNotification("Berhasil Ubah Bahan " + menu_nama);
+        } else {
+            showNotification("Gagal Ubah Bahan " + menu_nama);
+        }
+        closeDialog();
+    });
+}
 
 function get_bahan_by_menu() {
     var menu_id = $(".dialog-edit-bahan").attr("data-id");

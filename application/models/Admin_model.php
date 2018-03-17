@@ -30,6 +30,36 @@ class Admin_model extends CI_Model
         return $query->result();
     }
 
+    function update_menu_bahan($data) {
+        $this->db->trans_start();
+
+        $this->db->where("menu_id", $data["menu_id"]);
+        $this->db->set("modified_date", "NOW()", false);
+        $this->db->set("modified_by", $data["user_id"], true);
+        $this->db->update("menu");
+
+        $this->db->where("menu_id", $data["menu_id"]);
+        $this->db->delete("menu_bahan");
+
+        $bahan = $data["bahan"];
+        $iLength = sizeof($bahan);
+        $insertDataArray = array();
+        for ($i = 0; $i < $iLength; $i++) {
+            array_push($insertDataArray, array(
+                "menu_id" => $data["menu_id"],
+                "bahan_id" => $bahan[$i]["bahan_id"],
+                "bahan_qty" => $bahan[$i]["bahan_qty"],
+                "created_by" => $data["user_id"],
+                "modified_by" => $data["user_id"]
+            ));
+        }
+        if ($iLength > 0) {
+            $this->db->insert_batch("menu_bahan", $insertDataArray);
+        }
+
+        $this->db->trans_complete();
+    }
+
     function insert_menu($data) {
         $this->db->trans_start();
 
