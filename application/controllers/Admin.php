@@ -187,19 +187,21 @@ class Admin extends General_controller {
 		$bahan = $this->input->post("bahan");
 		$user_id = parent::is_logged_in();
 
-		if ($menu_jenis && $menu_nama && $menu_harga && $bahan && $user_id) {
+		if ($menu_jenis && $menu_nama && $menu_harga && $user_id) {
 			$bahan_array = array();
-			$bahan_item = explode(";", $bahan);
-			$iLength = sizeof($bahan_item);
-			for ($i = 0; $i < $iLength; $i++) {
-				$bahan_col = explode("~", $bahan_item[$i]);
-				$bahan_id = $bahan_col[0];
-				$bahan_qty = $bahan_col[1];
-				
-				array_push($bahan_array, array(
-					"bahan_id" => $bahan_id,
-					"bahan_qty" => $bahan_qty
-				));
+			if ($bahan != "") {
+				$bahan_item = explode(";", $bahan);
+				$iLength = sizeof($bahan_item);
+				for ($i = 0; $i < $iLength; $i++) {
+					$bahan_col = explode("~", $bahan_item[$i]);
+					$bahan_id = $bahan_col[0];
+					$bahan_qty = $bahan_col[1];
+					
+					array_push($bahan_array, array(
+						"bahan_id" => $bahan_id,
+						"bahan_qty" => $bahan_qty
+					));
+				}
 			}
 
 			$data = array(

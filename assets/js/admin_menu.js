@@ -65,6 +65,8 @@ $(function() {
                     $(".input-harga-menu").val("0");
                     showNotification("Berhasil Tambah Menu");
                     get_all_menu();
+                } else {
+                    showNotification("Gagal Tambah Menu");
                 }
             });
         } else {

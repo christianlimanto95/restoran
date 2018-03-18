@@ -35,4 +35,31 @@ class Kasir extends General_controller {
 			"data" => $menus
 		));
 	}
+
+	function do_transaksi() {
+		parent::show_404_if_not_ajax();
+
+		$meja_id = 0;
+		$menu = $this->input->post("menu");
+		$user_id = parent::is_logged_in();
+
+		$subtotal_qty = $this->Kasir_model->get_transaksi_subtotal($menu);
+		$subtotal = $subtotal_qty["subtotal"];
+		$total_qty = $subtotal_qty["total_qty"];
+
+		$data = array(
+			"meja_id" => "0",
+			"user_id" => $user_id,
+			"menu" => $menu,
+			"h_transaksi_subtotal" => $subtotal,
+			"h_transaksi_service_charga" => 0,
+			"h_transaksi_tax" => 0,
+			"h_transaksi_total" => $subtotal,
+			"h_transaksi_total_qty" => $total_qty
+		);
+		$this->Admin_model->transaksi($data);
+		echo json_encode(array(
+			"status" => "success"
+		));
+	}
 }
