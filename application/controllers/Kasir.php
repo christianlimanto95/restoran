@@ -41,6 +41,7 @@ class Kasir extends General_controller {
 				}
 			}
 		}
+		
 	}
 
 	function get_all_menu() {

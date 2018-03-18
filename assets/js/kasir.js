@@ -111,12 +111,13 @@ function do_transaksi() {
     });
 
     ajaxCall(do_transaksi_url, {menu: menu}, function(json) {
-        alert(json);
         var result = jQuery.parseJSON(json);
         closeDialog();
         showNotification("Transaksi Berhasil");
         $(".subtotal").attr("data-value", "0");
         $(".subtotal").html("0");
+        initialize();
+        $(".detail-table tbody").html("");
     });
 }
 

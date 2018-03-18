@@ -87,10 +87,9 @@ class Kasir_model extends CI_Model
         }
 
         $insertDataArray = array();
-        foreach ($insertDataArray as $key => $value) {
-            $key = substr($key, 1);
+        foreach ($bahan_array as $key => $value) {
             array_push($insertDataArray, array(
-                "bahan_id" => $key,
+                "bahan_id" => substr($key, 1),
                 "transaksi_bahan_qty" => $bahan_array[$key],
                 "transaksi_bahan_sumber" => 2,
                 "created_by" => $data["user_id"],
@@ -102,9 +101,8 @@ class Kasir_model extends CI_Model
         }
 
         $insertDataArray = array();
-        foreach ($insertDataArray as $key => $value) {
-            $key = substr($key, 1);
-            $this->db->where("bahan_id", $key);
+        foreach ($bahan_array as $key => $value) {
+            $this->db->where("bahan_id", substr($key, 1));
             $this->db->set("bahan_stok", "bahan_stok - " . $bahan_array[$key], false);
             $this->db->set("modified_date", "NOW()", false);
             $this->db->set("modified_by", $data["user_id"]);
