@@ -40,13 +40,22 @@ $(function() {
         if (e.which == 9 || e.which == 13) {
             var optionActive = $(".option.active");
             var nama = optionActive.attr("data-nama");
-            var harga = optionActive.attr("data-harga").replace(".", "");
+            var harga = removeThousandSeparator(optionActive.attr("data-harga"));
             $(".select").attr("data-nama", nama);
             $(".select").attr("data-harga", harga);
             selectOption($(".option.active"));
             nextTabIndex(e);
             just_get_all_menu();
         }
+    });
+
+    $(".select").on("valueSelected", function() {
+        var id = $(this).attr("data-value");
+        var selectedOption = $(".option[data-value='" + id + "']");
+        var nama = selectedOption.attr("data-nama");
+        var harga = removeThousandSeparator(selectedOption.attr("data-harga"));
+        $(this).attr("data-nama", nama);
+        $(this).attr("data-harga", harga);
     });
 
     $(document).on("click", ".btn-cancel-menu", function() {
@@ -102,9 +111,12 @@ function do_transaksi() {
     });
 
     ajaxCall(do_transaksi_url, {menu: menu}, function(json) {
+        alert(json);
         var result = jQuery.parseJSON(json);
         closeDialog();
         showNotification("Transaksi Berhasil");
+        $(".subtotal").attr("data-value", "0");
+        $(".subtotal").html("0");
     });
 }
 

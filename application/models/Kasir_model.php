@@ -76,11 +76,11 @@ class Kasir_model extends CI_Model
                 $jLength = sizeof($menu_bahan);
                 $insertDataArray = array();
                 for ($j = 0; $j < $jLength; $j++) {
-                    $pemakaian_bahan = intval($menu[$i]["menu_qty"]) * intval($menu_bahan[$j]["bahan_qty"]);
-                    if (array_key_exists($menu_bahan[$j]["bahan_id"], $bahan_array)) {
-                        $bahan_array[$menu_bahan[$j]["bahan_id"]] = $pemakaian_bahan;
+                    $pemakaian_bahan = intval($menu[$i]["menu_qty"]) * intval($menu_bahan[$j]->bahan_qty);
+                    if (!array_key_exists("b" . $menu_bahan[$j]->bahan_id, $bahan_array)) {
+                        $bahan_array["b" . $menu_bahan[$j]->bahan_id] = $pemakaian_bahan;
                     } else {
-                        $bahan_array[$menu_bahan[$j]["bahan_id"]] += $pemakaian_bahan;
+                        $bahan_array["b" . $menu_bahan[$j]->bahan_id] += $pemakaian_bahan;
                     }
                 }
             }
@@ -88,6 +88,7 @@ class Kasir_model extends CI_Model
 
         $insertDataArray = array();
         foreach ($insertDataArray as $key => $value) {
+            $key = substr($key, 1);
             array_push($insertDataArray, array(
                 "bahan_id" => $key,
                 "transaksi_bahan_qty" => $bahan_array[$key],
@@ -102,6 +103,7 @@ class Kasir_model extends CI_Model
 
         $insertDataArray = array();
         foreach ($insertDataArray as $key => $value) {
+            $key = substr($key, 1);
             $this->db->where("bahan_id", $key);
             $this->db->set("bahan_stok", "bahan_stok - " . $bahan_array[$key], false);
             $this->db->set("modified_date", "NOW()", false);
