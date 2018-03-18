@@ -41,23 +41,37 @@ class Kasir extends General_controller {
 
 		$meja_id = 0;
 		$menu = $this->input->post("menu");
+		$menu_array = array();
+		$menu_item = explode(";", $menu);
+		$iLength = sizeof($menu_item);
+		for ($i = 0; $i < $iLength; $i++) {
+			$menu_col = explode("~", $menu_item[$i]);
+			$menu_id = $menu_col[0];
+			$menu_qty = $menu_col[1];
+
+			array_push($menu_array, array(
+				"menu_id" => $menu_id,
+				"menu_qty" => $menu_qty
+			));
+		}
+
 		$user_id = parent::is_logged_in();
 
-		$subtotal_qty = $this->Kasir_model->get_transaksi_subtotal($menu);
+		$subtotal_qty = $this->Kasir_model->get_transaksi_subtotal($menu_array);
 		$subtotal = $subtotal_qty["subtotal"];
 		$total_qty = $subtotal_qty["total_qty"];
 
 		$data = array(
 			"meja_id" => "0",
 			"user_id" => $user_id,
-			"menu" => $menu,
+			"menu" => $menu_array,
 			"h_transaksi_subtotal" => $subtotal,
-			"h_transaksi_service_charga" => 0,
+			"h_transaksi_service_charge" => 0,
 			"h_transaksi_tax" => 0,
 			"h_transaksi_total" => $subtotal,
 			"h_transaksi_total_qty" => $total_qty
 		);
-		$this->Admin_model->transaksi($data);
+		$this->Kasir_model->transaksi($data);
 		echo json_encode(array(
 			"status" => "success"
 		));

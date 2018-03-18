@@ -71,6 +71,10 @@
                 <span class="dialog-confirm-bayar-titik-dua">: Rp</span>
                 <span class="dialog-confirm-bayar-right dialog-confirm-bayar-bayar"></span>
                 <br />
+                <span class="dialog-confirm-bayar-left">Kembali</span>
+                <span class="dialog-confirm-bayar-titik-dua">: Rp</span>
+                <span class="dialog-confirm-bayar-right dialog-confirm-bayar-kembali"></span>
+                <br />
                 Bayar?
             </div>
             <div class="dialog-button-container">
@@ -82,4 +86,5 @@
 </div>
 <script>
 var get_all_menu_url = "<?php echo base_url("kasir/get_all_menu"); ?>";
+var do_transaksi_url = "<?php echo base_url("kasir/do_transaksi"); ?>";
 </script>

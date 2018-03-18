@@ -82,8 +82,31 @@ $(function() {
         showConfirmDialogBayar();
     });
 
+    $(".btn-confirm-bayar").on("click", function() {
+        do_transaksi();
+    });
+
     get_all_menu(true);
 });
+
+function do_transaksi() {
+    var menu = "";
+    $(".detail-table tbody tr").each(function() {
+        var menu_id = $(this).attr("data-id");
+        var qty = $(this).attr("data-qty");
+
+        if (menu != "") {
+            menu += ";";
+        }
+        menu += menu_id + "~" + qty;
+    });
+
+    ajaxCall(do_transaksi_url, {menu: menu}, function(json) {
+        var result = jQuery.parseJSON(json);
+        closeDialog();
+        showNotification("Transaksi Berhasil");
+    });
+}
 
 function initialize() {
     just_get_all_menu(true);
@@ -114,8 +137,10 @@ function showConfirmDialogBayar() {
         var dialogConfirmBayar = $(".dialog-confirm-bayar");
         dialogConfirmBayar.attr("data-total", total);
         dialogConfirmBayar.attr("data-bayar", bayar);
+        var kembali = bayar - total;
         $(".dialog-confirm-bayar-total").html(addThousandSeparator(total + ""));
         $(".dialog-confirm-bayar-bayar").html(addThousandSeparator(bayar + ""));
+        $(".dialog-confirm-bayar-kembali").html(addThousandSeparator(kembali + ""));
         showDialog(dialogConfirmBayar);
     }
 }
@@ -184,6 +209,7 @@ function add_to_table() {
             var tdQty = $(tbodyTR[i]).find("td:nth-child(4)");
             var currentQty = parseInt(tdQty.html());
             currentQty += qty;
+            $(tbodyTR[i]).attr("data-qty", currentQty);
             tdQty.html(currentQty);
             
             var tdSubtotal = $(tbodyTR[i]).find("td:nth-child(5)");
@@ -198,7 +224,7 @@ function add_to_table() {
     }
 
     var element = "";
-    element += "<tr data-id='" + id + "' data-subtotal='" + subtotal + "'>";
+    element += "<tr data-id='" + id + "' data-subtotal='" + subtotal + "' data-qty='" + qty + "'>";
     element += "<td>" + id + "</td>";
     element += "<td>" + nama + "</td>";
     element += "<td>" + addThousandSeparator(harga + "") + "</td>";

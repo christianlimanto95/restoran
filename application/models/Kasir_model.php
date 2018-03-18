@@ -23,10 +23,10 @@ class Kasir_model extends CI_Model
         for ($i = 0; $i < $iLength; $i++) {
             $this->db->select("menu_harga");
             $this->db->where("menu_id", $menu[$i]["menu_id"]);
-            $this->db-limit(1);
+            $this->db->limit(1);
             $harga = $this->db->get("menu")->result();
-            $subtotal += intval($menu["menu_qty"]) * intval($harga[0]->menu_harga);
-            $total_qty += intval($menu["menu_qty"]);
+            $subtotal += intval($menu[$i]["menu_qty"]) * intval($harga[0]->menu_harga);
+            $total_qty += intval($menu[$i]["menu_qty"]);
         }
         return array(
             "subtotal" => $subtotal,
@@ -87,7 +87,7 @@ class Kasir_model extends CI_Model
         }
 
         $insertDataArray = array();
-        foreach ($array as $key => $value) {
+        foreach ($insertDataArray as $key => $value) {
             array_push($insertDataArray, array(
                 "bahan_id" => $key,
                 "transaksi_bahan_qty" => $bahan_array[$key],
@@ -101,7 +101,7 @@ class Kasir_model extends CI_Model
         }
 
         $insertDataArray = array();
-        foreach ($array as $key => $value) {
+        foreach ($insertDataArray as $key => $value) {
             $this->db->where("bahan_id", $key);
             $this->db->set("bahan_stok", "bahan_stok - " . $bahan_array[$key], false);
             $this->db->set("modified_date", "NOW()", false);
