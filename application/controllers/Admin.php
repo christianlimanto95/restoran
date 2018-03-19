@@ -328,4 +328,13 @@ class Admin extends General_controller {
 		
 		parent::view("admin_laporan_harian", $data);
 	}
+
+	function get_transaksi_bahan_today() {
+		parent::show_404_if_not_ajax();
+		$data = $this->Admin_model->get_transaksi_bahan_today();
+		echo json_encode(array(
+			"status" => "success",
+			"data" => $data
+		));
+	}
 }

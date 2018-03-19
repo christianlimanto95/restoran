@@ -90,7 +90,7 @@ class Kasir_model extends CI_Model
         foreach ($bahan_array as $key => $value) {
             array_push($insertDataArray, array(
                 "bahan_id" => substr($key, 1),
-                "transaksi_bahan_qty" => $bahan_array[$key],
+                "transaksi_bahan_qty" => -$bahan_array[$key],
                 "transaksi_bahan_sumber" => 2,
                 "created_by" => $data["user_id"],
                 "modified_by" => $data["user_id"]

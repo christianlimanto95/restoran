@@ -64,10 +64,15 @@
     font-size: 1vw;
     font-weight: bold;
     padding: 0.2vw 0;
+    text-transform: uppercase;
 }
 
 .table-stok td:nth-child(1) {
     padding-right: 1vw;
+}
+
+.table-stok td:nth-child(2) {
+    text-align: right;
 }
 
 .total {

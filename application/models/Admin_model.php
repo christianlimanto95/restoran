@@ -192,7 +192,8 @@ class Admin_model extends CI_Model
         $query = $this->db->query("
             SELECT tb.bahan_id, b.bahan_nama, tb.transaksi_bahan_qty
             FROM transaksi_bahan tb, bahan b
-            WHERE tb.bahan_id = b.bahan_id
+            WHERE tb.bahan_id = b.bahan_id AND tb.created_date >= CURDATE() AND tb.created_date < DATE_ADD(CURDATE(), INTERVAL 1 DAY)
         ");
+        return $query->result();
     }
 }

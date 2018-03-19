@@ -170,3 +170,6 @@
         </div>
     </div>
 </div>
+<script>
+var get_transaksi_bahan_url = "<?php echo base_url("admin/get_transaksi_bahan_today") ?>";
+</script>
