@@ -17,14 +17,7 @@
             <div class="stok-title">STOCK MASUK</div>
             <table class="table-stok">
                 <tbody>
-                    <tr>
-                        <td>BABI</td>
-                        <td>: 5000 gram</td>
-                    </tr>
-                    <tr>
-                        <td>MIE</td>
-                        <td>: 5000 gram</td>
-                    </tr>
+                    
                 </tbody>
             </table>
         </div>
@@ -32,14 +25,7 @@
             <div class="stok-title">STOCK KELUAR</div>
             <table class="table-stok">
                 <tbody>
-                    <tr>
-                        <td>BABI</td>
-                        <td>: 5000 gram</td>
-                    </tr>
-                    <tr>
-                        <td>MIE</td>
-                        <td>: 5000 gram</td>
-                    </tr>
+                    
                 </tbody>
             </table>
         </div>
@@ -47,25 +33,18 @@
             <div class="stok-title">SISA STOCK</div>
             <table class="table-stok">
                 <tbody>
-                    <tr>
-                        <td>BABI</td>
-                        <td>: 5000 gram</td>
-                    </tr>
-                    <tr>
-                        <td>MIE</td>
-                        <td>: 5000 gram</td>
-                    </tr>
+                    
                 </tbody>
             </table>
         </div>
     </div>
     <div class="total">
         <span class="total-label">TOTAL TRANSAKSI : </span>
-        <span class="total-value">6</span>
+        <span class="total-value total-transaksi-value">6</span>
     </div>
     <div class="total">
         <span class="total-label">TOTAL PEMASUKAN : </span>
-        <span class="total-value">900.000</span>
+        <span class="total-value total-pemasukan-value">900.000</span>
     </div>
     <div class="daftar-container">
         <div class="daftar daftar-transaksi">
@@ -172,4 +151,6 @@
 </div>
 <script>
 var get_transaksi_bahan_url = "<?php echo base_url("admin/get_transaksi_bahan_today") ?>";
+var get_stock_bahan_url = "<?php echo base_url("admin/get_stock_bahan_today") ?>";
+var get_total_url = "<?php echo base_url("admin/get_total_today") ?>";
 </script>

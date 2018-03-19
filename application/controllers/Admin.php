@@ -337,4 +337,22 @@ class Admin extends General_controller {
 			"data" => $data
 		));
 	}
+
+	function get_stock_bahan_today() {
+		parent::show_404_if_not_ajax();
+		$data = $this->Admin_model->get_stock_bahan_today();
+		echo json_encode(array(
+			"status" => "success",
+			"data" => $data
+		));
+	}
+
+	function get_total_today() {
+		parent::show_404_if_not_ajax();
+		$data = $this->Admin_model->get_total_today();
+		echo json_encode(array(
+			"status" => "success",
+			"data" => $data
+		));
+	}
 }

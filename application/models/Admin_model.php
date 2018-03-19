@@ -196,4 +196,21 @@ class Admin_model extends CI_Model
         ");
         return $query->result();
     }
+
+    function get_stock_bahan_today() {
+        $query = $this->db->query("
+            SELECT bahan_id, bahan_nama, bahan_stok, bahan_satuan
+            FROM bahan
+            WHERE status = 1
+        ");
+        return $query->result();
+    }
+
+    function get_total_today() {
+        $query = $this->db->query("
+            SELECT IFNULL(t.count, 0) AS count, IFNULL(t.total, 0) AS total
+            FROM (SELECT COUNT(h_transaksi_id) AS count, SUM(h_transaksi_total) AS total FROM h_transaksi WHERE created_date >= CURDATE() AND created_date < DATE_ADD(CURDATE(), INTERVAL 1 DAY)) t
+        ");
+        return $query->result();
+    }
 }
