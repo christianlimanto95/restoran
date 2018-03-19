@@ -66,6 +66,12 @@
             <div class="daftar-title">DAFTAR MAKANAN/MINUMAN TERJUAL</div>
             <table class="table-daftar-makanan table-daftar">
                 <thead>
+                    <tr>
+                        <td>MENU</td>
+                        <td>JUMLAH</td>
+                    </tr>
+                </thead>
+                <tbody>
                     
                 </tbody>
             </table>
