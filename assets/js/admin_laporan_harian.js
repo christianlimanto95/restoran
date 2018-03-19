@@ -2,6 +2,8 @@ $(function() {
     get_transaksi_bahan();
     get_stock_bahan();
     get_total();
+    get_daftar_transaksi();
+    get_menu_terjual();
 });
 
 function get_transaksi_bahan() {
@@ -83,6 +85,43 @@ function get_total() {
             var data = result.data[0];
             $(".total-transaksi-value").html(data.count);
             $(".total-pemasukan-value").html(addThousandSeparator(data.total));
+        }
+    });
+}
+
+function get_daftar_transaksi() {
+    ajaxCall(get_daftar_transaksi_url, null, function(json) {
+        var result = jQuery.parseJSON(json);
+        if (result.status == "success") {
+            var data = result.data;
+            var iLength = data.length;
+            var element = "";
+            for (var i = 0; i < iLength; i++) {
+                element += "<tr>";
+                element += "<td>" + data[i].h_transaksi_id + "</td>";
+                element += "<td>" + addThousandSeparator(data[i].h_transaksi_total) + "</td>";
+                element += "<td><div class='btn-detail'>DETAIL</div></td>";
+                element += "</tr>";
+            }
+            $(".table-daftar-transaksi tbody").html(element);
+        }
+    });
+}
+
+function get_menu_terjual() {
+    ajaxCall(get_menu_terjual_url, null, function(json) {
+        var result = jQuery.parseJSON(json);
+        if (result.status == "success") {
+            var data = result.data;
+            var iLength = data.length;
+            var element = "";
+            for (var i = 0; i < iLength; i++) {
+                element += "<tr>";
+                element += "<td>" + data[i].menu_nama + "</td>";
+                element += "<td>" + data[i].count + "</td>";
+                element += "</tr>";
+            }
+            $(".table-daftar-makanan tbody").html(element);
         }
     });
 }

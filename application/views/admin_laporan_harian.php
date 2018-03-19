@@ -58,71 +58,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>DB1800001</td>
-                        <td>34.000</td>
-                        <td><div class="btn-detail">DETAIL</div></td>
-                    </tr>
-                    <tr>
-                        <td>DB1800001</td>
-                        <td>34.000</td>
-                        <td><div class="btn-detail">DETAIL</div></td>
-                    </tr>
-                    <tr>
-                        <td>DB1800001</td>
-                        <td>34.000</td>
-                        <td><div class="btn-detail">DETAIL</div></td>
-                    </tr>
-                    <tr>
-                        <td>DB1800001</td>
-                        <td>34.000</td>
-                        <td><div class="btn-detail">DETAIL</div></td>
-                    </tr>
-                    <tr>
-                        <td>DB1800001</td>
-                        <td>34.000</td>
-                        <td><div class="btn-detail">DETAIL</div></td>
-                    </tr>
-                    <tr>
-                        <td>DB1800001</td>
-                        <td>34.000</td>
-                        <td><div class="btn-detail">DETAIL</div></td>
-                    </tr>
-                    <tr>
-                        <td>DB1800001</td>
-                        <td>34.000</td>
-                        <td><div class="btn-detail">DETAIL</div></td>
-                    </tr>
-                    <tr>
-                        <td>DB1800001</td>
-                        <td>34.000</td>
-                        <td><div class="btn-detail">DETAIL</div></td>
-                    </tr>
-                    <tr>
-                        <td>DB1800001</td>
-                        <td>34.000</td>
-                        <td><div class="btn-detail">DETAIL</div></td>
-                    </tr>
-                    <tr>
-                        <td>DB1800001</td>
-                        <td>34.000</td>
-                        <td><div class="btn-detail">DETAIL</div></td>
-                    </tr>
-                    <tr>
-                        <td>DB1800001</td>
-                        <td>34.000</td>
-                        <td><div class="btn-detail">DETAIL</div></td>
-                    </tr>
-                    <tr>
-                        <td>DB1800001</td>
-                        <td>34.000</td>
-                        <td><div class="btn-detail">DETAIL</div></td>
-                    </tr>
-                    <tr>
-                        <td>DB1800001</td>
-                        <td>34.000</td>
-                        <td><div class="btn-detail">DETAIL</div></td>
-                    </tr>
+                    
                 </tbody>
             </table>
         </div>
@@ -130,20 +66,7 @@
             <div class="daftar-title">DAFTAR MAKANAN/MINUMAN TERJUAL</div>
             <table class="table-daftar-makanan table-daftar">
                 <thead>
-                    <tr>
-                        <td>MENU</td>
-                        <td>JUMLAH</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>NASI BABI KECAP</td>
-                        <td>20</td>
-                    </tr>
-                    <tr>
-                        <td>ES TEH TAWAR</td>
-                        <td>15</td>
-                    </tr>
+                    
                 </tbody>
             </table>
         </div>
@@ -153,4 +76,6 @@
 var get_transaksi_bahan_url = "<?php echo base_url("admin/get_transaksi_bahan_today") ?>";
 var get_stock_bahan_url = "<?php echo base_url("admin/get_stock_bahan_today") ?>";
 var get_total_url = "<?php echo base_url("admin/get_total_today") ?>";
+var get_daftar_transaksi_url = "<?php echo base_url("admin/get_daftar_transaksi_today") ?>";
+var get_menu_terjual_url = "<?php echo base_url("admin/get_menu_terjual_today") ?>";
 </script>

@@ -355,4 +355,22 @@ class Admin extends General_controller {
 			"data" => $data
 		));
 	}
+
+	function get_daftar_transaksi_today() {
+		parent::show_404_if_not_ajax();
+		$data = $this->Admin_model->get_daftar_transaksi_today();
+		echo json_encode(array(
+			"status" => "success",
+			"data" => $data
+		));
+	}
+
+	function get_menu_terjual_today() {
+		parent::show_404_if_not_ajax();
+		$data = $this->Admin_model->get_menu_terjual_today();
+		echo json_encode(array(
+			"status" => "success",
+			"data" => $data
+		));
+	}
 }

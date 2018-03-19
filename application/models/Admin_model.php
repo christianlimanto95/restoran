@@ -213,4 +213,24 @@ class Admin_model extends CI_Model
         ");
         return $query->result();
     }
+
+    function get_daftar_transaksi_today() {
+        $query = $this->db->query("
+            SELECT h_transaksi_id, h_transaksi_total
+            FROM h_transaksi
+            WHERE created_date >= CURDATE() AND created_date < DATE_ADD(CURDATE(), INTERVAL 1 DAY)
+        ");
+        return $query->result();
+    }
+
+    function get_menu_terjual_today() {
+        $query = $this->db->query("
+            SELECT d.menu_id, m.menu_nama, SUM(d.menu_qty) AS count
+            FROM d_transaksi d, menu m
+            WHERE d.menu_id = m.menu_id AND d.created_date >= CURDATE() AND d.created_date < DATE_ADD(CURDATE(), INTERVAL 1 DAY)
+            GROUP BY d.menu_id
+            ORDER BY SUM(d.menu_qty) DESC
+        ");
+        return $query->result();
+    }
 }
