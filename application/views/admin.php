@@ -18,7 +18,7 @@
             <div class="main-menu-image" style="background-image: url(<?php echo base_url("assets/images/stock.png"); ?>);"></div>
             <div class="main-menu-text">M. STOCK</div>
         </a>
-        <a href="<?php echo base_url("admin/laporan"); ?>" class="main-menu main-menu-laporan" tabindex="4">
+        <a href="<?php echo base_url("admin/laporan_harian"); ?>" class="main-menu main-menu-laporan" tabindex="4">
             <div class="main-menu-image" style="background-image: url(<?php echo base_url("assets/images/report.png"); ?>);"></div>
             <div class="main-menu-text">LAPORAN</div>
         </a>

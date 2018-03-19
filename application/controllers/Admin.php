@@ -317,4 +317,15 @@ class Admin extends General_controller {
 			));
 		}
 	}
+
+	function laporan_harian() {
+		setlocale(LC_ALL, "id_ID");
+		$date = date("l, j F Y");
+		$data = array(
+			"title" => "Laporan Harian",
+			"date" => $date
+		);
+		
+		parent::view("admin_laporan_harian", $data);
+	}
 }

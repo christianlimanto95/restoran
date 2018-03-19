@@ -1,0 +1,141 @@
+.title {
+    font-family: pinarak;
+    text-align: center;
+    font-size: 3.5vw;
+    margin-top: 1vw;
+}
+
+.center {
+    width: 80vw;
+    margin: 3vw auto 0;
+    font-weight: bold;
+    margin-bottom: 5vw;
+}
+
+.laporan-tab-container {
+    text-align: center;
+}
+
+.laporan-tab {
+    display: inline-block;
+    font-size: 1.8vw;
+    margin-right: 8vw;
+    text-decoration: none;
+    color: black;
+}
+
+.laporan-tab:nth-last-child(1) {
+    margin-right: 0;
+}
+
+.laporan-tab.active {
+    border-bottom: 5px solid black;
+}
+
+.date {
+    font-size: 1.8vw;
+    margin-top: 3vw;
+    margin-bottom: 1vw;
+}
+
+.stok-container {
+    margin-bottom: 2vw;
+}
+
+.stok {
+    display: inline-block;
+    margin-right: 6vw;
+}
+
+.stok:nth-last-child(1) {
+    margin-right: 0;
+}
+
+.stok-title {
+    font-size: 1.3vw;
+    margin-bottom: 0.5vw;
+}
+
+.table-stok {
+    margin-left: 1vw;
+}
+
+.table-stok td {
+    font-size: 1vw;
+    font-weight: bold;
+    padding: 0.2vw 0;
+}
+
+.table-stok td:nth-child(1) {
+    padding-right: 1vw;
+}
+
+.total {
+    font-size: 1.3vw;
+    line-height: 2vw;
+}
+
+.daftar-container {
+    margin-top: 3vw;
+}
+
+.daftar {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.daftar-transaksi {
+    width: 35vw;
+}
+
+.daftar-title {
+    font-size: 1.3vw;
+    margin-bottom: 1vw;
+}
+
+.table-daftar {
+    display: inline-block;
+    max-height: 17vw;
+    overflow-y: auto;
+}
+
+.table-daftar td {
+    padding: 0.3vw;
+    font-size: 1vw;
+    font-weight: bold;
+}
+
+.table-daftar thead td {
+    padding-bottom: 0.6vw;
+    border-bottom: 3px solid black;
+}
+
+.table-daftar tbody tr:nth-child(1) td {
+    padding-top: 0.6vw;
+}
+
+.table-daftar td:nth-child(1) {
+    padding-left: 1vw;
+}
+
+.table-daftar td:nth-last-child(1) {
+    padding-right: 1vw;
+}
+
+.table-daftar-transaksi td:nth-child(1) {
+    width: 12vw;
+    padding-left: 1vw;
+}
+
+.table-daftar-transaksi td:nth-child(2) {
+    width: 7vw;
+}
+
+.table-daftar-makanan td:nth-child(1) {
+    width: 15vw;
+}
+
+.table-daftar-makanan tbody td:nth-child(2) {
+    padding-right: 2vw;
+    text-align: right;
+}

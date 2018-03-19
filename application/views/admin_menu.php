@@ -139,7 +139,7 @@
             </div>
             <div class="dialog-button-container">
                 <div class="button btn-cancel">BATAL</div>
-                <div class="button btn-confirm-edit-menu">UBAH</div>
+                <div class="button btn-confirm-edit-menu">SIMPAN</div>
             </div>
         </div>
     </div>
@@ -165,7 +165,7 @@
             </div>
             <div class="dialog-button-container">
                 <div class="button btn-cancel">BATAL</div>
-                <div class="button btn-confirm-edit-bahan">UBAH</div>
+                <div class="button btn-confirm-edit-bahan">SIMPAN</div>
             </div>
         </div>
     </div>

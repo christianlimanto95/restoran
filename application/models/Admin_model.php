@@ -187,4 +187,12 @@ class Admin_model extends CI_Model
             }
         }
     }
+
+    function get_transaksi_bahan_today() {
+        $query = $this->db->query("
+            SELECT tb.bahan_id, b.bahan_nama, tb.transaksi_bahan_qty
+            FROM transaksi_bahan tb, bahan b
+            WHERE tb.bahan_id = b.bahan_id
+        ");
+    }
 }
