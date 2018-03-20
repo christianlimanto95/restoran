@@ -4,6 +4,22 @@ $(function() {
     get_total();
     get_daftar_transaksi();
     get_menu_terjual();
+
+    $(document).on("click", ".btn-detail", function() {
+        var h_transaksi_id = $(this).closest("tr").attr("data-id");
+        var dialogDetailTransaksi = $(".dialog-detail-transaksi");
+        dialogDetailTransaksi.find(".dialog-title").html("DETAIL TRANSAKSI " + h_transaksi_id);
+        dialogDetailTransaksi.attr("data-id", h_transaksi_id);
+        showDialog(dialogDetailTransaksi);
+    });
+
+    $(".dialog-detail-transaksi").on("dialogShown", function() {
+        get_transaksi_detail();
+    });
+
+    $(".dialog-detail-transaksi").on("dialogClosed", function() {
+        $(".table-detail-transaksi tbody").html("");
+    });
 });
 
 function get_transaksi_bahan() {
@@ -97,7 +113,7 @@ function get_daftar_transaksi() {
             var iLength = data.length;
             var element = "";
             for (var i = 0; i < iLength; i++) {
-                element += "<tr>";
+                element += "<tr data-id='" + data[i].h_transaksi_id + "'>";
                 element += "<td>" + data[i].h_transaksi_id + "</td>";
                 element += "<td>" + addThousandSeparator(data[i].h_transaksi_total) + "</td>";
                 element += "<td><div class='btn-detail'>DETAIL</div></td>";
@@ -122,6 +138,28 @@ function get_menu_terjual() {
                 element += "</tr>";
             }
             $(".table-daftar-makanan tbody").html(element);
+        }
+    });
+}
+
+function get_transaksi_detail() {
+    var h_transaksi_id = $(".dialog-detail-transaksi").attr("data-id");
+    ajaxCall(get_transaksi_detail_url, {h_transaksi_id: h_transaksi_id}, function(json) {
+        var result = jQuery.parseJSON(json);
+        if (result.status == "success") {
+            var data = result.data;
+            var iLength = data.length;
+            var element = "";
+            for (var i = 0; i < iLength; i++) {
+                element += "<tr>";
+                element += "<td>" + data[i].menu_id + "</td>";
+                element += "<td>" + data[i].menu_nama + "</td>";
+                element += "<td>" + data[i].menu_harga + "</td>";
+                element += "<td>" + data[i].menu_qty + "</td>";
+                element += "<td>" + data[i].menu_subtotal + "</td>";
+                element += "</tr>";
+            }
+            $(".table-detail-transaksi tbody").html(element);
         }
     });
 }

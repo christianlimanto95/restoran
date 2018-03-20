@@ -233,4 +233,13 @@ class Admin_model extends CI_Model
         ");
         return $query->result();
     }
+
+    function get_transaksi_detail_by_h_transaksi($h_transaksi_id) {
+        $query = $this->db->query("
+            SELECT d.d_transaksi_id, d.menu_id, d.menu_nama, d.menu_harga, d.menu_qty, d.menu_subtotal
+            FROM d_transaksi d
+            WHERE d.h_transaksi_id = '" . $h_transaksi_id . "'
+        ");
+        return $query->result();
+    }
 }

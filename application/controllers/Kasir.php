@@ -22,28 +22,6 @@ class Kasir extends General_controller {
 		parent::view("kasir", $data);
 	}
 
-	function test() {
-		$bahan_array = array();
-
-		$this->db->select("bahan_id, bahan_qty");
-		$this->db->where("menu_id", 12);
-		$menu_bahan = $this->db->get("menu_bahan")->result();
-
-		if ($menu_bahan != "") {
-			$jLength = sizeof($menu_bahan);
-			$insertDataArray = array();
-			for ($j = 0; $j < $jLength; $j++) {
-				$pemakaian_bahan = intval("3") * intval($menu_bahan[$j]->bahan_qty);
-				if (!array_key_exists("b" . $menu_bahan[$j]->bahan_id, $bahan_array)) {
-					$bahan_array["b" . $menu_bahan[$j]->bahan_id] = $pemakaian_bahan;
-				} else {
-					$bahan_array["b" . $menu_bahan[$j]->bahan_id] += $pemakaian_bahan;
-				}
-			}
-		}
-		
-	}
-
 	function get_all_menu() {
 		$keyword = $this->input->post("keyword");
 		$menus = $this->Kasir_model->get_all_menu($keyword);
@@ -82,6 +60,7 @@ class Kasir extends General_controller {
 		$subtotal_qty = $this->Kasir_model->get_transaksi_subtotal($menu_array);
 		$subtotal = $subtotal_qty["subtotal"];
 		$total_qty = $subtotal_qty["total_qty"];
+		$menu_array = $subtotal_qty["menu"];
 
 		$data = array(
 			"meja_id" => "0",

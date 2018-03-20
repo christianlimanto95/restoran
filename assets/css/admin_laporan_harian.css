@@ -136,11 +136,61 @@
     width: 7vw;
 }
 
+.btn-detail {
+    padding: 0vw 0.5vw;
+    cursor: pointer;
+}
+
+.btn-detail:hover {
+    background-color: #E0E0E0;
+}
+
 .table-daftar-makanan td:nth-child(1) {
     width: 15vw;
 }
 
 .table-daftar-makanan tbody td:nth-child(2) {
     padding-right: 2vw;
+    text-align: right;
+}
+
+.dialog-detail-transaksi .dialog-box {
+    width: 47vw;
+    height: 30vw;
+}
+
+.dialog-detail-transaksi .dialog-text {
+    max-height: 16vw;
+    overflow-y: auto;
+}
+
+.table-detail-transaksi td {
+    font-size: 1vw;
+    padding: 0.3vw 0.5vw;
+}
+
+.table-detail-transaksi thead td {
+    padding-bottom: 0.6vw;
+    border-bottom: 3px solid black;
+}
+
+.table-detail-transaksi tbody tr:nth-child(1) td {
+    padding-top: 0.6vw;
+}
+
+.table-detail-transaksi td:nth-child(1) {
+    width: 6vw;
+}
+
+.table-detail-transaksi td:nth-child(2) {
+    width: 15vw;
+}
+
+.table-detail-transaksi td:nth-child(3), .table-detail-transaksi td:nth-child(5) {
+    width: 7vw;
+    text-align: right;
+}
+
+.table-detail-transaksi td:nth-child(4) {
     text-align: right;
 }

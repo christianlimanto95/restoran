@@ -373,4 +373,14 @@ class Admin extends General_controller {
 			"data" => $data
 		));
 	}
+
+	function get_transaksi_detail() {
+		parent::show_404_if_not_ajax();
+		$h_transaksi_id = $this->input->post("h_transaksi_id");
+		$data = $this->Admin_model->get_transaksi_detail_by_h_transaksi($h_transaksi_id);
+		echo json_encode(array(
+			"status" => "success",
+			"data" => $data
+		));
+	}
 }

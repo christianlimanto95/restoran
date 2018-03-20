@@ -19,16 +19,29 @@ class Kasir_model extends CI_Model
     function get_transaksi_subtotal($menu) {
         $subtotal = 0;
         $total_qty = 0;
+        $menu_data = array();
         $iLength = sizeof($menu);
         for ($i = 0; $i < $iLength; $i++) {
-            $this->db->select("menu_harga");
+            $this->db->select("menu_nama, menu_harga");
             $this->db->where("menu_id", $menu[$i]["menu_id"]);
             $this->db->limit(1);
-            $harga = $this->db->get("menu")->result();
-            $subtotal += intval($menu[$i]["menu_qty"]) * intval($harga[0]->menu_harga);
+            $result = $this->db->get("menu")->result();
+            $nama = $result[0]->menu_nama;
+            $harga = intval($result[0]->menu_harga);
+            $menu_subtotal = intval($menu[$i]["menu_qty"]) * $harga;
+            array_push($menu_data, array(
+                "menu_id" => $menu[$i]["menu_id"],
+                "menu_nama" => $nama,
+                "menu_qty" => intval($menu[$i]["menu_qty"]),
+                "menu_harga" => $harga,
+                "menu_subtotal" => $menu_subtotal
+            ));
+
+            $subtotal += $menu_subtotal;
             $total_qty += intval($menu[$i]["menu_qty"]);
         }
         return array(
+            "menu" => $menu_data,
             "subtotal" => $subtotal,
             "total_qty" => $total_qty
         );
@@ -58,7 +71,10 @@ class Kasir_model extends CI_Model
             array_push($insertDataArray, array(
                 "h_transaksi_id" => $h_transaksi_id,
                 "menu_id" => $menu[$i]["menu_id"],
-                "menu_qty" => $menu[$i]["menu_qty"]
+                "menu_qty" => $menu[$i]["menu_qty"],
+                "menu_nama" => $menu[$i]["menu_nama"],
+                "menu_harga" => $menu[$i]["menu_harga"],
+                "menu_subtotal" => $menu[$i]["menu_subtotal"]
             ));
         }
         if ($iLength > 0) {
