@@ -331,7 +331,17 @@ class Admin extends General_controller {
 
 	function get_transaksi_bahan_today() {
 		parent::show_404_if_not_ajax();
-		$data = $this->Admin_model->get_transaksi_bahan_today();
+		$start_date = $this->input->post("start_date");
+		$end_date = $this->input->post("end_date");
+		$data = null;
+		if ($start_date != null && $end_date != null) {
+			$data = array(
+				"start_date" => $start_date,
+				"end_date" => $end_date
+			);
+		}
+
+		$data = $this->Admin_model->get_transaksi_bahan_today($data);
 		echo json_encode(array(
 			"status" => "success",
 			"data" => $data
@@ -340,7 +350,17 @@ class Admin extends General_controller {
 
 	function get_stock_bahan_today() {
 		parent::show_404_if_not_ajax();
-		$data = $this->Admin_model->get_stock_bahan_today();
+		$start_date = $this->input->post("start_date");
+		$end_date = $this->input->post("end_date");
+		$data = null;
+		if ($start_date != null && $end_date != null) {
+			$data = array(
+				"start_date" => $start_date,
+				"end_date" => $end_date
+			);
+		}
+
+		$data = $this->Admin_model->get_stock_bahan_today($data);
 		echo json_encode(array(
 			"status" => "success",
 			"data" => $data
@@ -349,7 +369,17 @@ class Admin extends General_controller {
 
 	function get_total_today() {
 		parent::show_404_if_not_ajax();
-		$data = $this->Admin_model->get_total_today();
+		$start_date = $this->input->post("start_date");
+		$end_date = $this->input->post("end_date");
+		$data = null;
+		if ($start_date != null && $end_date != null) {
+			$data = array(
+				"start_date" => $start_date,
+				"end_date" => $end_date
+			);
+		}
+
+		$data = $this->Admin_model->get_total_today($data);
 		echo json_encode(array(
 			"status" => "success",
 			"data" => $data
@@ -358,7 +388,17 @@ class Admin extends General_controller {
 
 	function get_daftar_transaksi_today() {
 		parent::show_404_if_not_ajax();
-		$data = $this->Admin_model->get_daftar_transaksi_today();
+		$start_date = $this->input->post("start_date");
+		$end_date = $this->input->post("end_date");
+		$data = null;
+		if ($start_date != null && $end_date != null) {
+			$data = array(
+				"start_date" => $start_date,
+				"end_date" => $end_date
+			);
+		}
+
+		$data = $this->Admin_model->get_daftar_transaksi_today($data);
 		echo json_encode(array(
 			"status" => "success",
 			"data" => $data
@@ -367,7 +407,17 @@ class Admin extends General_controller {
 
 	function get_menu_terjual_today() {
 		parent::show_404_if_not_ajax();
-		$data = $this->Admin_model->get_menu_terjual_today();
+		$start_date = $this->input->post("start_date");
+		$end_date = $this->input->post("end_date");
+		$data = null;
+		if ($start_date != null && $end_date != null) {
+			$data = array(
+				"start_date" => $start_date,
+				"end_date" => $end_date
+			);
+		}
+
+		$data = $this->Admin_model->get_menu_terjual_today($data);
 		echo json_encode(array(
 			"status" => "success",
 			"data" => $data
@@ -378,10 +428,25 @@ class Admin extends General_controller {
 		parent::show_404_if_not_ajax();
 		$h_transaksi_id = $this->input->post("h_transaksi_id");
 		$data = $this->Admin_model->get_transaksi_detail_by_h_transaksi($h_transaksi_id);
+		$iLength = sizeof($data);
+		for ($i = 0; $i < $iLength; $i++) {
+			$data[$i]->menu_id = str_pad($data[$i]->menu_id . "", 3, "0", STR_PAD_LEFT);
+		}
 		echo json_encode(array(
 			"status" => "success",
 			"data" => $data
 		));
+	}
+
+	function laporan_periode() {
+		setlocale(LC_ALL, "id_ID");
+		$date = date("l, j F Y");
+		$data = array(
+			"title" => "Laporan Periode",
+			"date" => $date
+		);
+		
+		parent::view("admin_laporan_periode", $data);
 	}
 
 	function laporan_transaksi() {
