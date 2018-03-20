@@ -189,15 +189,17 @@ class Admin_model extends CI_Model
     }
 
     function get_transaksi_bahan_today($date) {
-        $where_date = "";
+        $date_start = "CURDATE()";
+        $date_end = "DATE_ADD(CURDATE(), INTERVAL 1 DAY)";
         if ($date != null) {
-            $where_date = "";
+            $date_start = "'" . $date["start_date"] . " 00:00:00'";
+            $date_end = "'" . $date["end_date"] . " 23:59:59'";
         }
 
         $query = $this->db->query("
             SELECT tb.bahan_id, b.bahan_nama, tb.transaksi_bahan_qty
             FROM transaksi_bahan tb, bahan b
-            WHERE tb.bahan_id = b.bahan_id AND tb.created_date >= CURDATE() AND tb.created_date < DATE_ADD(CURDATE(), INTERVAL 1 DAY)
+            WHERE tb.bahan_id = b.bahan_id AND tb.created_date BETWEEN " . $date_start . " AND " . $date_end . "
         ");
         return $query->result();
     }
@@ -211,28 +213,49 @@ class Admin_model extends CI_Model
         return $query->result();
     }
 
-    function get_total_today() {
+    function get_total_today($date) {
+        $date_start = "CURDATE()";
+        $date_end = "DATE_ADD(CURDATE(), INTERVAL 1 DAY)";
+        if ($date != null) {
+            $date_start = "'" . $date["start_date"] . " 00:00:00'";
+            $date_end = "'" . $date["end_date"] . " 23:59:59'";
+        }
+
         $query = $this->db->query("
             SELECT IFNULL(t.count, 0) AS count, IFNULL(t.total, 0) AS total
-            FROM (SELECT COUNT(h_transaksi_id) AS count, SUM(h_transaksi_total) AS total FROM h_transaksi WHERE created_date >= CURDATE() AND created_date < DATE_ADD(CURDATE(), INTERVAL 1 DAY)) t
+            FROM (SELECT COUNT(h_transaksi_id) AS count, SUM(h_transaksi_total) AS total FROM h_transaksi WHERE created_date BETWEEN " . $date_start . " AND " . $date_end . ") t
         ");
         return $query->result();
     }
 
-    function get_daftar_transaksi_today() {
+    function get_daftar_transaksi_today($date) {
+        $date_start = "CURDATE()";
+        $date_end = "DATE_ADD(CURDATE(), INTERVAL 1 DAY)";
+        if ($date != null) {
+            $date_start = "'" . $date["start_date"] . " 00:00:00'";
+            $date_end = "'" . $date["end_date"] . " 23:59:59'";
+        }
+
         $query = $this->db->query("
             SELECT h_transaksi_id, h_transaksi_total
             FROM h_transaksi
-            WHERE created_date >= CURDATE() AND created_date < DATE_ADD(CURDATE(), INTERVAL 1 DAY)
+            WHERE created_date BETWEEN " . $date_start . " AND " . $date_end . "
         ");
         return $query->result();
     }
 
-    function get_menu_terjual_today() {
+    function get_menu_terjual_today($date) {
+        $date_start = "CURDATE()";
+        $date_end = "DATE_ADD(CURDATE(), INTERVAL 1 DAY)";
+        if ($date != null) {
+            $date_start = "'" . $date["start_date"] . " 00:00:00'";
+            $date_end = "'" . $date["end_date"] . " 23:59:59'";
+        }
+
         $query = $this->db->query("
             SELECT d.menu_id, m.menu_nama, SUM(d.menu_qty) AS count
             FROM d_transaksi d, menu m
-            WHERE d.menu_id = m.menu_id AND d.created_date >= CURDATE() AND d.created_date < DATE_ADD(CURDATE(), INTERVAL 1 DAY)
+            WHERE d.menu_id = m.menu_id AND d.created_date BETWEEN " . $date_start . " AND " . $date_end . "
             GROUP BY d.menu_id
             ORDER BY SUM(d.menu_qty) DESC
         ");

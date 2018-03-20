@@ -350,17 +350,7 @@ class Admin extends General_controller {
 
 	function get_stock_bahan_today() {
 		parent::show_404_if_not_ajax();
-		$start_date = $this->input->post("start_date");
-		$end_date = $this->input->post("end_date");
-		$data = null;
-		if ($start_date != null && $end_date != null) {
-			$data = array(
-				"start_date" => $start_date,
-				"end_date" => $end_date
-			);
-		}
-
-		$data = $this->Admin_model->get_stock_bahan_today($data);
+		$data = $this->Admin_model->get_stock_bahan_today();
 		echo json_encode(array(
 			"status" => "success",
 			"data" => $data
@@ -439,17 +429,16 @@ class Admin extends General_controller {
 	}
 
 	function laporan_periode() {
-		setlocale(LC_ALL, "id_ID");
-		$date = date("l, j F Y");
+		parent::load_module("jquery-ui.min");
 		$data = array(
-			"title" => "Laporan Periode",
-			"date" => $date
+			"title" => "Laporan Periode"
 		);
 		
 		parent::view("admin_laporan_periode", $data);
 	}
 
 	function laporan_transaksi() {
+		parent::load_module("jquery-ui.min");
 		$data = array(
 			"title" => "Laporan Transaksi"
 		);

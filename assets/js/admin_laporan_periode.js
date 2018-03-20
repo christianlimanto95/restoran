@@ -1,6 +1,4 @@
 $(function() {
-    get_data();
-
     $(document).on("click", ".btn-detail", function() {
         var h_transaksi_id = $(this).closest("tr").attr("data-id");
         var dialogDetailTransaksi = $(".dialog-detail-transaksi");
@@ -18,9 +16,31 @@ $(function() {
     });
 });
 
+function script1onload() {
+    $(".input-date-start").datepicker({
+        dateFormat: "yy-mm-dd",
+        onSelect: function() {
+            var dateEnd = $(".input-date-end").val();
+            if (dateEnd != "") {
+                get_data();
+            }
+        }
+    });
+
+    $(".input-date-end").datepicker({
+        dateFormat: "yy-mm-dd",
+        onSelect: function() {
+            var dateStart = $(".input-date-start").val();
+            if (dateStart != "") {
+                get_data();
+            }
+        }
+    });
+}
+
 function get_data() {
-    var start_date = "2018-03-19";
-    var end_date = "2018-03-30";
+    var start_date = $(".input-date-start").val();
+    var end_date = $(".input-date-end").val();
     var date = {
         start_date: start_date,
         end_date: end_date
@@ -31,6 +51,8 @@ function get_data() {
     get_total(date);
     get_daftar_transaksi(date);
     get_menu_terjual(date);
+
+    showNotification("Result Updated");
 }
 
 function get_transaksi_bahan(date) {

@@ -14,10 +14,10 @@
     <div class="laporan-transaksi-header">
         <div class="laporan-transaksi-header-left">
             <div class="laporan-transaksi-header-label">DARI : </div>
-            <input type="text" class="laporan-transaksi-header-input" />
+            <input type="text" class="laporan-transaksi-header-input input-date-start" />
             <div></div>
             <div class="laporan-transaksi-header-label">SAMPAI : </div>
-            <input type="text" class="laporan-transaksi-header-input" />
+            <input type="text" class="laporan-transaksi-header-input input-date-end" />
         </div>
         <div class="laporan-transaksi-header-right">
             <span class="grand-total-label">GRAND TOTAL : </span>

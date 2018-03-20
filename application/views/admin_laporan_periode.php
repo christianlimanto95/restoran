@@ -7,18 +7,18 @@
 </div>
 <div class="center">
     <div class="laporan-tab-container">
-        <a href="<?php echo base_url("admin/laporan_harian"); ?>" class="laporan-tab laporan-tab-harian">LAPORAN PERIODE</a>
-        <div class="laporan-tab laporan-tab-periode">LAPORAN PERIODE</div>
+        <a href="<?php echo base_url("admin/laporan_harian"); ?>" class="laporan-tab laporan-tab-harian">LAPORAN HARI INI</a>
+        <div class="laporan-tab laporan-tab-periode active">LAPORAN PERIODE</div>
         <a href="<?php echo base_url("admin/laporan_transaksi"); ?>" class="laporan-tab laporan-tab-transaksi">LAPORAN TRANSAKSI</a>
     </div>
     <div class="laporan-periode-header">
         <div class="laporan-periode-header-label">DARI : </div>
-        <input type="text" class="laporan-periode-header-input" />
+        <input type="text" class="laporan-periode-header-input input-date-start" />
         <div></div>
         <div class="laporan-periode-header-label">SAMPAI : </div>
-        <input type="text" class="laporan-periode-header-input" />
+        <input type="text" class="laporan-periode-header-input input-date-end" />
     </div>
-    <div class="date"><?php echo $date; ?></div>
+    <div class="date"></div>
     <div class="stok-container">
         <div class="stok stok-masuk">
             <div class="stok-title">STOCK MASUK</div>
@@ -47,11 +47,11 @@
     </div>
     <div class="total">
         <span class="total-label">TOTAL TRANSAKSI : </span>
-        <span class="total-value total-transaksi-value">6</span>
+        <span class="total-value total-transaksi-value">0</span>
     </div>
     <div class="total">
         <span class="total-label">TOTAL PEMASUKAN : </span>
-        <span class="total-value total-pemasukan-value">900.000</span>
+        <span class="total-value total-pemasukan-value">0</span>
     </div>
     <div class="daftar-container">
         <div class="daftar daftar-transaksi">

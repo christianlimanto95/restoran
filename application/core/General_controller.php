@@ -8,7 +8,7 @@ Just put general function which frequently used in this class
 
 class General_controller extends CI_Controller
 {
-    protected $additional_files = "";
+    protected $script_count = 0;
     protected $additional_css = "";
     protected $additional_js = "";
    
@@ -24,11 +24,12 @@ class General_controller extends CI_Controller
 	}
 	
 	public function load_additional_css($file_name) {
-		$this->additional_css .= "<link href='" . base_url("assets/css/template/" . $file_name . ".css") . "' rel='stylesheet'>";
+		$this->additional_css .= "<link href='" . base_url("assets/css/common/" . $file_name . ".css") . "' rel='stylesheet'>";
 	}
 	
 	public function load_additional_js($file_name) {
-		$this->additional_js .= "<script src='" . base_url("assets/js/template/" . $file_name . ".js") . "' defer></script>";
+        $this->script_count++;
+		$this->additional_js .= "<script onload='script" . $this->script_count . "onload()' src='" . base_url("assets/js/common/" . $file_name . ".js") . "' defer></script>";
 	}
 
     public function view($file, $data){

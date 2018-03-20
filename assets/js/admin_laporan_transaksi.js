@@ -1,10 +1,28 @@
-$(function() {
-    get_laporan_transaksi();
-});
+function script1onload() {
+    $(".input-date-start").datepicker({
+        dateFormat: "yy-mm-dd",
+        onSelect: function() {
+            var dateEnd = $(".input-date-end").val();
+            if (dateEnd != "") {
+                get_laporan_transaksi();
+            }
+        }
+    });
+
+    $(".input-date-end").datepicker({
+        dateFormat: "yy-mm-dd",
+        onSelect: function() {
+            var dateStart = $(".input-date-start").val();
+            if (dateStart != "") {
+                get_laporan_transaksi();
+            }
+        }
+    });
+}
 
 function get_laporan_transaksi() {
-    var start_date = "2018-03-19";
-    var end_date = "2018-03-30";
+    var start_date = $(".input-date-start").val();
+    var end_date = $(".input-date-end").val();
     ajaxCall(laporan_transaksi_url, {start_date: start_date, end_date: end_date}, function(json) {
         var result = jQuery.parseJSON(json);
         if (result.status == "success") {
@@ -82,6 +100,7 @@ function get_laporan_transaksi() {
 
             $(".table-transaksi tbody").html(element);
             $(".grand-total-value").html(addThousandSeparator(grand_total + ""));
+            showNotification("Result Updated");
         }
     });
 }
