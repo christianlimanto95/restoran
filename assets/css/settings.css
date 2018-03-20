@@ -1,0 +1,43 @@
+.title {
+    font-family: pinarak;
+    text-align: center;
+    font-size: 3.5vw;
+    margin-top: 1vw;
+}
+
+.center {
+    width: 30vw;
+    margin: 5vw auto 0;
+}
+
+.center-title {
+    font-weight: bold;
+    font-size: 2vw;
+    margin-bottom: 3vw;
+}
+
+.form-item {
+    width: 100%;
+    margin-bottom: 2vw;
+}
+
+.form-label {
+    font-size: 1vw;
+    margin-bottom: 0.5vw;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.5vw;
+    font-size: 1vw;
+}
+
+.btn-simpan {
+    float: right;
+    margin-top: 2vw;
+    text-align: center;
+}
+
+.btn-simpan:hover {
+    background-color: #E0E0E0;
+}

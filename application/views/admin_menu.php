@@ -23,7 +23,11 @@
             </div>
         </div>
         <div class="form-item">
-            <div class="form-label">HARGA <span class="error error-menu-harga"></span></div>
+            <div class="form-label">HARGA BELI <span class="error error-menu-modal"></span></div>
+            <input type="text" class="form-input input-modal-menu" data-type="number" data-thousand-separator="true" maxlength="9" value="0" />
+        </div>
+        <div class="form-item">
+            <div class="form-label">HARGA JUAL <span class="error error-menu-harga"></span></div>
             <input type="text" class="form-input input-harga-menu" data-type="number" data-thousand-separator="true" maxlength="9" value="0" />
         </div>
         <div class="title-bahan-makanan">BAHAN MAKANAN</div>
