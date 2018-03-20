@@ -383,4 +383,27 @@ class Admin extends General_controller {
 			"data" => $data
 		));
 	}
+
+	function laporan_transaksi() {
+		$data = array(
+			"title" => "Laporan Transaksi"
+		);
+		
+		parent::view("admin_laporan_transaksi", $data);
+	}
+
+	function get_laporan_transaksi() {
+		parent::show_404_if_not_ajax();
+		$start_date = $this->input->post("start_date");
+		$end_date = $this->input->post("end_date");
+		$data = array(
+			"start_date" => $start_date,
+			"end_date" => $end_date
+		);
+		$result = $this->Admin_model->get_laporan_transaksi($data);
+		echo json_encode(array(
+			"status" => "success",
+			"data" => $result
+		));
+	}
 }

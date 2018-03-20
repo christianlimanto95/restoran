@@ -242,4 +242,14 @@ class Admin_model extends CI_Model
         ");
         return $query->result();
     }
+
+    function get_laporan_transaksi($data) {
+        $query = $this->db->query("
+            SELECT DATE_FORMAT(h.created_date, '%d-%m-%Y') AS created_date, h.h_transaksi_id, d.menu_id, d.menu_nama, d.menu_harga, d.menu_qty, d.menu_subtotal
+            FROM h_transaksi h, d_transaksi d
+            WHERE h.h_transaksi_id = d.h_transaksi_id AND h.created_date BETWEEN '" . $data["start_date"] . " 00:00:00' AND '" . $data["end_date"] . " 23:59:59'
+            ORDER BY h.h_transaksi_id
+        ");
+        return $query->result();
+    }
 }
