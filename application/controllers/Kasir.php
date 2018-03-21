@@ -61,7 +61,7 @@ class Kasir extends General_controller {
 		$user_id = parent::is_logged_in();
 
 		$subtotal_qty = $this->Kasir_model->get_transaksi_subtotal($menu_array);
-		$subtotal = $subtotal_qty["subtotal"];
+		$subtotal = intval($subtotal_qty["subtotal"]);
 		$total_qty = $subtotal_qty["total_qty"];
 		$menu_array = $subtotal_qty["menu"];
 
@@ -71,13 +71,14 @@ class Kasir extends General_controller {
 			"menu" => $menu_array,
 			"h_transaksi_subtotal" => $subtotal,
 			"h_transaksi_service_charge" => 0,
-			"h_transaksi_tax" => 0,
+			"h_transaksi_tax" => intval($subtotal / 10),
 			"h_transaksi_total" => $subtotal,
 			"h_transaksi_total_qty" => $total_qty
 		);
-		$this->Kasir_model->transaksi($data);
+		$h_transaksi_id = $this->Kasir_model->transaksi($data);
 		echo json_encode(array(
-			"status" => "success"
+			"status" => "success",
+			"h_transaksi_id" => $h_transaksi_id
 		));
 	}
 }

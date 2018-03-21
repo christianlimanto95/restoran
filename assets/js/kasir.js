@@ -111,64 +111,65 @@ function script3onload() {
 }
 
 function do_transaksi() {
+    var menu_array = [];
+    var total = 0;
     var menu = "";
     $(".detail-table tbody tr").each(function() {
         var menu_id = $(this).attr("data-id");
+        var nama = $(this).attr("data-nama");
         var qty = $(this).attr("data-qty");
+        var subtotal = $(this).attr("data-subtotal");
 
         if (menu != "") {
             menu += ";";
         }
         menu += menu_id + "~" + qty;
+        menu_array.push(pad('   ', qty, true) + ' ' + pad('                    ', nama, false) + ' ' + pad('       ', subtotal, true) + '\x0A');
+
+        total += parseInt(subtotal);
     });
 
     ajaxCall(do_transaksi_url, {menu: menu}, function(json) {
         var result = jQuery.parseJSON(json);
-        qz.websocket.connect().then(function() { 
-            return qz.printers.find("pos58 printer(4)")               // Pass the printer name into the next Promise
-        }).then(function(printer) {
-            var config = qz.configs.create(printer);       // Create a default config for the found printer
-            var data = [
-                '\x1B' + '\x40',          // init
-                '\x1B' + '\x61' + '\x31', // center align
-                'DEPOT DNP PROJECT' + '\x0A',
-                'Jasa Layanan Antar' + '\x0A',
-                'Telp : 031-1234567',     
-                '\x0A',                   // line break
-                '\x0A',                   // line break
-                '\x1B' + '\x61' + '\x30', // left align
-                'Crew ID 191252 Budi Subagio' + '\x0A',
-                '\x1B' + '\x61' + '\x31',
-                'TAX INVOICE' + '\x0A',                   // line break    
-                '\x0A',
-                '\x1B' + '\x61' + '\x30', // left align
-                'No. Nota #123456' + '\x0A',
-                '23-05-2018  00:37:12' + '\x0A' + '\x0A',
-                'QTY ITEM                   TOTAL' + '\x0A',
-                '  1 NASI AYAM GORENG       15000' + '\x0A',
-                '  3 MIE UJUNG PANDANG      90000' + '\x0A',
-                '  2 KWETIAU SIRAM          80000' + '\x0A',
-                '\x0A',
-                'TOTAL                     185000' + '\x0A',
-                'TAX 10%                    18500' + '\x0A',
-                '\x0A',
-                '\x1B' + '\x45' + '\x0D', // bold on
-                'GRAND TOTAL               203500' + '\x0A',
-                '\x1B' + '\x45' + '\x0A', // bold off
-                'BAYAR                     250000' + '\x0A',
-                'KEMBALI                    46500' + '\x0A',
-                '\x0A' + '\x0A',
-                '--------------------------------' + '\x0A',
-                '\x0A',
-                '\x1B' + '\x61' + '\x31', // center align
-                'Terima Kasih atas kunjungan Anda.',
-                '\x0A' + '\x0A' + '\x0A' + '\x0A',
-                '\x1B' + '\x69',          // cut paper
-                '\x10' + '\x14' + '\x01' + '\x00' + '\x05',  // Generate Pulse to kick-out cash drawer**
-                                                    // **for legacy drawer cable CD-005A.  Research before using.
-            ];   // Raw ZPL
-            return qz.print(config, data);
-        }).catch(function(e) { console.error(e); });
+        var h_transaksi_id = result.h_transaksi_id;
+
+        var d = new Date();
+        var day = d.getDate() + '';
+        var month = (d.getMonth() + 1) + '';
+        var year = d.getFullYear() + '';
+        var date = pad('00', day, true) + '-' + pad('00', month, true) + '-' + year;
+
+        var hour = d.getHours() + '';
+        var min = d.getMinutes() + '';
+        var sec = d.getSeconds() + '';
+        var time = pad('00', hour, true) + ':' + pad('00', min, true) + ':' + pad('00', sec, true);
+
+        var grandtotal = removeThousandSeparator($(".subtotal").attr("data-value"));
+        var bayar = removeThousandSeparator($(".dialog-confirm-bayar-bayar").html());
+        var kembali = removeThousandSeparator($(".dialog-confirm-bayar-kembali").html());
+
+        var args = {
+            h_transaksi_id: h_transaksi_id,
+            date: date,
+            time: time,
+            total: total,
+            grandtotal: grandtotal,
+            bayar: bayar,
+            kembali: kembali,
+            menu_array: menu_array
+        };
+
+        if (qz.websocket.isActive()) {
+            qz.printers.find("pos58 printer(4)").then(function(printer) {
+                print(printer, args);
+            });
+        } else {
+            qz.websocket.connect().then(function() { 
+                return qz.printers.find("pos58 printer(4)"); // Pass the printer name into the next Promise
+            }).then(function(printer) {
+                print(printer, args);
+            }).catch(function(e) { console.error(e); });
+        }
         
         closeDialog();
         showNotification("Transaksi Berhasil");
@@ -177,6 +178,47 @@ function do_transaksi() {
         initialize();
         $(".detail-table tbody").html("");
     });
+}
+
+function print(printer, args) {
+    var config = qz.configs.create(printer);       // Create a default config for the found printer
+    var data = [
+        '\x1B' + '\x40',          // init
+        '\x1B' + '\x61' + '\x31', // center align
+        'DAPUR BABI' + '\x0A',
+        'Spesialis Mie Babi dan Kwetiau' + '\x0A',
+        'Telp : 031-1234567',     
+        '\x0A',
+        '\x0A',
+        'TAX INVOICE' + '\x0A',    
+        '\x0A',
+        '\x1B' + '\x61' + '\x30', // left align
+        'No. Nota #' + args.h_transaksi_id + '\x0A',
+        args.date + '  ' + args.time + '\x0A' + '\x0A',
+        'QTY ITEM                   TOTAL' + '\x0A'
+    ];
+    Array.prototype.push.apply(data, args.menu_array);
+    Array.prototype.push.apply(data, [
+        '\x0A',
+        'TOTAL                    ' + pad('       ', args.total + '', true) + '\x0A',
+        'TAX 10%                  ' + pad('       ', parseInt((args.total / 10)) + '', true) + '\x0A',
+        '\x0A',
+        '\x1B' + '\x45' + '\x0D', // bold on
+        'GRAND TOTAL              ' + pad('       ', args.grandtotal, true) + '\x0A',
+        '\x1B' + '\x45' + '\x0A', // bold off
+        'BAYAR                    ' + pad('       ', args.bayar, true) + '\x0A',
+        'KEMBALI                  ' + pad('       ', args.kembali, true) + '\x0A',
+        '\x0A' + '\x0A',
+        '--------------------------------' + '\x0A',
+        '\x0A',
+        '\x1B' + '\x61' + '\x31', // center align
+        'Terima Kasih atas kunjungan Anda.',
+        '\x0A' + '\x0A' + '\x0A' + '\x0A',
+        '\x1B' + '\x69',          // cut paper
+        '\x10' + '\x14' + '\x01' + '\x00' + '\x05',  // Generate Pulse to kick-out cash drawer**
+                                            // **for legacy drawer cable CD-005A.  Research before using.
+    ]);   // Raw ZPL
+    return qz.print(config, data);
 }
 
 function initialize() {
@@ -289,13 +331,13 @@ function add_to_table() {
             tdSubtotal.html(addThousandSeparator(currentSubtotal + ""));
 
             $(tbodyTR[i]).attr("data-subtotal", currentSubtotal);
-            addTotal(subtotal);
+            setTotal();
             return;
         }
     }
 
     var element = "";
-    element += "<tr data-id='" + id + "' data-subtotal='" + subtotal + "' data-qty='" + qty + "'>";
+    element += "<tr data-id='" + id + "' data-nama='" + nama + "' data-subtotal='" + subtotal + "' data-qty='" + qty + "'>";
     element += "<td>" + id + "</td>";
     element += "<td>" + nama + "</td>";
     element += "<td>" + addThousandSeparator(harga + "") + "</td>";
@@ -305,12 +347,17 @@ function add_to_table() {
     element += "</tr>";
     $(".detail-table tbody").append(element);
 
-    addTotal(subtotal);
+    setTotal();
 }
 
-function addTotal(subtotal) {
-    var total = parseInt($(".subtotal").attr("data-value"));
-    total += subtotal;
+function setTotal() {
+    var total = 0;
+    var tr = $(".detail-table tbody tr");
+    tr.each(function() {
+        total += parseInt($(this).attr("data-subtotal"));
+    });
+
+    total += total / 10;
     $(".subtotal").attr("data-value", total);
     $(".subtotal").html(addThousandSeparator(total + ""));
 }
@@ -318,5 +365,5 @@ function addTotal(subtotal) {
 function deleteItem(tr) {
     var subtotal = parseInt(tr.attr("data-subtotal"));
     tr.remove();
-    addTotal(-subtotal);
+    setTotal();
 }

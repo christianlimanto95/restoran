@@ -129,5 +129,6 @@ class Kasir_model extends CI_Model
         }
 
         $this->db->trans_complete();
+        return $h_transaksi_id;
     }
 }
