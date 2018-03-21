@@ -40,6 +40,12 @@ $(function() {
             valid = false;
         }
 
+        var menu_modal = parseInt(removeThousandSeparator($(".input-modal-menu").val()));
+        if (menu_modal == 0) {
+            $(".error-menu-modal").html("harus lebih dari 0");
+            valid = false;
+        }
+
         var menu_harga = parseInt(removeThousandSeparator($(".input-harga-menu").val()));
         if (menu_harga == 0) {
             $(".error-menu-harga").html("harus lebih dari 0");
@@ -58,7 +64,7 @@ $(function() {
                 bahan += bahan_id + "~" + bahan_qty;
             });
             
-            ajaxCall(insert_menu_url, {menu_jenis: menu_jenis, menu_nama: menu_nama, menu_harga: menu_harga, bahan: bahan}, function(json) {
+            ajaxCall(insert_menu_url, {menu_jenis: menu_jenis, menu_nama: menu_nama, menu_modal: menu_modal, menu_harga: menu_harga, bahan: bahan}, function(json) {
                 var result = jQuery.parseJSON(json);
                 if (result.status == "success") {
                     $(".input-nama-menu").val("");
@@ -85,6 +91,7 @@ $(function() {
         var id = tr.attr("data-id");
         var nama = tr.attr("data-nama");
         var jenis = tr.attr("data-jenis");
+        var modal = tr.attr("data-modal");
         var harga = tr.attr("data-harga");
 
         var dialogEditMenu = $(".dialog-edit-menu");
@@ -92,6 +99,7 @@ $(function() {
         dialogEditMenu.attr("data-nama", nama);
         dialogEditMenu.find(".menu-edit-nama").val(nama);
         selectOption(dialogEditMenu.find(".edit-jenis-option[data-value='" + jenis + "']"));
+        dialogEditMenu.find(".menu-edit-modal").val(addThousandSeparator(modal));
         dialogEditMenu.find(".menu-edit-harga").val(addThousandSeparator(harga));
         showDialog(dialogEditMenu);
     });
@@ -101,23 +109,28 @@ $(function() {
         if (nama == "") {
             showNotification("Nama tidak boleh kosong");
         } else {
-            var harga = parseInt(removeThousandSeparator($(".menu-edit-harga").val()));
-            if (harga == 0) {
-                showNotification("Harga tidak boleh 0");
+            var modal = parseInt(removeThousandSeparator($(".menu-edit-modal").val()));
+            if (modal == 0) {
+                showNotification("Modal tidak boleh 0");
             } else {
-                var jenis = $(".select-edit-jenis").attr("data-value");
-                var id = $(".dialog-edit-menu").attr("data-id");
+                var harga = parseInt(removeThousandSeparator($(".menu-edit-harga").val()));
+                if (harga == 0) {
+                    showNotification("Harga tidak boleh 0");
+                } else {
+                    var jenis = $(".select-edit-jenis").attr("data-value");
+                    var id = $(".dialog-edit-menu").attr("data-id");
 
-                ajaxCall(update_menu_url, {menu_id: id, menu_jenis: jenis, menu_nama: nama, menu_harga: harga}, function(json) {
-                    var result = jQuery.parseJSON(json);
-                    if (result.status == "success") {
-                        get_all_menu();
-                        closeDialog();
-                        showNotification("Berhasil Update Menu " + nama);
-                    } else {
-                        showNotification("Gagal Update Menu");
-                    }
-                });
+                    ajaxCall(update_menu_url, {menu_id: id, menu_jenis: jenis, menu_nama: nama, menu_modal: modal, menu_harga: harga}, function(json) {
+                        var result = jQuery.parseJSON(json);
+                        if (result.status == "success") {
+                            get_all_menu();
+                            closeDialog();
+                            showNotification("Berhasil Update Menu " + nama);
+                        } else {
+                            showNotification("Gagal Update Menu");
+                        }
+                    });
+                }
             }
         }
     });
@@ -265,7 +278,7 @@ function get_all_menu() {
                 jenis = "MINUMAN";
             }
 
-            element += "<tr data-id='" + data[i].menu_id + "' data-nama='" + data[i].menu_nama + "' data-jenis='" + data[i].menu_jenis + "' data-harga='" + data[i].menu_harga + "'>";
+            element += "<tr data-id='" + data[i].menu_id + "' data-nama='" + data[i].menu_nama + "' data-jenis='" + data[i].menu_jenis + "' data-modal='" + data[i].menu_modal + "' data-harga='" + data[i].menu_harga + "'>";
             element += "<td>" + data[i].menu_id + "</td>";
             element += "<td>" + data[i].menu_nama + "</td>";
             element += "<td>" + jenis + "</td>";

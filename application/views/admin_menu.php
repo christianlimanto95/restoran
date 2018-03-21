@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="form-item">
-            <div class="form-label">HARGA BELI <span class="error error-menu-modal"></span></div>
+            <div class="form-label">HARGA MODAL <span class="error error-menu-modal"></span></div>
             <input type="text" class="form-input input-modal-menu" data-type="number" data-thousand-separator="true" maxlength="9" value="0" />
         </div>
         <div class="form-item">
@@ -130,6 +130,12 @@
                                         <div class="option tabindex-exception edit-jenis-option" data-value="2">MINUMAN</div>
                                     </div>
                                 </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="table-label">MODAL</td>
+                            <td class="table-value">
+                                <input type="text" class="table-input menu-edit-modal" data-type="number" data-thousand-separator="true" maxlength="8" />
                             </td>
                         </tr>
                         <tr>

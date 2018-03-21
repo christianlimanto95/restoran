@@ -66,6 +66,7 @@ class Admin_model extends CI_Model
         $insertData = array(
             "menu_jenis" => $data["menu_jenis"],
             "menu_nama" => $data["menu_nama"],
+            "menu_modal" => $data["menu_modal"],
             "menu_harga" => $data["menu_harga"],
             "created_by" => $data["user_id"],
             "modified_by" => $data["user_id"]
@@ -96,6 +97,7 @@ class Admin_model extends CI_Model
         $this->db->where("menu_id", $data["menu_id"]);
         $this->db->set("menu_nama", $data["menu_nama"], true);
         $this->db->set("menu_jenis", $data["menu_jenis"], true);
+        $this->db->set("menu_modal", $data["menu_modal"], true);
         $this->db->set("menu_harga", $data["menu_harga"], true);
         $this->db->set("modified_by", $data["user_id"], false);
         $this->db->set("modified_date", "NOW()", false);

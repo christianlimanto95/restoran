@@ -183,6 +183,7 @@ class Admin extends General_controller {
 		parent::show_404_if_not_ajax();
 		$menu_jenis = $this->input->post("menu_jenis");
 		$menu_nama = strtoupper($this->input->post("menu_nama"));
+		$menu_modal = $this->input->post("menu_modal");
 		$menu_harga = $this->input->post("menu_harga");
 		$bahan = $this->input->post("bahan");
 		$user_id = parent::is_logged_in();
@@ -207,6 +208,7 @@ class Admin extends General_controller {
 			$data = array(
 				"menu_jenis" => $menu_jenis,
 				"menu_nama" => $menu_nama,
+				"menu_modal" => $menu_modal,
 				"menu_harga" => $menu_harga,
 				"bahan" => $bahan_array,
 				"user_id" => $user_id
@@ -228,6 +230,7 @@ class Admin extends General_controller {
 		$menu_id = $this->input->post("menu_id");
 		$menu_jenis = $this->input->post("menu_jenis");
 		$menu_nama = strtoupper($this->input->post("menu_nama"));
+		$menu_modal = $this->input->post("menu_modal");
 		$menu_harga = $this->input->post("menu_harga");
 		$user_id = parent::is_logged_in();
 
@@ -235,6 +238,7 @@ class Admin extends General_controller {
 			"menu_id" => $menu_id,
 			"menu_jenis" => $menu_jenis,
 			"menu_nama" => $menu_nama,
+			"menu_modal" => $menu_modal,
 			"menu_harga" => $menu_harga,
 			"user_id" => $user_id
 		);
