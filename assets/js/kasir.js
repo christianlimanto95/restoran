@@ -98,6 +98,18 @@ $(function() {
     get_all_menu(true);
 });
 
+function script1onload() {
+
+}
+
+function script2onload() {
+
+}
+
+function script3onload() {
+	
+}
+
 function do_transaksi() {
     var menu = "";
     $(".detail-table tbody tr").each(function() {
@@ -112,6 +124,52 @@ function do_transaksi() {
 
     ajaxCall(do_transaksi_url, {menu: menu}, function(json) {
         var result = jQuery.parseJSON(json);
+        qz.websocket.connect().then(function() { 
+            return qz.printers.find("pos58 printer(4)")               // Pass the printer name into the next Promise
+        }).then(function(printer) {
+            var config = qz.configs.create(printer);       // Create a default config for the found printer
+            var data = [
+                '\x1B' + '\x40',          // init
+                '\x1B' + '\x61' + '\x31', // center align
+                'DEPOT DNP PROJECT' + '\x0A',
+                'Jasa Layanan Antar' + '\x0A',
+                'Telp : 031-1234567',     
+                '\x0A',                   // line break
+                '\x0A',                   // line break
+                '\x1B' + '\x61' + '\x30', // left align
+                'Crew ID 191252 Budi Subagio' + '\x0A',
+                '\x1B' + '\x61' + '\x31',
+                'TAX INVOICE' + '\x0A',                   // line break    
+                '\x0A',
+                '\x1B' + '\x61' + '\x30', // left align
+                'No. Nota #123456' + '\x0A',
+                '23-05-2018  00:37:12' + '\x0A' + '\x0A',
+                'QTY ITEM                   TOTAL' + '\x0A',
+                '  1 NASI AYAM GORENG       15000' + '\x0A',
+                '  3 MIE UJUNG PANDANG      90000' + '\x0A',
+                '  2 KWETIAU SIRAM          80000' + '\x0A',
+                '\x0A',
+                'TOTAL                     185000' + '\x0A',
+                'TAX 10%                    18500' + '\x0A',
+                '\x0A',
+                '\x1B' + '\x45' + '\x0D', // bold on
+                'GRAND TOTAL               203500' + '\x0A',
+                '\x1B' + '\x45' + '\x0A', // bold off
+                'BAYAR                     250000' + '\x0A',
+                'KEMBALI                    46500' + '\x0A',
+                '\x0A' + '\x0A',
+                '--------------------------------' + '\x0A',
+                '\x0A',
+                '\x1B' + '\x61' + '\x31', // center align
+                'Terima Kasih atas kunjungan Anda.',
+                '\x0A' + '\x0A' + '\x0A' + '\x0A',
+                '\x1B' + '\x69',          // cut paper
+                '\x10' + '\x14' + '\x01' + '\x00' + '\x05',  // Generate Pulse to kick-out cash drawer**
+                                                    // **for legacy drawer cable CD-005A.  Research before using.
+            ];   // Raw ZPL
+            return qz.print(config, data);
+        }).catch(function(e) { console.error(e); });
+        
         closeDialog();
         showNotification("Transaksi Berhasil");
         $(".subtotal").attr("data-value", "0");

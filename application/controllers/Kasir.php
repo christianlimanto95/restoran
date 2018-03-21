@@ -13,6 +13,9 @@ class Kasir extends General_controller {
 	
 	public function index()
 	{
+		parent::load_additional_js("rsvp-3.1.0.min");
+		parent::load_additional_js("sha-256.min");
+		parent::load_additional_js("qz-tray");
 		$is_admin = parent::is_admin();
 		$data = array(
 			"title" => "Kasir",
