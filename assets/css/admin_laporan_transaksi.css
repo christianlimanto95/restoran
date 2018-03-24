@@ -61,6 +61,27 @@
     font-size: 1.5vw;
 }
 
+.export-to-excel {
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.export-to-excel:hover {
+    background-color: #DDD;
+}
+
+.excel-icon {
+    width: 40px;
+    height: 40px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    margin: 0 auto;
+}
+
+.excel-text {
+    text-align: center;
+}
+
 .laporan-transaksi-table-container {
     margin-top: 5vw;
 }

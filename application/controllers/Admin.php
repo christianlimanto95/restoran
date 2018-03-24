@@ -443,6 +443,7 @@ class Admin extends General_controller {
 
 	function laporan_transaksi() {
 		parent::load_module("jquery-ui.min");
+		parent::load_additional_js("xlsx.core.min");
 		$data = array(
 			"title" => "Laporan Transaksi"
 		);

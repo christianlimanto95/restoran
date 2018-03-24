@@ -22,10 +22,14 @@
         <div class="laporan-transaksi-header-right">
             <span class="grand-total-label">GRAND TOTAL : </span>
             <span class="grand-total-value">0</span>
+            <div class="export-to-excel">
+                <div class="excel-icon" style="background-image: url(<?php echo base_url("assets/images/excel.png"); ?>);"></div>
+                <div class="excel-text">EXPORT TO EXCEL</div>
+            </div>
         </div>
     </div>
     <div class="laporan-transaksi-table-container">
-        <table class="table-transaksi">
+        <table class="table-transaksi" id="data-table">
             <thead>
                 <tr>
                     <td>TANGGAL</td>

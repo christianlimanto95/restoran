@@ -1,3 +1,5 @@
+var laporanDone = false;
+
 function script1onload() {
     $(".input-date-start").datepicker({
         dateFormat: "yy-mm-dd",
@@ -18,6 +20,59 @@ function script1onload() {
             }
         }
     });
+
+    $(".export-to-excel").on("click", function() {
+        if (!laporanDone) {
+            showNotification("Pilih tanggal DARI dan SAMPAI");
+        } else {
+            exportToExcel();
+        }
+    });
+}
+
+function exportToExcel() {
+    var ws_data = [];
+    var judul = "Laporan Transaksi Periode " + $(".input-date-start").val() + " sampai " + $(".input-date-end").val();
+    ws_data.push([judul]);
+    ws_data.push([""]);
+    ws_data.push(["TANGGAL", "NO. NOTA", "MENU", "HARGA", "JUMLAH", "SUBTOTAL"]);
+
+    var tr = $(".table-transaksi tbody tr");
+    var iLength = tr.length;
+    for (var i = 0; i < iLength; i++) {
+        var currentTr = $(tr[i]);
+        var tgl = currentTr.find("td:nth-child(1)").html();
+        var nota = currentTr.find("td:nth-child(2)").html();
+        var menu = currentTr.find("td:nth-child(3)").html();
+        var harga = currentTr.find("td:nth-child(4)").html();
+        var jumlah = currentTr.find("td:nth-child(5)").html();
+        var subtotal = currentTr.find("td:nth-child(6)").html();
+
+        menu = menu.split("<br>");
+        var currentMenu = menu[0];
+        harga = harga.split("<br>");
+        var currentHarga = harga[0];
+        jumlah = jumlah.split("<br>");
+        var currentJumlah = jumlah[0];
+        subtotal = subtotal.split("<br>");
+        var currentSubtotal = subtotal[0];
+        
+        ws_data.push([tgl, nota, currentMenu, currentHarga, currentJumlah, currentSubtotal]);
+
+        var menuLength = menu.length;
+        for (var j = 1; j < menuLength; j++) {
+            ws_data.push(["", "", menu[j], harga[j], jumlah[j], subtotal[j]]);
+        }
+    }
+
+    var ws = XLSX.utils.aoa_to_sheet(ws_data);
+    var wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+    XLSX.writeFile(wb, judul + ".xlsx");
+}
+
+function script2onload() {
+
 }
 
 function get_laporan_transaksi() {
@@ -42,7 +97,13 @@ function get_laporan_transaksi() {
                 } else {
                     transaksi[data[i].h_transaksi_id + ""] = {
                         date: data[i].created_date,
-                        data: []
+                        data: [{
+                            menu_id: data[i].menu_id,
+                            menu_nama: data[i].menu_nama,
+                            menu_harga: data[i].menu_harga,
+                            menu_qty: data[i].menu_qty,
+                            menu_subtotal: data[i].menu_subtotal
+                        }]
                     };
                 }
             }
@@ -101,6 +162,7 @@ function get_laporan_transaksi() {
             $(".table-transaksi tbody").html(element);
             $(".grand-total-value").html(addThousandSeparator(grand_total + ""));
             showNotification("Result Updated");
+            laporanDone = true;
         }
     });
 }
