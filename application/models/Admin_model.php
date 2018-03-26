@@ -224,8 +224,8 @@ class Admin_model extends CI_Model
         }
 
         $query = $this->db->query("
-            SELECT IFNULL(t.count, 0) AS count, IFNULL(t.total, 0) AS total
-            FROM (SELECT COUNT(h_transaksi_id) AS count, SUM(h_transaksi_total) AS total FROM h_transaksi WHERE created_date BETWEEN " . $date_start . " AND " . $date_end . ") t
+            SELECT IFNULL(t.count, 0) AS count, IFNULL(t.total, 0) AS total, IFNULL(m.total_modal, 0) AS modal
+            FROM (SELECT COUNT(h_transaksi_id) AS count, SUM(h_transaksi_total) AS total FROM h_transaksi WHERE created_date BETWEEN " . $date_start . " AND " . $date_end . ") t, (SELECT SUM(m.menu_harga) AS total_modal FROM menu m, d_transaksi d WHERE m.menu_id = d.menu_id AND d.created_date BETWEEN " . $date_start . " AND " . $date_end . ") m
         ");
         return $query->result();
     }

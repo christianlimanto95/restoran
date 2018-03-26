@@ -53,6 +53,10 @@
         <span class="total-label">TOTAL PEMASUKAN : </span>
         <span class="total-value total-pemasukan-value">0</span>
     </div>
+    <div class="total">
+        <span class="total-label">TOTAL MODAL : </span>
+        <span class="total-value total-modal-value">0</span>
+    </div>
     <div class="daftar-container">
         <div class="daftar daftar-transaksi">
             <div class="daftar-title">DAFTAR TRANSAKSI</div>

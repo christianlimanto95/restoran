@@ -134,6 +134,7 @@ function get_total(date) {
             var data = result.data[0];
             $(".total-transaksi-value").html(data.count);
             $(".total-pemasukan-value").html(addThousandSeparator(data.total));
+            $(".total-modal-value").html(addThousandSeparator(data.modal));
         }
     });
 }
