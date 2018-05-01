@@ -1,4 +1,6 @@
 var get_all_menu_ajax = null;
+var mode_kembalian = false;
+var dialogConfirmBayarShown = false;
 
 $(function() {
     $(document).on("keydown click", ".qty-add", function(e) {
@@ -11,20 +13,27 @@ $(function() {
     $(window).on("keydown", function(e) {
         switch (e.which) {
             case 13:
-                nextTabIndex(e);
+                if (dialogConfirmBayarShown) {
+                    do_transaksi();
+                } else {
+                    nextTabIndex(e);
+                }
                 break;
             case 112:
                 e.preventDefault();
                 toggleOptionContainer($(".menu-chosen"));
                 break;
-        }
-    });
-
-    $(window).on("keyup", function(e) {
-        if ($(document.activeElement).prop("tagName").toLowerCase() != "input") {
-            if (e.which == 66) {
-                showDialogBayar();
-            }
+            case 66:
+                if (e.ctrlKey) {
+                    showDialogBayar();
+                }
+                break;
+            case 27:
+                if (mode_kembalian) {
+                    mode_kembalian = false;
+                    $(".subtotal").html("0");
+                }
+                break;
         }
     });
 
@@ -41,8 +50,12 @@ $(function() {
             var optionActive = $(".option.active");
             var nama = optionActive.attr("data-nama");
             var harga = removeThousandSeparator(optionActive.attr("data-harga"));
+            var diskon_nominal = optionActive.attr("data-diskon-nominal");
+            var diskon_satuan = optionActive.attr("data-diskon-satuan");
             $(".select").attr("data-nama", nama);
             $(".select").attr("data-harga", harga);
+            $(".select").attr("data-diskon-nominal", diskon_nominal);
+            $(".select").attr("data-diskon-satuan", diskon_satuan);
             selectOption($(".option.active"));
             nextTabIndex(e);
             just_get_all_menu();
@@ -54,8 +67,12 @@ $(function() {
         var selectedOption = $(".option[data-value='" + id + "']");
         var nama = selectedOption.attr("data-nama");
         var harga = removeThousandSeparator(selectedOption.attr("data-harga"));
+        var diskon_nominal = selectedOption.attr("data-diskon-nominal");
+        var diskon_satuan = selectedOption.attr("data-diskon-satuan");
         $(this).attr("data-nama", nama);
         $(this).attr("data-harga", harga);
+        $(this).attr("data-diskon-nominal", diskon_nominal);
+        $(this).attr("data-diskon-satuan", diskon_satuan);
     });
 
     $(document).on("click", ".btn-cancel-menu", function() {
@@ -93,6 +110,14 @@ $(function() {
 
     $(".btn-confirm-bayar").on("click", function() {
         do_transaksi();
+    });
+
+    $('.dialog-confirm-bayar').on("dialogShown", function() {
+        dialogConfirmBayarShown = true;
+    });
+
+    $(".dialog-confirm-bayar").on("dialogClosed", function() {
+        dialogConfirmBayarShown = false;
     });
 
     get_all_menu(true);
@@ -173,8 +198,10 @@ function do_transaksi() {
         
         closeDialog();
         showNotification("Transaksi Berhasil");
+        var kembali = addThousandSeparator($(".dialog-confirm-bayar").attr("data-kembali"));
         $(".subtotal").attr("data-value", "0");
-        $(".subtotal").html("0");
+        $(".subtotal").html(kembali);
+        mode_kembalian = true;
         initialize();
         $(".detail-table tbody").html("");
     });
@@ -254,6 +281,7 @@ function showConfirmDialogBayar() {
         $(".dialog-confirm-bayar-total").html(addThousandSeparator(total + ""));
         $(".dialog-confirm-bayar-bayar").html(addThousandSeparator(bayar + ""));
         $(".dialog-confirm-bayar-kembali").html(addThousandSeparator(kembali + ""));
+        dialogConfirmBayar.attr("data-kembali", kembali);
         showDialog(dialogConfirmBayar);
     }
 }
@@ -270,15 +298,19 @@ function get_all_menu(first) {
         var iLength = data.length;
         var element = "";
         for (var i = 0; i < iLength; i++) {
-            element += "<div class='menu-option option tabindex-exception' data-value='" + data[i].menu_id + "' tabindex='" + (i + 1) + "' data-nama='" + data[i].menu_nama + "' data-harga='" + data[i].menu_harga + "'>" + data[i].menu_id + " - " + data[i].menu_nama + " - " + data[i].menu_harga + "</div>";
+            element += "<div class='menu-option option tabindex-exception' data-value='" + data[i].menu_id + "' tabindex='" + (i + 1) + "' data-nama='" + data[i].menu_nama + "' data-harga='" + data[i].menu_harga + "' data-diskon-nominal='" + data[i].diskon_nominal + "' data-diskon-satuan='" + data[i].diskon_satuan + "'>" + data[i].menu_id + " - " + data[i].menu_nama + " - " + data[i].menu_harga + "</div>";
         }
         $(".menu-option-container").html(element);
         if (first) {
             var optionFirst = $(".option").first();
             var nama = optionFirst.attr("data-nama");
             var harga = optionFirst.attr("data-harga").replace(".", "");
+            var diskon_nominal = optionFirst.attr("data-diskon-nominal");
+            var diskon_satuan = optionFirst.attr("data-diskon-satuan");
             $(".select").attr("data-nama", nama);
             $(".select").attr("data-harga", harga);
+            $(".select").attr("data-diskon-nominal", diskon_nominal);
+            $(".select").attr("data-diskon-satuan", diskon_satuan);
             selectOption(optionFirst);
         } else {
             $(".menu-chosen .option-container").addClass("show");
@@ -298,11 +330,11 @@ function just_get_all_menu() {
     get_all_menu_ajax = ajaxCall(get_all_menu_url, {keyword: ""}, function(json) {
 
         var result = jQuery.parseJSON(json);
-        var data = result.data;
+        var data = result.data;        
         var iLength = data.length;
         var element = "";
         for (var i = 0; i < iLength; i++) {
-            element += "<div class='menu-option option tabindex-exception' data-value='" + data[i].menu_id + "' data-nama='" + data[i].menu_nama + "' data-harga='" + data[i].menu_harga + "' tabindex='" + (i + 1) + "'>" + data[i].menu_id + " - " + data[i].menu_nama + " - " + data[i].menu_harga + "</div>";
+            element += "<div class='menu-option option tabindex-exception' data-value='" + data[i].menu_id + "' data-nama='" + data[i].menu_nama + "' data-harga='" + data[i].menu_harga + "' data-diskon-nominal='" + data[i].diskon_nominal + "' data-diskon-satuan='" + data[i].diskon_satuan + "' tabindex='" + (i + 1) + "'>" + data[i].menu_id + " - " + data[i].menu_nama + " - " + data[i].menu_harga + "</div>";
         }
         $(".menu-option-container").html(element);
     });
@@ -313,7 +345,25 @@ function add_to_table() {
     var nama = $(".select").attr("data-nama");
     var harga = parseInt($(".select").attr("data-harga"));
     var qty = parseInt($(".qty").val());
+    var diskon_nominal = parseInt($(".select").attr("data-diskon-nominal"));
+    var diskon_satuan = $(".select").attr("data-diskon-satuan");
+    var diskon = diskon_nominal;
+    if (diskon != 0) {
+        if (diskon_satuan == "1") {
+            diskon = "-" + addThousandSeparator(diskon_nominal + "");
+        } else {
+            diskon = "-" + diskon_nominal + "%";
+        }
+    }
+
     var subtotal = qty * harga;
+    if (diskon_nominal != 0) {
+        if (diskon_satuan == "1") {
+            subtotal -= diskon_nominal;
+        } else {
+            subtotal -= diskon_nominal * subtotal / 100;
+        }
+    }
 
     var tbodyTR = $(".detail-table tbody tr");
     var iLength = tbodyTR.length;
@@ -342,6 +392,7 @@ function add_to_table() {
     element += "<td>" + nama + "</td>";
     element += "<td>" + addThousandSeparator(harga + "") + "</td>";
     element += "<td>" + qty + "</td>";
+    element += "<td>" + diskon + "</td>";
     element += "<td>" + addThousandSeparator(subtotal + "") + "</td>";
     element += "<td><div class='btn-cancel-menu'>CANCEL</div></td>";
     element += "</tr>";

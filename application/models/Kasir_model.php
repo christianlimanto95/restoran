@@ -9,9 +9,9 @@ class Kasir_model extends CI_Model
 
     function get_all_menu($keyword) {
         $query = $this->db->query("
-            SELECT *
-            FROM menu
-            WHERE status = 1 AND CONCAT(LPAD(menu_id, 3, '0'), ' - ', menu_nama, ' - ', CAST(FORMAT(menu_harga, 0, 'id_ID') AS CHAR(11))) LIKE '%" . $keyword . "%'
+            SELECT m.*, d.diskon_nominal, d.diskon_satuan
+            FROM menu m, diskon d
+            WHERE m.status = 1 AND d.menu_id = m.menu_id AND CONCAT(LPAD(m.menu_id, 3, '0'), ' - ', m.menu_nama, ' - ', CAST(FORMAT(m.menu_harga, 0, 'id_ID') AS CHAR(11))) LIKE '%" . $keyword . "%'
         ");
         return $query->result();
     }
@@ -22,20 +22,34 @@ class Kasir_model extends CI_Model
         $menu_data = array();
         $iLength = sizeof($menu);
         for ($i = 0; $i < $iLength; $i++) {
-            $this->db->select("menu_nama, menu_modal, menu_harga");
-            $this->db->where("menu_id", $menu[$i]["menu_id"]);
+            $this->db->select("m.menu_nama, m.menu_modal, m.menu_harga, d.diskon_nominal, d.diskon_satuan");
+            $this->db->from("menu m, diskon d");
+            $this->db->where("m.menu_id", $menu[$i]["menu_id"]);
+            $this->db->where("m.menu_id = d.menu_id");
             $this->db->limit(1);
-            $result = $this->db->get("menu")->result();
+            $result = $this->db->get()->result();
             $nama = $result[0]->menu_nama;
             $modal = $result[0]->menu_modal;
             $harga = intval($result[0]->menu_harga);
+            $diskon_nominal = intval($result[0]->diskon_nominal);
+            $diskon_satuan = intval($result[0]->diskon_satuan);
             $menu_subtotal = intval($menu[$i]["menu_qty"]) * $harga;
+            if ($diskon_nominal != 0) {
+                if ($diskon_satuan == 1) {
+                    $menu_subtotal -= $diskon_nominal;
+                } else {
+                    $menu_subtotal -= $diskon_nominal * $menu_subtotal / 100;
+                }
+            }
+
             array_push($menu_data, array(
                 "menu_id" => $menu[$i]["menu_id"],
                 "menu_nama" => $nama,
                 "menu_modal" => $modal,
                 "menu_qty" => intval($menu[$i]["menu_qty"]),
                 "menu_harga" => $harga,
+                "diskon_nominal" => $diskon_nominal,
+                "diskon_satuan" => $diskon_satuan,
                 "menu_subtotal" => $menu_subtotal
             ));
 
@@ -77,6 +91,8 @@ class Kasir_model extends CI_Model
                 "menu_nama" => $menu[$i]["menu_nama"],
                 "menu_modal" => $menu[$i]["menu_modal"],
                 "menu_harga" => $menu[$i]["menu_harga"],
+                "diskon_nominal" => $menu[$i]["diskon_nominal"],
+                "diskon_satuan" => $menu[$i]["diskon_satuan"],
                 "menu_subtotal" => $menu[$i]["menu_subtotal"]
             ));
         }

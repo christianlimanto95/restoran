@@ -102,6 +102,7 @@
                             <td>NAMA</td>
                             <td>HARGA</td>
                             <td>QTY</td>
+                            <td>DISKON</td>
                             <td>SUBTOTAL</td>
                         </tr>
                     </thead>

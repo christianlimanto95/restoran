@@ -152,12 +152,24 @@ function get_transaksi_detail() {
             var iLength = data.length;
             var element = "";
             for (var i = 0; i < iLength; i++) {
+                var diskon_nominal = data[i].diskon_nominal;
+                var diskon_satuan = data[i].diskon_satuan;
+                var diskon = diskon_nominal;
+                if (diskon != 0) {
+                    if (diskon_satuan == "1") {
+                        diskon = "-" + addThousandSeparator(diskon_nominal + "");
+                    } else {
+                        diskon =  "-" + diskon_nominal + "%";
+                    }
+                }
+
                 element += "<tr>";
                 element += "<td>" + data[i].menu_id + "</td>";
                 element += "<td>" + data[i].menu_nama + "</td>";
-                element += "<td>" + data[i].menu_harga + "</td>";
+                element += "<td>" + addThousandSeparator(data[i].menu_harga) + "</td>";
                 element += "<td>" + data[i].menu_qty + "</td>";
-                element += "<td>" + data[i].menu_subtotal + "</td>";
+                element += "<td>" + diskon + "</td>";
+                element += "<td>" + addThousandSeparator(data[i].menu_subtotal) + "</td>";
                 element += "</tr>";
             }
             $(".table-detail-transaksi tbody").html(element);

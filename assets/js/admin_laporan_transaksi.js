@@ -35,7 +35,7 @@ function exportToExcel() {
     var judul = "Laporan Transaksi Periode " + $(".input-date-start").val() + " sampai " + $(".input-date-end").val();
     ws_data.push([judul]);
     ws_data.push([""]);
-    ws_data.push(["TANGGAL", "NO. NOTA", "MENU", "HARGA", "JUMLAH", "SUBTOTAL"]);
+    ws_data.push(["TANGGAL", "NO. NOTA", "MENU", "HARGA", "JUMLAH", "DISKON", "SUBTOTAL"]);
 
     var tr = $(".table-transaksi tbody tr");
     var iLength = tr.length;
@@ -46,7 +46,8 @@ function exportToExcel() {
         var menu = currentTr.find("td:nth-child(3)").html();
         var harga = currentTr.find("td:nth-child(4)").html();
         var jumlah = currentTr.find("td:nth-child(5)").html();
-        var subtotal = currentTr.find("td:nth-child(6)").html();
+        var diskon = currentTr.find("td:nth-child(6)").html();
+        var subtotal = currentTr.find("td:nth-child(7)").html();
 
         menu = menu.split("<br>");
         var currentMenu = menu[0];
@@ -54,14 +55,16 @@ function exportToExcel() {
         var currentHarga = harga[0];
         jumlah = jumlah.split("<br>");
         var currentJumlah = jumlah[0];
+        diskon = diskon.split("<br>");
+        var currentDiskon = diskon[0];
         subtotal = subtotal.split("<br>");
         var currentSubtotal = subtotal[0];
         
-        ws_data.push([tgl, nota, currentMenu, currentHarga, currentJumlah, currentSubtotal]);
+        ws_data.push([tgl, nota, currentMenu, currentHarga, currentJumlah, currentDiskon, currentSubtotal]);
 
         var menuLength = menu.length;
         for (var j = 1; j < menuLength; j++) {
-            ws_data.push(["", "", menu[j], harga[j], jumlah[j], subtotal[j]]);
+            ws_data.push(["", "", menu[j], harga[j], jumlah[j], diskon[j], subtotal[j]]);
         }
     }
 
@@ -92,6 +95,8 @@ function get_laporan_transaksi() {
                         menu_nama: data[i].menu_nama,
                         menu_harga: data[i].menu_harga,
                         menu_qty: data[i].menu_qty,
+                        diskon_nominal: data[i].diskon_nominal,
+                        diskon_satuan: data[i].diskon_satuan,
                         menu_subtotal: data[i].menu_subtotal
                     });
                 } else {
@@ -102,6 +107,8 @@ function get_laporan_transaksi() {
                             menu_nama: data[i].menu_nama,
                             menu_harga: data[i].menu_harga,
                             menu_qty: data[i].menu_qty,
+                            diskon_nominal: data[i].diskon_nominal,
+                            diskon_satuan: data[i].diskon_satuan,
                             menu_subtotal: data[i].menu_subtotal
                         }]
                     };
@@ -142,6 +149,26 @@ function get_laporan_transaksi() {
                             element += "<br />";
                         }
                         element += item[i].menu_qty;
+                    }
+                    element += "</td>";
+
+                    element += "<td>";
+                    for (var i = 0; i < iLength; i++) {
+                        var diskon_nominal = item[i].diskon_nominal;
+                        var diskon_satuan = item[i].diskon_satuan;
+                        var diskon = diskon_nominal;
+                        if (diskon != 0) {
+                            if (diskon_satuan == "1") {
+                                diskon = "-" + addThousandSeparator(diskon_nominal);
+                            } else {
+                                diskon = "-" + diskon_nominal + "%";
+                            }
+                        }
+
+                        if (i > 0) {
+                            element += "<br />";
+                        }
+                        element += diskon;
                     }
                     element += "</td>";
 

@@ -90,6 +90,15 @@ class Admin_model extends CI_Model
             $this->db->insert_batch("menu_bahan", $insertDataArray);
         }
 
+        $insertData = array(
+            "menu_id" => $menu_id,
+            "diskon_nominal" => 0,
+            "diskon_satuan" => 1,
+            "created_by" => $data["user_id"],
+            "modified_by" => $data["user_id"]
+        );
+        $this->db->insert("diskon", $insertData);
+
         $this->db->trans_complete();
     }
 
@@ -266,7 +275,7 @@ class Admin_model extends CI_Model
 
     function get_transaksi_detail_by_h_transaksi($h_transaksi_id) {
         $query = $this->db->query("
-            SELECT d.d_transaksi_id, d.menu_id, d.menu_nama, d.menu_harga, d.menu_qty, d.menu_subtotal
+            SELECT d.d_transaksi_id, d.menu_id, d.menu_nama, d.menu_harga, d.menu_qty, d.diskon_nominal, d.diskon_satuan, d.menu_subtotal
             FROM d_transaksi d
             WHERE d.h_transaksi_id = '" . $h_transaksi_id . "'
         ");
@@ -275,7 +284,7 @@ class Admin_model extends CI_Model
 
     function get_laporan_transaksi($data) {
         $query = $this->db->query("
-            SELECT DATE_FORMAT(h.created_date, '%d-%m-%Y') AS created_date, h.h_transaksi_id, d.menu_id, d.menu_nama, d.menu_harga, d.menu_qty, d.menu_subtotal
+            SELECT DATE_FORMAT(h.created_date, '%d-%m-%Y') AS created_date, h.h_transaksi_id, d.menu_id, d.menu_nama, d.menu_harga, d.menu_qty, d.diskon_nominal, d.diskon_satuan, d.menu_subtotal
             FROM h_transaksi h, d_transaksi d
             WHERE h.h_transaksi_id = d.h_transaksi_id AND h.created_date BETWEEN '" . $data["start_date"] . " 00:00:00' AND '" . $data["end_date"] . " 23:59:59'
             ORDER BY h.h_transaksi_id

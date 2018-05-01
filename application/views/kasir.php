@@ -29,6 +29,7 @@
                     <td>NAMA</td>
                     <td>HARGA</td>
                     <td>JUMLAH</td>
+                    <td>DISKON</td>
                     <td>SUBTOTAL</td>
                     <td>ACTION</td>
                 </tr>

@@ -80,7 +80,7 @@
 
 .detail {
     margin: 0 auto;
-    width: 55vw;
+    width: 60vw;
     height: 20vw;
     border: 3px solid black;
     clear: both;
@@ -111,7 +111,7 @@
     width: 17vw;
 }
 
-.detail-table td:nth-child(3), .detail-table td:nth-child(5) {
+.detail-table td:nth-child(3), .detail-table td:nth-child(6) {
     width: 8vw;
     text-align: right;
 }
@@ -121,16 +121,20 @@
     text-align: center;
 }
 
-.detail-table td:nth-child(6) {
+.detail-table td:nth-child(5) {
+    text-align: center;
+}
+
+.detail-table td:nth-child(7) {
     width: 7vw;
     text-align: right;
 }
 
-.detail-table thead td:nth-child(6) {
+.detail-table thead td:nth-child(7) {
     padding-right: 1.5vw;
 }
 
-.detail-table tbody td:nth-child(6) {
+.detail-table tbody td:nth-child(7) {
     color: rgb(128, 0, 38);
 }
 

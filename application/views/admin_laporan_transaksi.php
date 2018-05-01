@@ -37,6 +37,7 @@
                     <td>MENU</td>
                     <td>HARGA</td>
                     <td>JUMLAH</td>
+                    <td>DISKON</td>
                     <td>SUBTOTAL</td>
                 </tr>
             </thead>

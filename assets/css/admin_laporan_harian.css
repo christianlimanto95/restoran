@@ -155,7 +155,7 @@
 }
 
 .dialog-detail-transaksi .dialog-box {
-    width: 47vw;
+    width: 52vw;
     height: 30vw;
 }
 
@@ -186,11 +186,15 @@
     width: 15vw;
 }
 
-.table-detail-transaksi td:nth-child(3), .table-detail-transaksi td:nth-child(5) {
+.table-detail-transaksi td:nth-child(3), .table-detail-transaksi td:nth-child(6) {
     width: 7vw;
     text-align: right;
 }
 
 .table-detail-transaksi td:nth-child(4) {
+    text-align: right;
+}
+
+.table-detail-transaksi td:nth-child(5) {
     text-align: right;
 }
