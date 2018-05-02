@@ -144,6 +144,16 @@
                                 <input type="text" class="table-input menu-edit-harga" data-type="number" data-thousand-separator="true" maxlength="8" />
                             </td>
                         </tr>
+                        <tr>
+                            <td class="table-label">DISKON</td>
+                            <td class="table-value">
+                                <input type="text" name="diskon_nominal" class="table-input menu-edit-diskon-nominal" data-type="number" maxlength="8" />
+                                <select class="menu-edit-diskon-satuan" name="diskon_satuan">
+                                    <option value="1">IDR</option>
+                                    <option value="2">%</option>
+                                </select>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

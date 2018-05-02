@@ -214,7 +214,8 @@ function print(printer, args) {
         '\x1B' + '\x61' + '\x31', // center align
         'DAPUR BABI' + '\x0A',
         'Spesialis Mie Babi dan Kwetiau' + '\x0A',
-        'Telp : 031-1234567',     
+        'Jl. Siwalankerto 147' + '\x0A',
+        'HP : 081232287668',     
         '\x0A',
         '\x0A',
         'TAX INVOICE' + '\x0A',    

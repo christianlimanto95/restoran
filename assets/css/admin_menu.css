@@ -240,7 +240,7 @@
 }
 
 .dialog-edit-menu .dialog-box {
-    height: 30vw;
+    height: 35vw;
 }
 
 .table-edit-menu td {
@@ -282,4 +282,12 @@
     display: block;
     max-height: 15vw;
     overflow: auto;
+}
+
+.menu-edit-diskon-nominal {
+    width: 150px;
+}
+
+select.menu-edit-diskon-satuan {
+    font-size: 1.2vw;
 }

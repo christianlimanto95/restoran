@@ -231,7 +231,9 @@ class Admin extends General_controller {
 		$menu_jenis = $this->input->post("menu_jenis");
 		$menu_nama = strtoupper($this->input->post("menu_nama"));
 		$menu_modal = $this->input->post("menu_modal");
-		$menu_harga = $this->input->post("menu_harga");
+        $menu_harga = $this->input->post("menu_harga");
+        $diskon_nominal = $this->input->post("diskon_nominal");
+        $diskon_satuan = $this->input->post("diskon_satuan");
 		$user_id = parent::is_logged_in();
 
 		$data = array(
@@ -239,7 +241,9 @@ class Admin extends General_controller {
 			"menu_jenis" => $menu_jenis,
 			"menu_nama" => $menu_nama,
 			"menu_modal" => $menu_modal,
-			"menu_harga" => $menu_harga,
+            "menu_harga" => $menu_harga,
+            "diskon_nominal" => $diskon_nominal,
+            "diskon_satuan" => $diskon_satuan,
 			"user_id" => $user_id
 		);
 		$affected_rows = $this->Admin_model->update_menu($data);

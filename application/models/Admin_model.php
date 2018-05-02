@@ -8,8 +8,11 @@ class Admin_model extends CI_Model
     }
 
     function get_all_menu() {
-        $this->db->where("status", 1);
-        return $this->db->get("menu")->result();
+        $this->db->select("m.*, d.diskon_nominal, d.diskon_satuan");
+        $this->db->from("menu m, diskon d");
+        $this->db->where("m.status", 1);
+        $this->db->where("m.menu_id = d.menu_id");
+        return $this->db->get()->result();
     }
 
     function get_all_bahan_by_keyword($keyword) {
@@ -103,6 +106,8 @@ class Admin_model extends CI_Model
     }
 
     function update_menu($data) {
+        $this->db->trans_start();
+
         $this->db->where("menu_id", $data["menu_id"]);
         $this->db->set("menu_nama", $data["menu_nama"], true);
         $this->db->set("menu_jenis", $data["menu_jenis"], true);
@@ -111,7 +116,16 @@ class Admin_model extends CI_Model
         $this->db->set("modified_by", $data["user_id"], false);
         $this->db->set("modified_date", "NOW()", false);
         $this->db->update("menu");
-        return $this->db->affected_rows();
+
+        $this->db->where("menu_id", $data["menu_id"]);
+        $this->db->set("diskon_nominal", $data["diskon_nominal"]);
+        $this->db->set("diskon_satuan", $data["diskon_satuan"]);
+        $this->db->set("modified_by", $data["user_id"]);
+        $this->db->set("modified_date", "NOW()", false);
+        $this->db->update("diskon");
+
+        $this->db->trans_complete();
+        return 1;
     }
 
     function delete_menu($data) {

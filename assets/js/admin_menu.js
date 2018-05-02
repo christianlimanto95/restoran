@@ -93,6 +93,8 @@ $(function() {
         var jenis = tr.attr("data-jenis");
         var modal = tr.attr("data-modal");
         var harga = tr.attr("data-harga");
+        var diskon_nominal = tr.attr("data-diskon-nominal");
+        var diskon_satuan = tr.attr("data-diskon-satuan");
 
         var dialogEditMenu = $(".dialog-edit-menu");
         dialogEditMenu.attr("data-id", id);
@@ -101,6 +103,8 @@ $(function() {
         selectOption(dialogEditMenu.find(".edit-jenis-option[data-value='" + jenis + "']"));
         dialogEditMenu.find(".menu-edit-modal").val(addThousandSeparator(modal));
         dialogEditMenu.find(".menu-edit-harga").val(addThousandSeparator(harga));
+        dialogEditMenu.find(".menu-edit-diskon-nominal").val(diskon_nominal);
+        dialogEditMenu.find(".menu-edit-diskon-satuan").val(diskon_satuan);
         showDialog(dialogEditMenu);
     });
 
@@ -119,8 +123,10 @@ $(function() {
                 } else {
                     var jenis = $(".select-edit-jenis").attr("data-value");
                     var id = $(".dialog-edit-menu").attr("data-id");
+                    var diskon_nominal = $(".menu-edit-diskon-nominal").val();
+                    var diskon_satuan = $(".menu-edit-diskon-satuan").val();
 
-                    ajaxCall(update_menu_url, {menu_id: id, menu_jenis: jenis, menu_nama: nama, menu_modal: modal, menu_harga: harga}, function(json) {
+                    ajaxCall(update_menu_url, {menu_id: id, menu_jenis: jenis, menu_nama: nama, menu_modal: modal, menu_harga: harga, diskon_nominal: diskon_nominal, diskon_satuan: diskon_satuan}, function(json) {
                         var result = jQuery.parseJSON(json);
                         if (result.status == "success") {
                             get_all_menu();
@@ -278,7 +284,7 @@ function get_all_menu() {
                 jenis = "MINUMAN";
             }
 
-            element += "<tr data-id='" + data[i].menu_id + "' data-nama='" + data[i].menu_nama + "' data-jenis='" + data[i].menu_jenis + "' data-modal='" + data[i].menu_modal + "' data-harga='" + data[i].menu_harga + "'>";
+            element += "<tr data-id='" + data[i].menu_id + "' data-nama='" + data[i].menu_nama + "' data-jenis='" + data[i].menu_jenis + "' data-modal='" + data[i].menu_modal + "' data-harga='" + data[i].menu_harga + "' data-diskon-nominal='" + data[i].diskon_nominal + "' data-diskon-satuan='" + data[i].diskon_satuan + "'>";
             element += "<td>" + data[i].menu_id + "</td>";
             element += "<td>" + data[i].menu_nama + "</td>";
             element += "<td>" + jenis + "</td>";
