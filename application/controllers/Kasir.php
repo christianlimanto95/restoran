@@ -72,7 +72,7 @@ class Kasir extends General_controller {
 			"h_transaksi_subtotal" => $subtotal,
 			"h_transaksi_service_charge" => 0,
 			"h_transaksi_tax" => intval($subtotal / 10),
-			"h_transaksi_total" => $subtotal,
+			"h_transaksi_total" => $subtotal + ($subtotal / 10),
 			"h_transaksi_total_qty" => $total_qty
 		);
 		$h_transaksi_id = $this->Kasir_model->transaksi($data);

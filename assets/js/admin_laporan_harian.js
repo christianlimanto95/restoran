@@ -148,6 +148,7 @@ function get_transaksi_detail() {
     ajaxCall(get_transaksi_detail_url, {h_transaksi_id: h_transaksi_id}, function(json) {
         var result = jQuery.parseJSON(json);
         if (result.status == "success") {
+            var total = 0;
             var data = result.data;
             var iLength = data.length;
             var element = "";
@@ -171,8 +172,13 @@ function get_transaksi_detail() {
                 element += "<td>" + diskon + "</td>";
                 element += "<td>" + addThousandSeparator(data[i].menu_subtotal) + "</td>";
                 element += "</tr>";
+
+                total += parseInt(data[i].menu_subtotal);
             }
             $(".table-detail-transaksi tbody").html(element);
+
+            var tax_value = total / 10;
+            $(".tax-value").html(addThousandSeparator(tax_value + ""));
         }
     });
 }

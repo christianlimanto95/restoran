@@ -1,6 +1,7 @@
 var get_all_menu_ajax = null;
 var mode_kembalian = false;
 var dialogConfirmBayarShown = false;
+var printer_found = null;
 
 $(function() {
     $(document).on("keydown click", ".qty-add", function(e) {
@@ -185,13 +186,12 @@ function do_transaksi() {
         };
 
         if (qz.websocket.isActive()) {
-            qz.printers.find("pos58 printer(4)").then(function(printer) {
-                print(printer, args);
-            });
+            print(printer_found, args);
         } else {
             qz.websocket.connect().then(function() { 
                 return qz.printers.find("pos58 printer(4)"); // Pass the printer name into the next Promise
             }).then(function(printer) {
+                printer_found = printer;
                 print(printer, args);
             }).catch(function(e) { console.error(e); });
         }
@@ -376,7 +376,14 @@ function add_to_table() {
             $(tbodyTR[i]).attr("data-qty", currentQty);
             tdQty.html(currentQty);
             
-            var tdSubtotal = $(tbodyTR[i]).find("td:nth-child(5)");
+            if (diskon_satuan == "1") {
+                var tdDiskon = $(tbodyTR[i]).find("td:nth-child(5)");
+                var currentDiskon = parseInt(tdDiskon.html().replace(".", "").replace("-", "").replace("%", ""));
+                currentDiskon += diskon_nominal;
+                tdDiskon.html("-" + addThousandSeparator(currentDiskon + ""));
+            }
+            
+            var tdSubtotal = $(tbodyTR[i]).find("td:nth-child(6)");
             var currentSubtotal = parseInt(tdSubtotal.html().replace(".", ""));
             currentSubtotal += subtotal;
             tdSubtotal.html(addThousandSeparator(currentSubtotal + ""));

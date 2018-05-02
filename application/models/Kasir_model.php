@@ -36,7 +36,7 @@ class Kasir_model extends CI_Model
             $menu_subtotal = intval($menu[$i]["menu_qty"]) * $harga;
             if ($diskon_nominal != 0) {
                 if ($diskon_satuan == 1) {
-                    $menu_subtotal -= $diskon_nominal;
+                    $menu_subtotal -= $diskon_nominal * intval($menu[$i]["menu_qty"]);
                 } else {
                     $menu_subtotal -= $diskon_nominal * $menu_subtotal / 100;
                 }
