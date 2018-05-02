@@ -110,6 +110,10 @@
                         
                     </tbody>
                 </table>
+                <div class="tax">
+                    <div class="tax-label">Tax 10%</div>
+                    <div class="tax-value"></div>
+                </div>
             </div>
             <div class="dialog-button-container">
                 <div class="button btn-cancel">TUTUP</div>

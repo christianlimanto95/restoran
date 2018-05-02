@@ -101,6 +101,7 @@ $(function() {
     $(".input-bayar").on("keydown", function(e) {
         if (e.which == 13) {
             e.stopPropagation();
+            $(this).blur();
             showConfirmDialogBayar();
         }
     });
@@ -145,12 +146,34 @@ function do_transaksi() {
         var nama = $(this).attr("data-nama");
         var qty = $(this).attr("data-qty");
         var subtotal = $(this).attr("data-subtotal");
+        var diskon_nominal = parseInt($(this).attr("data-diskon-nominal"));
+        var diskon_satuan = $(this).attr("data-diskon-satuan");
 
         if (menu != "") {
             menu += ";";
         }
         menu += menu_id + "~" + qty;
-        menu_array.push(pad('   ', qty, true) + ' ' + pad('                    ', nama, false) + ' ' + pad('       ', subtotal, true) + '\x0A');
+        
+        if (diskon_nominal != 0) {
+            var subtotal_before_disc = 0;
+            
+            var disc_label = 'disc';
+            var disc_value = '';
+            if (diskon_satuan == "2") {
+                subtotal_before_disc = parseInt(subtotal) * 100 / (100 - diskon_nominal);
+                disc_label = 'disc ' + diskon_nominal + '%';
+                disc_value = '-' + (subtotal_before_disc * diskon_nominal / 100);
+            } else {
+                subtotal_before_disc = parseInt(subtotal) + (parseInt(qty) * diskon_nominal);
+                disc_value = '-' + (parseInt(qty) * diskon_nominal);
+            }
+
+            menu_array.push(pad('   ', qty, true) + ' ' + pad('                    ', nama, false) + ' ' + pad('       ', subtotal_before_disc + '', true) + '\x0A');
+
+            menu_array.push('    ' + pad('                    ', disc_label, false) + ' ' + pad('       ', disc_value, true) + '\x0A');
+        } else {
+            menu_array.push(pad('   ', qty, true) + ' ' + pad('                    ', nama, false) + ' ' + pad('       ', subtotal, true) + '\x0A');
+        }
 
         total += parseInt(subtotal);
     });
@@ -351,7 +374,7 @@ function add_to_table() {
     var diskon = diskon_nominal;
     if (diskon != 0) {
         if (diskon_satuan == "1") {
-            diskon = "-" + addThousandSeparator(diskon_nominal + "");
+            diskon = "-" + addThousandSeparator(diskon_nominal * qty + "");
         } else {
             diskon = "-" + diskon_nominal + "%";
         }
@@ -360,7 +383,7 @@ function add_to_table() {
     var subtotal = qty * harga;
     if (diskon_nominal != 0) {
         if (diskon_satuan == "1") {
-            subtotal -= diskon_nominal;
+            subtotal -= diskon_nominal * qty;
         } else {
             subtotal -= diskon_nominal * subtotal / 100;
         }
@@ -381,6 +404,7 @@ function add_to_table() {
                 var currentDiskon = parseInt(tdDiskon.html().replace(".", "").replace("-", "").replace("%", ""));
                 currentDiskon += diskon_nominal;
                 tdDiskon.html("-" + addThousandSeparator(currentDiskon + ""));
+                $(tbodyTR[i]).attr("data-diskon-nominal", currentDiskon);
             }
             
             var tdSubtotal = $(tbodyTR[i]).find("td:nth-child(6)");
@@ -395,7 +419,7 @@ function add_to_table() {
     }
 
     var element = "";
-    element += "<tr data-id='" + id + "' data-nama='" + nama + "' data-subtotal='" + subtotal + "' data-qty='" + qty + "'>";
+    element += "<tr data-id='" + id + "' data-nama='" + nama + "' data-subtotal='" + subtotal + "' data-qty='" + qty + "' data-diskon-nominal='" + diskon_nominal + "' data-diskon-satuan='" + diskon_satuan + "'>";
     element += "<td>" + id + "</td>";
     element += "<td>" + nama + "</td>";
     element += "<td>" + addThousandSeparator(harga + "") + "</td>";

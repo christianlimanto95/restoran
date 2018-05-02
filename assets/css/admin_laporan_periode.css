@@ -214,3 +214,21 @@
 .table-detail-transaksi td:nth-child(5) {
     text-align: right;
 }
+
+.tax {
+    margin-top: 30px;
+}
+
+.tax-label, .tax-value {
+    font-size: 1vw;
+    font-weight: normal;
+}
+
+.tax-label {
+    float: left;
+}
+
+.tax-value {
+    float: right;
+    margin-right: 8px;
+}
