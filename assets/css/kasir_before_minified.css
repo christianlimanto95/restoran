@@ -204,3 +204,21 @@ input.dialog-bayar-right {
 .btn-bayar:hover {
     background-color: #E0E0E0;
 }
+
+.copy-struk {
+    width: 12vw;
+    padding: 0.5vw 0;
+    margin-top: 1.5vw;
+    font-size: 1.5vw;
+    font-weight: bold;
+    cursor: pointer;
+    display: none;
+}
+
+.copy-struk:hover {
+    background-color: #E0E0E0;
+}
+
+.copy-struk.show {
+    display: block;
+}

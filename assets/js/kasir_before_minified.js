@@ -2,6 +2,7 @@ var get_all_menu_ajax = null;
 var mode_kembalian = false;
 var dialogConfirmBayarShown = false;
 var printer_found = null;
+var print_clipboard = null;
 
 $(function() {
     $(document).on("keydown click", ".qty-add", function(e) {
@@ -122,6 +123,12 @@ $(function() {
         dialogConfirmBayarShown = false;
     });
 
+    $(".copy-struk").on("click", function() {
+        var config = qz.configs.create(printer_found);
+        qz.print(config, print_clipboard);
+        showNotification("Struk telah dicopy");
+    });
+
     get_all_menu(true);
 });
 
@@ -236,7 +243,7 @@ function print(printer, args) {
         '\x1B' + '\x40',          // init
         '\x1B' + '\x61' + '\x31', // center align
         'DAPUR BABI' + '\x0A',
-        'Spesialis Mie Babi dan Kwetiau' + '\x0A',
+        'Spesialis Iga Babi' + '\x0A',
         'Jl. Siwalankerto 147' + '\x0A',
         'HP : 081232287668',     
         '\x0A',
@@ -269,6 +276,9 @@ function print(printer, args) {
         '\x10' + '\x14' + '\x01' + '\x00' + '\x05',  // Generate Pulse to kick-out cash drawer**
                                             // **for legacy drawer cable CD-005A.  Research before using.
     ]);   // Raw ZPL
+
+    print_clipboard = data;
+    $(".copy-struk").addClass("show");
     return qz.print(config, data);
 }
 

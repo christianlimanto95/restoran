@@ -39,6 +39,7 @@
         </table>
     </div>
     <div class="bayar">BAYAR</div>
+    <div class="copy-struk">COPY STRUK</div>
 </div>
 <div class="dialog dialog-bayar">
     <div class="dialog-background">
